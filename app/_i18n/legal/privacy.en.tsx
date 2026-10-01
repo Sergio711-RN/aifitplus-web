@@ -1,0 +1,265 @@
+import Link from "next/link";
+import { Fill, type ILegalSection } from "../../_components/legal-page";
+import { LEGAL } from "../../_lib/legal";
+import { ContactEmail } from "./contact-email";
+import type { ILegalDocument } from "./types";
+
+const SECTIONS: ILegalSection[] = [
+  {
+    id: "operator",
+    title: "Who processes your data",
+    body: (
+      <>
+        <p>
+          The data controller is <Fill value={LEGAL.operatorName} label="company name" />,{" "}
+          <Fill value={LEGAL.operatorIds} label="company registration number" />, address:{" "}
+          <Fill value={LEGAL.operatorAddress} label="postal address" />. In this policy, “we” means this company.
+        </p>
+        <p>
+          This policy covers the AIFit+ mobile app for iOS and Android and the aifitplus.com website. For questions about your data, write to{" "}
+          <ContactEmail label="contact email" />.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "data",
+    title: "What data we collect",
+    body: (
+      <>
+        <h3>Account</h3>
+        <ul>
+          <li>Email address — to sign in with a code.</li>
+          <li>Name, interface language and profile photo — if you provide them.</li>
+        </ul>
+        <h3>Health and body data</h3>
+        <p>
+          Your answers at first launch: sex, year of birth, height, weight and weigh-in history, target weight and pace, activity level, diet
+          type, what you want to improve, blood type and Rh factor (optional). This is a special category of data: it reaches our server only
+          after you give separate consent at sign-up. Until then, your answers are stored only on your device.
+        </p>
+        <h3>Food diary</h3>
+        <ul>
+          <li>Photos of meals that you take or pick from your gallery.</li>
+          <li>Recognition results: dish, ingredients, portion weight, calories, protein, fat, carbs, your edits and answers to follow-up questions.</li>
+          <li>Time and type of meal.</li>
+        </ul>
+        <h3>Subscription</h3>
+        <p>
+          Subscription status, plan, trial and renewal dates. Payments are taken by the App Store and Google Play — we do not receive your card
+          number or payment details.
+        </p>
+        <h3>Settings and technical data</h3>
+        <ul>
+          <li>Reminder times, units of measurement, the promo code you entered.</li>
+          <li>An internal user ID and a session key on your device.</li>
+          <li>Server technical logs: IP address, time and type of request. We need them to run and protect the service.</li>
+        </ul>
+        <h3>Website</h3>
+        <p>
+          The website does not use cookies, ad trackers or analytics services. Like any web server, the website host sees your IP address and
+          browser type in its technical logs.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "purposes",
+    title: "Why we process data and on what legal basis",
+    body: (
+      <ul>
+        <li>
+          <strong>Running the app</strong>: sign-in, calculating your daily targets, recognising meals, the diary, syncing between devices.
+          Legal basis: our contract with you (<Link href="/en/terms">Terms of Use</Link>), Art. 6(1)(b) GDPR.
+        </li>
+        <li>
+          <strong>Health data</strong> is processed only to calculate your plan and keep your diary. Legal basis: your separate explicit
+          consent, which you give by ticking a box at sign-up, Art. 9(2)(a) GDPR.
+        </li>
+        <li>
+          <strong>Subscription</strong>: checking access to paid features. Legal basis: contract, Art. 6(1)(b) GDPR.
+        </li>
+        <li>
+          <strong>Security</strong>: protection against hacking and abuse, such as a daily limit on AI requests. Legal basis: our legitimate
+          interest in a working service, Art. 6(1)(f) GDPR.
+        </li>
+        <li>
+          <strong>Reminders</strong> are sent only if you turn them on and allow notifications in your system settings.
+        </li>
+      </ul>
+    ),
+  },
+  {
+    id: "no-sale",
+    title: "What we do not do",
+    body: (
+      <ul>
+        <li>We do not sell or rent out your data.</li>
+        <li>We do not show ads or share data with ad networks.</li>
+        <li>We do not publish your meal photos or show them to other users.</li>
+        <li>We do not make decisions based on your data that have legal effects for you.</li>
+      </ul>
+    ),
+  },
+  {
+    id: "ai",
+    title: "How photo recognition works",
+    body: (
+      <>
+        <p>
+          The photo is compressed on your device and uploaded to private storage that only your account can access. The server sends it to an
+          artificial intelligence model, receives the meal breakdown and saves the result to your diary.
+        </p>
+        <p>
+          The model is provided by Anthropic. Anthropic processes the photo on our behalf and only to answer the request. Under the terms of its
+          commercial API, request content is not used to train models.
+        </p>
+        <p>
+          Calorie and nutrient estimates are approximate. Check the result and correct it — your edits are saved in the diary.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "processors",
+    title: "Who we share data with",
+    body: (
+      <>
+        <p>Only with providers the service cannot work without. Each one receives the minimum data needed for its task:</p>
+        <ul>
+          <li>
+            <strong>Supabase</strong> — database, sign-in and file storage. All account data, the diary, photos. Servers in Ireland (EU).
+          </li>
+          <li>
+            <strong>Anthropic</strong> — meal recognition. Photos and the text of follow-up answers. USA.
+          </li>
+          <li>
+            <strong>Resend</strong> — sending sign-in code emails. Email address and email language. USA.
+          </li>
+          <li>
+            <strong>RevenueCat</strong> — subscription management. Internal user ID and purchase history from the store. USA.
+          </li>
+          <li>
+            <strong>Apple and Google</strong> — subscription payments and notifications. They process data under their own policies as
+            independent controllers.
+          </li>
+        </ul>
+        <p>
+          We also disclose data to public authorities where the law requires it, and only to the extent of the request.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "transfer",
+    title: "Where data is stored",
+    body: (
+      <>
+        <p>
+          Our main storage is in the European Union (Ireland). Photo recognition, emails and subscription management are handled by providers
+          in the USA, so some data is transferred outside the European Economic Area.
+        </p>
+        <p>
+          These transfers rely on the European Commission’s adequacy decision (EU–US Data Privacy Framework) for providers certified under it,
+          or on the European Commission’s standard contractual clauses. Data is transferred only for the purposes set out in this policy.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "retention",
+    title: "How long we keep data",
+    body: (
+      <ul>
+        <li>Account data, the diary and photos — for as long as you have an account.</li>
+        <li>
+          When you delete your account, your profile, plan, weight history, diary and photos are deleted immediately. They disappear from the
+          hosting provider’s backups within {LEGAL.backupRetentionDays} days.
+        </li>
+        <li>Answers entered before sign-up are stored only on your device and are erased when you sign out.</li>
+        <li>The App Store, Google Play and RevenueCat keep purchase records for as long as payment accounting laws require.</li>
+      </ul>
+    ),
+  },
+  {
+    id: "rights",
+    title: "Your rights",
+    body: (
+      <>
+        <ul>
+          <li>
+            <strong>Find out</strong> what data we hold and get a copy of it.
+          </li>
+          <li>
+            <strong>Take</strong> your data in a machine-readable format to move it to another service.
+          </li>
+          <li>
+            <strong>Correct</strong> your data — most fields can be edited right in the app.
+          </li>
+          <li>
+            <strong>Delete</strong> your account and all your data: in the app, tap your profile photo → “Delete account”. This does not
+            cancel your subscription — cancel it in the App Store or Google Play settings.
+          </li>
+          <li>
+            <strong>Withdraw consent</strong> to the processing of your health data. Without this data the app cannot calculate your plan, so
+            withdrawing consent means deleting your account.
+          </li>
+          <li>
+            <strong>Object</strong> to processing or restrict it.
+          </li>
+          <li>
+            <strong>Complain</strong> to the data protection authority in the country where you live or work.
+          </li>
+        </ul>
+        <p>
+          Send requests to <ContactEmail label="contact email" /> from the email address linked to your account. We will reply within one month,
+          usually sooner.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "security",
+    title: "How we protect data",
+    body: (
+      <ul>
+        <li>All connections are encrypted (HTTPS/TLS).</li>
+        <li>Database access rules: each account sees only its own records and its own files.</li>
+        <li>Photos are kept in private storage, and links to them are not public.</li>
+        <li>Secret service keys are stored only on the server, not in the app.</li>
+        <li>Sign-in uses a one-time code — there are no passwords to steal.</li>
+      </ul>
+    ),
+  },
+  {
+    id: "children",
+    title: "Age",
+    body: (
+      <p>
+        You can use AIFit+ from the age of {LEGAL.minAge}. We do not knowingly collect children’s data. If you find out that a child has
+        created an account, write to us and we will delete it.
+      </p>
+    ),
+  },
+  {
+    id: "changes",
+    title: "Changes to this policy",
+    body: (
+      <p>
+        If we change what data we collect or who we share it with, we will tell you in the app in advance. The effective date is shown at the
+        top of this document.
+      </p>
+    ),
+  },
+];
+
+export const privacyEn: ILegalDocument = {
+  title: "Privacy Policy",
+  lead: (
+    <p>
+      AIFit+ counts calories from photos of your food. To do that, it needs data about your body and your diet. Here is a short, to-the-point
+      summary: what we collect, why, where we store it and how to delete it all.
+    </p>
+  ),
+  sections: SECTIONS,
+};

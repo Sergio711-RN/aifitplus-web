@@ -10,33 +10,41 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { DAY_TARGET_KCAL } from "../_lib/content";
+import { useI18n } from "../_i18n/i18n-provider";
+import { DAY_TARGET_KCAL, MEALS } from "../_lib/content";
 import { sparkPath } from "./app-mark";
 import { CountUp } from "./count-up";
-import { DishArt } from "./food-thumb";
 import { GlassMeter } from "./glass-meter";
 import { PhoneFrame } from "./phone-frame";
 
-// Copy from the app's «Как это работает» onboarding step
-const STEPS = [
-  { title: "Снимите тарелку", text: "Можно сделать пару кадров с разных сторон — так точнее." },
-  { title: "ИИ разберёт блюдо", text: "Определит состав и порцию. Если что-то неясно — задаст короткий вопрос." },
-  { title: "Следите за днём", text: "Главный экран покажет, сколько осталось и чего не хватает." },
-];
+// Step copy is the app's «How it works» onboarding step (`t.how.steps`)
+const STEP_COUNT = 3;
 
-const Plate = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 48 48" className={className} aria-hidden>
-    <circle cx={24} cy={24} r={23} fill="var(--color-plate)" />
-    <circle cx={24} cy={24} r={19} fill="var(--color-plate-well)" opacity={0.55} />
-    <g transform="translate(24 24) scale(1.25) translate(-24 -24)">
-      <DishArt dish="syrniki" />
-    </g>
-  </svg>
+const SNAP_MEAL = MEALS.syrniki;
+
+const Photo = ({ className, sizes = "300px" }: { className?: string; sizes?: string }) => (
+  <span className={`relative block overflow-hidden ${className ?? ""}`}>
+    <Image src={SNAP_MEAL.photo} alt="" fill sizes={sizes} className="object-cover" />
+  </span>
 );
 
 const SnapScreen = () => (
-  <div className="flex h-full flex-col items-center pt-16">
+  <div className="relative flex h-full flex-col items-center pt-16">
+    <div className="absolute inset-0 scale-125 blur-xl brightness-[0.3] saturate-150">
+      <Photo className="size-full" sizes="160px" />
+    </div>
+    <motion.div
+      className="absolute inset-x-0 top-[38px] aspect-square [mask-image:radial-gradient(circle,#000_56%,transparent_71%)]"
+      initial={{ scale: 1.2, filter: "blur(12px)" }}
+      animate={{ scale: [1.2, 1, 1.06], filter: "blur(0px)" }}
+      transition={{ scale: { duration: 6, times: [0, 0.15, 1], ease: "easeOut" }, filter: { duration: 0.8 } }}
+    >
+      <Photo className="size-full" />
+    </motion.div>
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink/90 to-transparent" />
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
     <div className="relative aspect-square w-[80%]">
       {["top-0 left-0 border-t-[3px] border-l-[3px] rounded-tl-2xl", "top-0 right-0 border-t-[3px] border-r-[3px] rounded-tr-2xl", "bottom-0 left-0 border-b-[3px] border-l-[3px] rounded-bl-2xl", "bottom-0 right-0 border-b-[3px] border-r-[3px] rounded-br-2xl"].map((corner, index) => (
         <motion.span
@@ -48,29 +56,22 @@ const SnapScreen = () => (
         />
       ))}
       <motion.div
-        className="absolute inset-[9%]"
-        animate={{ rotate: [0, -8, 6, 0], scale: [1, 0.96, 1.02, 1] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Plate className="size-full" />
-      </motion.div>
-      <motion.div
         className="absolute inset-x-[4%] h-0.5 rounded-full bg-apricot shadow-[0_0_16px_4px_rgba(255,176,120,0.55)]"
         animate={{ top: ["6%", "94%", "6%"] }}
         transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
-    <div className="mt-auto mb-7 flex w-full items-center justify-between px-8">
+    <div className="relative mt-auto mb-7 flex w-full items-center justify-between px-8">
       <div className="flex gap-1.5">
         {[0, 1].map((shot) => (
           <motion.span
             key={shot}
-            className="size-10 overflow-hidden rounded-xl border border-line bg-surface-tile p-1"
+            className="size-10 overflow-hidden rounded-xl border-2 border-text/80"
             initial={{ scale: 0, rotate: -20 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.6 + shot * 0.5, type: "spring", stiffness: 300, damping: 16 }}
           >
-            <Plate className="size-full" />
+            <Photo className="size-full" sizes="80px" />
           </motion.span>
         ))}
       </div>
@@ -82,66 +83,71 @@ const SnapScreen = () => (
   </div>
 );
 
+/** What the AI found on the plate; names are `t.how.parts` in the same order */
 const PARTS = [
-  { name: "Сырники, 3 шт.", grams: "150 г", kcal: 324 },
-  { name: "Сметана 15%", grams: "30 г", kcal: 48 },
-  { name: "Ягодный соус", grams: "15 г", kcal: 28 },
+  { grams: 200, kcal: 396 },
+  { grams: 80, kcal: 34 },
+  { grams: 40, kcal: 28 },
 ];
 
-const AnalyseScreen = () => (
-  <div className="flex h-full flex-col px-4 pt-14">
-    <div className="relative mx-auto size-32">
-      <Plate className="size-full" />
-      <motion.span
-        className="absolute inset-0 rounded-full border-2 border-lilac"
-        animate={{ scale: [1, 1.3], opacity: [0.8, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity }}
-      />
-    </div>
-    <div className="mt-5 space-y-2">
-      {PARTS.map((part, index) => (
-        <motion.div
-          key={part.name}
-          className="flex items-center justify-between rounded-2xl bg-surface px-3.5 py-2.5 text-[12px]"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 + index * 0.25, type: "spring", stiffness: 220, damping: 22 }}
-        >
-          <span className="font-semibold">{part.name}</span>
-          <span className="text-text-3">
-            {part.grams} <span className="ml-1 font-bold text-apricot">{part.kcal}</span>
-          </span>
-        </motion.div>
-      ))}
-    </div>
-    <motion.div
-      className="mt-4 rounded-2xl border border-lilac-line bg-lilac-surface p-3.5"
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 1.1, type: "spring", stiffness: 200, damping: 20 }}
-    >
-      <div className="flex items-start gap-2 text-[12px] leading-snug text-text">
-        <svg viewBox="0 0 20 20" className="mt-0.5 size-3.5 shrink-0 text-lilac" aria-hidden>
-          <path d={sparkPath(10, 10, 10)} fill="currentColor" />
-        </svg>
-        <Typewriter text="Сметана жирная или лёгкая? От этого зависит около 40 ккал." delay={1.4} />
+const AnalyseScreen = () => {
+  const { t } = useI18n();
+
+  return (
+    <div className="flex h-full flex-col px-4 pt-14">
+      <div className="relative mx-auto size-32">
+        <Photo className="size-full rounded-full" sizes="256px" />
+        <motion.span
+          className="absolute inset-0 rounded-full border-2 border-lilac"
+          animate={{ scale: [1, 1.3], opacity: [0.8, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity }}
+        />
       </div>
-      <div className="mt-3 flex gap-2">
-        {["15%", "20%"].map((option, index) => (
-          <motion.span
-            key={option}
-            className={`rounded-full px-3.5 py-1.5 text-[12px] font-semibold ${index === 0 ? "bg-lilac text-ink" : "bg-surface-tile text-text-2"}`}
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 2.6 + index * 0.1, type: "spring", stiffness: 300, damping: 16 }}
+      <div className="mt-5 space-y-2">
+        {PARTS.map((part, index) => (
+          <motion.div
+            key={part.grams}
+            className="flex items-center justify-between rounded-2xl bg-surface px-3.5 py-2.5 text-[12px]"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 + index * 0.25, type: "spring", stiffness: 220, damping: 22 }}
           >
-            {option}
-          </motion.span>
+            <span className="font-semibold">{t.how.parts[index]}</span>
+            <span className="text-text-3">
+              {part.grams} {t.units.g} <span className="ml-1 font-bold text-apricot">{part.kcal}</span>
+            </span>
+          </motion.div>
         ))}
       </div>
-    </motion.div>
-  </div>
+      <motion.div
+        className="mt-4 rounded-2xl border border-lilac-line bg-lilac-surface p-3.5"
+        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 1.1, type: "spring", stiffness: 200, damping: 20 }}
+      >
+        <div className="flex items-start gap-2 text-[12px] leading-snug text-text">
+          <svg viewBox="0 0 20 20" className="mt-0.5 size-3.5 shrink-0 text-lilac" aria-hidden>
+            <path d={sparkPath(10, 10, 10)} fill="currentColor" />
+          </svg>
+          <Typewriter text={t.how.question} delay={1.4} />
+        </div>
+        <div className="mt-3 flex gap-2">
+          {t.how.answers.map((option, index) => (
+            <motion.span
+              key={option}
+              className={`rounded-full px-3.5 py-1.5 text-[12px] font-semibold ${index === 0 ? "bg-lilac text-ink" : "bg-surface-tile text-text-2"}`}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 2.6 + index * 0.1, type: "spring", stiffness: 300, damping: 16 }}
+            >
+              {option}
+            </motion.span>
+          ))}
+        </div>
+      </motion.div>
+    </div>
 );
+};
 
 /** Text typed letter by letter, with a blinking caret while typing */
 export const Typewriter = ({ text, delay = 0, speed = 28 }: { text: string; delay?: number; speed?: number }) => {
@@ -175,6 +181,7 @@ export const Typewriter = ({ text, delay = 0, speed = 28 }: { text: string; dela
 const EATEN = 1240;
 
 const HomeScreen = () => {
+  const { t, formatNumber } = useI18n();
   const level = useMotionValue(0);
 
   useEffect(() => {
@@ -183,16 +190,14 @@ const HomeScreen = () => {
     return () => controls.stop();
   }, [level]);
 
-  const days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-
   return (
     <div className="flex h-full flex-col px-4 pt-14">
       <div className="flex items-center justify-between">
-        <span className="text-[17px] font-extrabold">Сегодня</span>
-        <span className="rounded-full bg-surface px-2.5 py-1 text-[11px] font-bold text-apricot">12 дней подряд</span>
+        <span className="text-[17px] font-extrabold">{t.how.today}</span>
+        <span className="rounded-full bg-surface px-2.5 py-1 text-[11px] font-bold text-apricot">{t.how.streak}</span>
       </div>
       <div className="mt-3 flex justify-between">
-        {days.map((day, index) => (
+        {t.how.weekdays.map((day, index) => (
           <motion.span
             key={day}
             className={`flex h-12 w-8 flex-col items-center justify-center gap-1 rounded-xl text-[10px] ${index === 3 ? "bg-apricot text-ink" : "bg-surface text-text-3"}`}
@@ -208,22 +213,22 @@ const HomeScreen = () => {
       <div className="mt-5 flex items-center gap-5">
         <GlassMeter level={level} width={86} height={196} />
         <div>
-          <div className="text-[11px] text-text-3">Съедено</div>
+          <div className="text-[11px] text-text-3">{t.how.eaten}</div>
           <div className="text-[30px] leading-none font-extrabold">
             <CountUp value={EATEN} duration={1.6} />
           </div>
-          <div className="mt-1 text-[12px] text-text-2">из {DAY_TARGET_KCAL.toLocaleString("ru-RU")} ккал</div>
-          <div className="mt-4 text-[11px] text-text-3">Осталось</div>
+          <div className="mt-1 text-[12px] text-text-2">{t.common.ofKcal(formatNumber(DAY_TARGET_KCAL))}</div>
+          <div className="mt-4 text-[11px] text-text-3">{t.how.left}</div>
           <div className="text-[18px] font-bold text-apricot">
-            <CountUp value={DAY_TARGET_KCAL - EATEN} duration={1.6} /> ккал
+            <CountUp value={DAY_TARGET_KCAL - EATEN} duration={1.6} /> {t.units.kcal}
           </div>
         </div>
       </div>
       <div className="mt-5 space-y-2.5">
         {[
-          { label: "Углеводы", value: 134, target: 236, color: "var(--color-apricot)" },
-          { label: "Жиры", value: 52, target: 58, color: "var(--color-lilac)" },
-          { label: "Белки", value: 70, target: 130, color: "var(--color-mint)" },
+          { label: t.macros.carbs, value: 134, target: 236, color: "var(--color-apricot)" },
+          { label: t.macros.fats, value: 52, target: 58, color: "var(--color-lilac)" },
+          { label: t.macros.protein, value: 70, target: 130, color: "var(--color-mint)" },
         ].map((macro, index) => (
           <div key={macro.label}>
             <div className="mb-1 flex justify-between text-[11px]">
@@ -232,7 +237,10 @@ const HomeScreen = () => {
                 <span className="font-bold" style={{ color: macro.color }}>
                   {macro.value}
                 </span>
-                <span className="text-text-3"> / {macro.target} г</span>
+                <span className="text-text-3">
+                  {" "}
+                  / {macro.target} {t.units.g}
+                </span>
               </span>
             </div>
             <div className="h-1.5 overflow-hidden rounded-full bg-surface-muted">
@@ -253,7 +261,34 @@ const HomeScreen = () => {
 
 const SCREENS = [SnapScreen, AnalyseScreen, HomeScreen];
 
+/** Glow behind the phone per step, in the meaning of the app colours: apricot — the action, lilac — AI, mint — progress */
+const STEP_GLOWS = ["rgba(255, 176, 120, 0.26)", "rgba(183, 166, 255, 0.3)", "rgba(127, 216, 190, 0.24)"];
+
+const Backdrop = ({ active }: { active: number }) => (
+  <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
+    <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-ink)_0%,#171c3a_45%,#151a34_70%,var(--color-ink)_100%)]" />
+    <motion.div
+      className="absolute top-[-12%] left-1/2 size-[560px] -translate-x-1/2 rounded-full blur-[110px] lg:top-1/2 lg:right-[-6%] lg:left-auto lg:size-[880px] lg:translate-x-0 lg:-translate-y-1/2"
+      animate={{ backgroundColor: STEP_GLOWS[active], scale: [1, 1.08, 1] }}
+      transition={{ backgroundColor: { duration: 1.2, ease: "easeInOut" }, scale: { duration: 8, repeat: Infinity, ease: "easeInOut" } }}
+    />
+    <motion.div
+      className="absolute -top-48 -left-40 size-[620px] rounded-full bg-lilac/10 blur-[130px]"
+      animate={{ x: [0, 80, 0], y: [0, 50, 0] }}
+      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+    />
+    <motion.div
+      className="absolute -bottom-56 left-[20%] size-[560px] rounded-full bg-apricot/[0.07] blur-[130px]"
+      animate={{ x: [0, -60, 0], y: [0, -40, 0] }}
+      transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+    />
+    {/* Dot grid, fading out away from the phone */}
+    <div className="absolute inset-0 [background-image:radial-gradient(rgba(238,240,255,0.09)_1px,transparent_1.5px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_55%_60%_at_50%_30%,#000,transparent)] lg:[mask-image:radial-gradient(ellipse_50%_70%_at_75%_50%,#000,transparent)]" />
+  </div>
+);
+
 export const HowItWorks = () => {
+  const { t } = useI18n();
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
@@ -261,24 +296,25 @@ export const HowItWorks = () => {
   const railHeight = useTransform(progress, [0, 1], ["0%", "100%"]);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
-    setActive(Math.min(STEPS.length - 1, Math.floor(value * STEPS.length)));
+    setActive(Math.min(STEP_COUNT - 1, Math.floor(value * STEP_COUNT)));
   });
 
   const Screen = SCREENS[active];
 
   return (
-    <section ref={sectionRef} id="how" className="relative" style={{ height: `${STEPS.length * 100 + 40}vh` }}>
-      <div className="sticky top-0 flex h-dvh items-center overflow-hidden px-5 md:px-10">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[1fr_auto] lg:gap-24">
+    <section ref={sectionRef} id="how" className="relative" style={{ height: `${STEP_COUNT * 100 + 40}vh` }}>
+      <div className="sticky top-0 isolate flex h-dvh items-center overflow-hidden px-5 md:px-10">
+        <Backdrop active={active} />
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[1fr_auto] lg:gap-24 lg:pr-12">
           <div className="order-2 lg:order-1">
-            <h2 className="mb-6 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em] lg:mb-12">
-              Как это работает
+            <h2 className="mb-4 text-[clamp(1.75rem,4.5vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em] lg:mb-12">
+              {t.how.title}
             </h2>
-            <ol className="relative space-y-2 pl-8 lg:space-y-8">
+            <ol className="relative space-y-1 pl-8 lg:space-y-8">
               {/* Progress rail */}
               <span className="absolute top-2 bottom-2 left-[7px] w-0.5 rounded-full bg-line" />
               <motion.span className="absolute top-2 left-[7px] w-0.5 rounded-full bg-apricot" style={{ height: railHeight }} />
-              {STEPS.map((step, index) => (
+              {t.how.steps.map((step, index) => (
                 <li key={step.title} className="relative">
                   <motion.span
                     className="absolute top-2 -left-8 grid size-4 place-items-center rounded-full border-2"
@@ -289,7 +325,7 @@ export const HowItWorks = () => {
                     }}
                   />
                   <motion.div animate={{ opacity: index === active ? 1 : 0.35 }} transition={{ duration: 0.4 }}>
-                    <div className="text-[14px] font-semibold text-text-3">Шаг {index + 1}</div>
+                    <div className="text-[14px] font-semibold text-text-3">{t.how.step(index + 1)}</div>
                     <h3 className="text-[clamp(1.35rem,2.4vw,2rem)] font-bold tracking-tight">{step.title}</h3>
                     <AnimatePresence initial={false}>
                       {index === active && (
@@ -310,7 +346,7 @@ export const HowItWorks = () => {
             </ol>
           </div>
 
-          <div className="order-1 mx-auto origin-top scale-[0.62] max-lg:-mb-[38%] sm:scale-75 sm:max-lg:-mb-[28%] lg:order-2 lg:scale-100 lg:max-xl:scale-90">
+          <div className="order-1 mx-auto -mb-[260px] origin-top scale-[0.58] sm:-mb-[93px] sm:scale-[0.85] lg:order-2 lg:mb-0 lg:origin-center lg:scale-110 lg:[@media(min-height:860px)]:scale-125 lg:[@media(min-height:960px)]:scale-[1.38]">
             <PhoneFrame>
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div

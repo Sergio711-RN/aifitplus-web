@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
+import { useI18n } from "../_i18n/i18n-provider";
 import { sparkPath } from "./app-mark";
 import { FlairText } from "./flair-text";
 import { StoreButtons } from "./store-buttons";
@@ -56,20 +57,24 @@ const AssemblingMark = () => {
   );
 };
 
-export const FinalCta = () => (
-  <section id="download" className="relative overflow-hidden px-5 pt-28 pb-24 text-center md:px-10 md:pt-40">
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[70%] bg-[radial-gradient(60%_60%_at_50%_100%,rgba(255,176,120,0.16),transparent)]" />
-    <AssemblingMark />
-    <FlairText
-      as="h2"
-      text="Начните с сегодняшнего ужина"
-      className="mx-auto mt-12 max-w-[14ch] text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.98] tracking-[-0.035em]"
-      weight={780}
-      radius={180}
-    />
-    <p className="mx-auto mt-6 max-w-md text-[18px] leading-relaxed text-text-2">
-      Установите AIFit+, ответьте на пару вопросов о себе — и первый снимок тарелки уже посчитан.
-    </p>
-    <StoreButtons className="mt-10 justify-center" />
-  </section>
-);
+export const FinalCta = () => {
+  const { t } = useI18n();
+
+  return (
+    <section id="download" className="relative overflow-hidden px-5 pt-28 pb-24 text-center md:px-10 md:pt-40">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[70%] bg-[radial-gradient(60%_60%_at_50%_100%,rgba(255,176,120,0.16),transparent)]" />
+      <AssemblingMark />
+      <FlairText
+        as="h2"
+        text={t.cta.title}
+        className="mx-auto mt-12 max-w-[14ch] text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.98] tracking-[-0.035em]"
+        weight={780}
+        radius={180}
+      />
+      <p className="mx-auto mt-6 max-w-md text-[18px] leading-relaxed text-text-2">
+        {t.cta.text}
+      </p>
+      <StoreButtons className="mt-10 justify-center" />
+    </section>
+  );
+};

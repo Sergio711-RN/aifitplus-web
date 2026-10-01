@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "motion/react";
 import { useId, useRef, useState } from "react";
+import { useI18n } from "../_i18n/i18n-provider";
 import { buildPlan, type Activity, type Goal, type IPlanInput, type Sex } from "../_lib/nutrition-plan";
 import { CountUp } from "./count-up";
 
@@ -97,6 +98,7 @@ const Slider = ({
 
 /** Concentric macro rings, as in the app's loader after sign-in; each ring shows the share of calories */
 const MacroRings = ({ shares, calories }: { shares: { color: string; share: number }[]; calories: number }) => {
+  const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-15% 0px" });
 
@@ -126,15 +128,16 @@ const MacroRings = ({ shares, calories }: { shares: { color: string; share: numb
       })}
     </svg>
     <div className="absolute inset-0 flex flex-col items-center justify-center">
-      <span className="text-[13px] text-text-3">Норма в день</span>
+      <span className="text-[13px] text-text-3">{t.plan.perDay}</span>
       <CountUp value={calories} duration={0.9} className="text-[44px] leading-none font-extrabold tracking-tight" />
-      <span className="text-[14px] text-text-2">ккал</span>
+      <span className="text-[14px] text-text-2">{t.units.kcal}</span>
     </div>
   </div>
   );
 };
 
 export const PlanCalculator = () => {
+  const { t } = useI18n();
   const [input, setInput] = useState<IPlanInput>({
     sex: "female",
     age: 30,
@@ -147,9 +150,9 @@ export const PlanCalculator = () => {
   const set = <K extends keyof IPlanInput>(key: K) => (value: IPlanInput[K]) => setInput((current) => ({ ...current, [key]: value }));
 
   const macros = [
-    { label: "Углеводы", grams: plan.carbsG, kcal: plan.carbsG * 4, color: "var(--color-apricot)" },
-    { label: "Жиры", grams: plan.fatG, kcal: plan.fatG * 9, color: "var(--color-lilac)" },
-    { label: "Белки", grams: plan.proteinG, kcal: plan.proteinG * 4, color: "var(--color-mint)" },
+    { label: t.macros.carbs, grams: plan.carbsG, kcal: plan.carbsG * 4, color: "var(--color-apricot)" },
+    { label: t.macros.fats, grams: plan.fatG, kcal: plan.fatG * 9, color: "var(--color-lilac)" },
+    { label: t.macros.protein, grams: plan.proteinG, kcal: plan.proteinG * 4, color: "var(--color-mint)" },
   ];
 
   return (
@@ -158,11 +161,10 @@ export const PlanCalculator = () => {
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
-            Норма, посчитанная под вас
+            {t.plan.title}
           </h2>
           <p className="mt-5 text-[18px] leading-relaxed text-text-2">
-            Тот же расчёт, что в приложении: обмен веществ по формуле Миффлина — Сан Жеора, ваша активность и темп.
-            Белок — 2 г на килограмм целевого веса, жиры — четверть калорий. Подвигайте ползунки.
+            {t.plan.text}
           </p>
         </div>
 
@@ -170,37 +172,37 @@ export const PlanCalculator = () => {
           <div className="space-y-7">
             <div className="grid gap-5 sm:grid-cols-2">
               <Segmented<Sex>
-                label="Пол"
+                label={t.plan.sex}
                 value={input.sex}
                 onChange={set("sex")}
                 options={[
-                  { value: "female", label: "Женский" },
-                  { value: "male", label: "Мужской" },
+                  { value: "female", label: t.plan.female },
+                  { value: "male", label: t.plan.male },
                 ]}
               />
               <Segmented<Goal>
-                label="Цель"
+                label={t.plan.goal}
                 value={input.goal}
                 onChange={set("goal")}
                 options={[
-                  { value: "lose", label: "Снизить" },
-                  { value: "maintain", label: "Держать" },
-                  { value: "gain", label: "Набрать" },
+                  { value: "lose", label: t.plan.lose },
+                  { value: "maintain", label: t.plan.maintain },
+                  { value: "gain", label: t.plan.gain },
                 ]}
               />
             </div>
-            <Slider label="Вес" unit="кг" value={input.weightKg} min={40} max={150} onChange={set("weightKg")} />
-            <Slider label="Рост" unit="см" value={input.heightCm} min={140} max={210} onChange={set("heightCm")} />
-            <Slider label="Возраст" unit="лет" value={input.age} min={16} max={80} onChange={set("age")} />
+            <Slider label={t.plan.weight} unit={t.units.kg} value={input.weightKg} min={40} max={150} onChange={set("weightKg")} />
+            <Slider label={t.plan.height} unit={t.units.cm} value={input.heightCm} min={140} max={210} onChange={set("heightCm")} />
+            <Slider label={t.plan.age} unit={t.units.years} value={input.age} min={16} max={80} onChange={set("age")} />
             <Segmented<Activity>
-              label="Активность"
+              label={t.plan.activity}
               value={input.activity}
               onChange={set("activity")}
               options={[
-                { value: "sedentary", label: "Сидячая" },
-                { value: "light", label: "Лёгкая" },
-                { value: "moderate", label: "Средняя" },
-                { value: "high", label: "Высокая" },
+                { value: "sedentary", label: t.plan.sedentary },
+                { value: "light", label: t.plan.light },
+                { value: "moderate", label: t.plan.moderate },
+                { value: "high", label: t.plan.high },
               ]}
             />
           </div>
@@ -213,7 +215,7 @@ export const PlanCalculator = () => {
                   <div className="text-[13px] text-text-3">{macro.label}</div>
                   <div className="mt-1 text-[24px] font-extrabold sm:text-[28px]" style={{ color: macro.color }}>
                     <CountUp value={macro.grams} duration={0.7} />
-                    <span className="ml-0.5 text-[14px] font-semibold">г</span>
+                    <span className="ml-0.5 text-[14px] font-semibold">{t.units.g}</span>
                   </div>
                 </div>
               ))}

@@ -10,8 +10,24 @@ const BARS = [
   { key: "protein", x: 100, height: 70, color: "var(--color-mint)" },
 ] as const;
 
+/** Same bars with literal colours: CSS variables do not exist outside the page */
+const BARS_HEX = [
+  { x: 38, height: 58, color: "#FFB078" },
+  { x: 69, height: 86, color: "#B7A6FF" },
+  { x: 100, height: 70, color: "#7FD8BE" },
+];
+
 export const sparkPath = (cx: number, cy: number, r: number) =>
   `M${cx} ${cy - r}Q${cx} ${cy} ${cx + r} ${cy}Q${cx} ${cy} ${cx} ${cy + r}Q${cx} ${cy} ${cx - r} ${cy}Q${cx} ${cy} ${cx} ${cy - r}Z`;
+
+/** The mark on its tile as a standalone SVG string — for generated images, where React components are not rendered */
+export const appMarkSvg = ({ rx = 36 } = {}) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><rect width="160" height="160" rx="${rx}" fill="#12162B"/>` +
+  BARS_HEX.map(
+    (bar) =>
+      `<rect x="${bar.x}" y="${BAR_BOTTOM - bar.height}" width="${BAR_WIDTH}" height="${bar.height}" rx="${BAR_WIDTH / 2}" fill="${bar.color}"/>`,
+  ).join("") +
+  `<path d="${sparkPath(80, 34, 10)}" fill="#EEF0FF"/></svg>`;
 
 interface IAppMarkProps {
   size?: number;

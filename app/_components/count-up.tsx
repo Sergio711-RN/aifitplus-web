@@ -2,15 +2,15 @@
 
 import { animate, motion, useInView, useMotionValue, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
-
-const format = new Intl.NumberFormat("ru-RU");
+import { useI18n } from "../_i18n/i18n-provider";
 
 /** Number that rolls to `value` once visible, and from the previous value on every change */
 export const CountUp = ({ value, duration = 1.2, className }: { value: number; duration?: number; className?: string }) => {
+  const { formatNumber } = useI18n();
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
   const current = useMotionValue(0);
-  const text = useTransform(current, (latest) => format.format(Math.round(latest)));
+  const text = useTransform(current, (latest) => formatNumber(Math.round(latest)));
 
   useEffect(() => {
     if (!isInView) return;

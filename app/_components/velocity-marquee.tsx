@@ -11,6 +11,7 @@ import {
   wrap,
 } from "motion/react";
 import { useRef, type ReactNode } from "react";
+import { useI18n } from "../_i18n/i18n-provider";
 import { MEALS } from "../_lib/content";
 import { FoodThumb } from "./food-thumb";
 
@@ -46,28 +47,38 @@ const VelocityRow = ({ children, baseVelocity }: { children: ReactNode; baseVelo
 
 const ITEMS = Object.values(MEALS);
 
-export const VelocityMarquee = () => (
-  <section className="relative border-y border-line/70 bg-ink-deep/60 py-7" aria-label="Примеры распознанных блюд">
-    <VelocityRow baseVelocity={-2.2}>
-      {ITEMS.map((meal) => (
-        <span key={meal.dish} className="mx-6 flex items-center gap-4">
-          <FoodThumb dish={meal.dish} size={52} />
-          <span className="text-[clamp(1.6rem,3.2vw,2.6rem)] font-bold tracking-tight">{meal.title}</span>
-          <span className="text-[clamp(1.6rem,3.2vw,2.6rem)] font-light text-apricot tabular-nums">{meal.kcal}</span>
-        </span>
-      ))}
-    </VelocityRow>
-    <div className="mt-4 opacity-70">
-      <VelocityRow baseVelocity={1.6}>
+export const VelocityMarquee = () => {
+  const { t } = useI18n();
+
+  return (
+    <section className="relative border-y border-line/70 bg-ink-deep/60 py-7" aria-label={t.marquee.label}>
+      <VelocityRow baseVelocity={-2.2}>
         {ITEMS.map((meal) => (
-          <span key={meal.dish} className="mx-5 flex items-center gap-3 text-[15px] text-text-2">
-            <span className="text-apricot">У {meal.carbsG} г</span>
-            <span className="text-lilac">Ж {meal.fatG} г</span>
-            <span className="text-mint">Б {meal.proteinG} г</span>
-            <span className="ml-5 size-1.5 rounded-full bg-line" />
+          <span key={meal.dish} className="mx-6 flex items-center gap-4">
+            <FoodThumb dish={meal.dish} size={52} />
+            <span className="text-[clamp(1.6rem,3.2vw,2.6rem)] font-bold tracking-tight">{t.meals[meal.dish]}</span>
+            <span className="text-[clamp(1.6rem,3.2vw,2.6rem)] font-light text-apricot tabular-nums">{meal.kcal}</span>
           </span>
         ))}
       </VelocityRow>
-    </div>
-  </section>
-);
+      <div className="mt-4 opacity-70">
+        <VelocityRow baseVelocity={1.6}>
+          {ITEMS.map((meal) => (
+            <span key={meal.dish} className="mx-5 flex items-center gap-3 text-[15px] text-text-2">
+              <span className="text-apricot">
+                {t.macros.carbsShort} {meal.carbsG} {t.units.g}
+              </span>
+              <span className="text-lilac">
+                {t.macros.fatsShort} {meal.fatG} {t.units.g}
+              </span>
+              <span className="text-mint">
+                {t.macros.proteinShort} {meal.proteinG} {t.units.g}
+              </span>
+              <span className="ml-5 size-1.5 rounded-full bg-line" />
+            </span>
+          ))}
+        </VelocityRow>
+      </div>
+    </section>
+  );
+};

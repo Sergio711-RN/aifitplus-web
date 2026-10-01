@@ -144,3 +144,55 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Long-form text of the Privacy Policy and the Terms */
+.legal p,
+.legal ul,
+.legal ol,
+.legal dl {
+  margin-top: 1rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-text-2);
+}
+.legal :is(p, ul, ol, dl):first-child {
+  margin-top: 0;
+}
+.legal h3 {
+  margin-top: 1.75rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.legal ul {
+  list-style: none;
+  padding-left: 0;
+}
+.legal ul > li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+.legal ul > li + li {
+  margin-top: 0.5rem;
+}
+.legal ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.2rem;
+  top: 0.72em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--color-apricot);
+}
+.legal strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+.legal a {
+  color: var(--color-apricot);
+  text-underline-offset: 4px;
+}
+.legal a:hover {
+  text-decoration: underline;
+}

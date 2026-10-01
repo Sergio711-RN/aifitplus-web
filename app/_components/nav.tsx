@@ -2,17 +2,20 @@
 
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
+import { useI18n } from "../_i18n/i18n-provider";
 import { AppMark } from "./app-mark";
+import { LangSwitch } from "./lang-switch";
 import { Magnetic } from "./magnetic";
 
 const LINKS = [
-  { href: "#how", label: "Как это работает" },
-  { href: "#day", label: "День" },
-  { href: "#plan", label: "План" },
-];
+  { href: "#how", key: "how" },
+  { href: "#day", key: "day" },
+  { href: "#plan", key: "plan" },
+] as const;
 
 /** Floating pill header: hides while scrolling down, comes back on the way up, gains glass once off the top */
 export const Nav = () => {
+  const { t } = useI18n();
   const { scrollY } = useScroll();
   const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,7 +38,7 @@ export const Nav = () => {
           isScrolled ? "border-line bg-ink/70 backdrop-blur-xl" : "border-transparent"
         }`}
       >
-        <a href="#top" className="flex items-center gap-2" aria-label="AIFit+, наверх">
+        <a href="#top" className="flex items-center gap-2" aria-label={t.nav.toTop}>
           <AppMark size={30} />
           <span className="text-xl font-extrabold tracking-tight">
             AIFit<span className="text-apricot">+</span>
@@ -48,19 +51,23 @@ export const Nav = () => {
                 href={link.href}
                 className="rounded-full px-4 py-2 text-[15px] text-text-2 transition-colors hover:bg-surface hover:text-text"
               >
-                {link.label}
+                {t.nav[link.key]}
               </a>
             </li>
           ))}
         </ul>
-        <Magnetic strength={0.25}>
-          <a
-            href="#download"
-            className="block rounded-full bg-apricot px-5 py-2.5 text-[15px] font-bold text-ink transition-colors hover:bg-apricot-light"
-          >
-            Скачать
-          </a>
-        </Magnetic>
+        <div className="flex items-center gap-2">
+          <LangSwitch />
+          <Magnetic strength={0.25}>
+            <a
+              href="#download"
+              className="block rounded-full bg-apricot px-4 py-2.5 text-[15px] font-bold whitespace-nowrap text-ink transition-colors hover:bg-apricot-light sm:px-5"
+            >
+              <span className="sm:hidden">{t.nav.ctaShort}</span>
+              <span className="hidden sm:inline">{t.nav.cta}</span>
+            </a>
+          </Magnetic>
+        </div>
       </nav>
     </motion.header>
   );

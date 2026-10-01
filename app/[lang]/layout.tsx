@@ -1,0 +1,52 @@
+import type { Metadata, Viewport } from "next";
+import { Commissioner } from "next/font/google";
+import { notFound } from "next/navigation";
+import { SmoothScroll } from "../_components/smooth-scroll";
+import { isLocale, LOCALES } from "../_i18n/config";
+import { getDictionary } from "../_i18n/dictionaries";
+import { I18nProvider } from "../_i18n/i18n-provider";
+import { pageMetadata, SITE_URL } from "../_i18n/seo";
+import "../globals.css";
+
+// Same family as the app; variable, with the «flair» and «volume» axes animated in headlines. Cyrillic covers Ukrainian too
+const commissioner = Commissioner({
+  variable: "--font-commissioner",
+  subsets: ["latin", "cyrillic"],
+  axes: ["FLAR", "VOLM"],
+});
+
+// Only /en, /uk and /ru exist; anything else is a 404
+export const dynamicParams = false;
+
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
+
+export const generateMetadata = async ({ params }: LayoutProps<"/[lang]">): Promise<Metadata> => {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const t = getDictionary(lang);
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    applicationName: "AIFit+",
+    ...pageMetadata({ locale: lang, path: "", title: t.meta.title, description: t.meta.description }),
+  };
+};
+
+export const viewport: Viewport = {
+  themeColor: "#12162B",
+};
+
+export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+
+  return (
+    <html lang={lang} className={`${commissioner.variable} antialiased`}>
+      <body className="grain min-h-dvh">
+        <I18nProvider locale={lang}>
+          <SmoothScroll>{children}</SmoothScroll>
+        </I18nProvider>
+      </body>
+    </html>
+  );
+}
