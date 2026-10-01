@@ -1,26 +1,146 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Palette from the mobile app (aifitplus/src/theme/theme.ts), direction «Вечерний таймлайн».
+   Meaning of colours is the same as in the app: apricot — actions, eaten calories, carbs;
+   lilac — everything AI, fats; mint — protein, confirmations; rose — over the limit. */
+@theme {
+  --color-ink: #12162b;
+  --color-ink-deep: #0d1022;
+  --color-surface: #1a1f3b;
+  --color-surface-raised: #1c2240;
+  --color-surface-muted: #232a4e;
+  --color-surface-tile: #262d55;
+  --color-line: #2e3561;
+  --color-text: #eef0ff;
+  --color-text-2: #a3abd6;
+  --color-text-3: #8f97c4;
+  --color-text-off: #5e6699;
+  --color-apricot: #ffb078;
+  --color-apricot-light: #ffc99f;
+  --color-lilac: #b7a6ff;
+  --color-lilac-surface: #1e2147;
+  --color-lilac-line: #3b3a78;
+  --color-mint: #7fd8be;
+  --color-mint-text: #bdebdd;
+  --color-rose: #ff8a9a;
+  --color-plate: #e9ecf8;
+  --color-plate-well: #d5daf0;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-commissioner), system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-wave: wave 2.6s linear infinite;
+  --animate-spin-slow: spin 3.2s linear infinite;
+  --animate-pulse-bar: pulse-bar 1.6s ease-in-out infinite;
+  --animate-scan: scan 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
+
+  @keyframes wave {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes pulse-bar {
+    0%,
+    100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(1.12);
+    }
+  }
+  @keyframes scan {
+    from {
+      top: 8%;
+    }
+    to {
+      top: 88%;
+    }
   }
 }
 
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-ink);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01";
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-apricot);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-apricot);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Film grain over the whole page: keeps large gradient areas from banding */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(4) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3%, 2%); }
+  50% { transform: translate(2%, -3%); }
+  75% { transform: translate(-1%, 3%); }
+  100% { transform: translate(3%, -1%); }
+}
+
+/* Card whose border lights up under the cursor; --x/--y are set from pointer events */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    320px circle at var(--x, 50%) var(--y, 50%),
+    var(--glow, var(--color-apricot)),
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
