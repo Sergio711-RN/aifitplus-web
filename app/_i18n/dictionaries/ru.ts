@@ -115,7 +115,14 @@ export const ru = {
     home: "На главную",
     how: "Как работает AIFit+",
   },
-  footer: { privacy: "Политика конфиденциальности", terms: "Условия использования" },
+  consent: {
+    label: "Согласие на cookie",
+    text: "Мы хотим понимать, сколько людей заходит на сайт и откуда. Для этого нужны cookie Google Analytics — включим их, только если вы согласны.",
+    more: "Подробнее",
+    accept: "Принять",
+    decline: "Отклонить",
+  },
+  footer: { privacy: "Политика конфиденциальности", terms: "Условия использования", cookies: "Настройки cookie" },
   legal: {
     effective: (date: string) => `Действует с ${date}`,
     contents: "Содержание",

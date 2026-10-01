@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Commissioner } from "next/font/google";
 import { notFound } from "next/navigation";
+import { AnalyticsConsent } from "../_components/analytics-consent";
 import { SmoothScroll } from "../_components/smooth-scroll";
 import { isLocale, LOCALES } from "../_i18n/config";
 import { getDictionary } from "../_i18n/dictionaries";
@@ -44,7 +45,10 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     <html lang={lang} className={`${commissioner.variable} antialiased`}>
       <body className="grain min-h-dvh">
         <I18nProvider locale={lang}>
-          <SmoothScroll>{children}</SmoothScroll>
+          <SmoothScroll>
+            {children}
+            <AnalyticsConsent />
+          </SmoothScroll>
         </I18nProvider>
       </body>
     </html>

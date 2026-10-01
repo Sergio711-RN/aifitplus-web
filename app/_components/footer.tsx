@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LOCALE_META, LOCALES } from "../_i18n/config";
 import { useI18n } from "../_i18n/i18n-provider";
+import { openConsentSettings } from "../_lib/analytics";
 import { AppMark } from "./app-mark";
 import { localizedPath, rememberLocale } from "./lang-switch";
 
@@ -28,6 +29,9 @@ export const Footer = () => {
           <Link href={`/${locale}/terms`} className="transition-colors hover:text-text">
             {t.footer.terms}
           </Link>
+          <button type="button" onClick={openConsentSettings} className="transition-colors hover:text-text">
+            {t.footer.cookies}
+          </button>
         </nav>
         <nav aria-label={t.nav.language} className="flex gap-1">
           {LOCALES.map((option) => (

@@ -115,7 +115,14 @@ export const en: Dictionary = {
     home: "Go to home page",
     how: "How AIFit+ works",
   },
-  footer: { privacy: "Privacy Policy", terms: "Terms of Use" },
+  consent: {
+    label: "Cookie consent",
+    text: "We'd like to know how many people visit the site and where they come from. That needs Google Analytics cookies — we only switch them on if you agree.",
+    more: "Learn more",
+    accept: "Accept",
+    decline: "Decline",
+  },
+  footer: { privacy: "Privacy Policy", terms: "Terms of Use", cookies: "Cookie settings" },
   legal: {
     effective: (date: string) => `Effective from ${date}`,
     contents: "Contents",

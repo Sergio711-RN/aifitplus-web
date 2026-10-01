@@ -57,9 +57,18 @@ const SECTIONS: ILegalSection[] = [
         </ul>
         <h3>Website</h3>
         <p>
-          The website does not use cookies, ad trackers or analytics services. Like any web server, the website host sees your IP address and
-          browser type in its technical logs.
+          Like any web server, the website host sees your IP address and browser type in its technical logs. The website remembers the
+          language you pick in the NEXT_LOCALE cookie for a year, and your answer about statistics in your browser’s storage. Both are needed
+          for the website to work and do not require consent.
         </p>
+        <p>
+          If you click “Accept” in the cookie banner, the website loads Google Analytics. It sets the _ga and _ga_* cookies with a random
+          browser identifier for up to 2 years and collects which pages you open, where you came from, your device and browser type,
+          language and approximate location (country, city). Google Analytics does not store IP addresses. Detailed data is kept in Google
+          Analytics for 2 months; after that only aggregate statistics remain. We see aggregate reports and do not link them to your app
+          account. Google Analytics advertising features are turned off.
+        </p>
+        <p>Without your consent Google Analytics is not loaded. You can change your mind at any time under “Cookie settings” at the bottom of the page.</p>
       </>
     ),
   },
@@ -82,6 +91,10 @@ const SECTIONS: ILegalSection[] = [
         <li>
           <strong>Security</strong>: protection against hacking and abuse, such as a daily limit on AI requests. Legal basis: our legitimate
           interest in a working service, Art. 6(1)(f) GDPR.
+        </li>
+        <li>
+          <strong>Website statistics</strong>: how many people visit the website and where they come from, so we can improve it. Legal
+          basis: your consent in the cookie banner, Art. 6(1)(a) GDPR; you can withdraw it under “Cookie settings” at the bottom of the page.
         </li>
         <li>
           <strong>Reminders</strong> are sent only if you turn them on and allow notifications in your system settings.
@@ -125,7 +138,10 @@ const SECTIONS: ILegalSection[] = [
     title: "Who we share data with",
     body: (
       <>
-        <p>Only with providers the service cannot work without. Each one receives the minimum data needed for its task:</p>
+        <p>
+          Only with providers the service cannot work without and, if you agree, a website statistics service. Each one receives the minimum
+          data needed for its task:
+        </p>
         <ul>
           <li>
             <strong>Supabase</strong> — database, sign-in and file storage. All account data, the diary, photos. Servers in Ireland (EU).
@@ -138,6 +154,10 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>RevenueCat</strong> — subscription management. Internal user ID and purchase history from the store. USA.
+          </li>
+          <li>
+            <strong>Google</strong> — website statistics (Google Analytics), only with your consent. Browser identifier from the cookie, pages
+            viewed, device type, approximate location. Google Ireland Limited; data may be processed in the USA.
           </li>
           <li>
             <strong>Apple and Google</strong> — subscription payments and notifications. They process data under their own policies as
@@ -156,8 +176,8 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Our main storage is in the European Union (Ireland). Photo recognition, emails and subscription management are handled by providers
-          in the USA, so some data is transferred outside the European Economic Area.
+          Our main storage is in the European Union (Ireland). Photo recognition, emails, subscription management and website statistics are
+          handled by providers in the USA, so some data is transferred outside the European Economic Area.
         </p>
         <p>
           These transfers rely on the European Commission’s adequacy decision (EU–US Data Privacy Framework) for providers certified under it,

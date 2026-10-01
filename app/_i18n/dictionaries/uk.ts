@@ -114,7 +114,14 @@ export const uk: Dictionary = {
     home: "На головну",
     how: "Як працює AIFit+",
   },
-  footer: { privacy: "Політика конфіденційності", terms: "Умови використання" },
+  consent: {
+    label: "Згода на cookie",
+    text: "Ми хочемо розуміти, скільки людей заходить на сайт і звідки. Для цього потрібні cookie Google Analytics — увімкнемо їх, лише якщо ви погоджуєтеся.",
+    more: "Докладніше",
+    accept: "Прийняти",
+    decline: "Відхилити",
+  },
+  footer: { privacy: "Політика конфіденційності", terms: "Умови використання", cookies: "Налаштування cookie" },
   legal: {
     effective: (date: string) => `Діє з ${date}`,
     contents: "Зміст",
