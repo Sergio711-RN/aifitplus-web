@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Commissioner } from "next/font/google";
-import { NotFoundView, notFoundLocale } from "./_components/not-found-view";
+import { NotFoundView } from "./_components/not-found-view";
+import { DEFAULT_LOCALE } from "./_i18n/config";
 import { getDictionary } from "./_i18n/dictionaries";
 import "./globals.css";
 
-// Any URL that matches no route. Renders without the `[lang]` layout, so it brings its own font and styles;
-// the language comes from the URL prefix via `proxy.ts`
+// `out/404.html`: Apache shows it for missing files outside the language folders (/en, /uk, /ru have their own,
+// `app/[lang]/404`). Renders without the `[lang]` layout, so it brings its own font and styles
 
 const commissioner = Commissioner({
   variable: "--font-commissioner",
@@ -13,18 +14,16 @@ const commissioner = Commissioner({
   axes: ["FLAR", "VOLM"],
 });
 
-export const generateMetadata = async (): Promise<Metadata> => ({
-  title: getDictionary(await notFoundLocale()).notFound.metaTitle,
+export const metadata: Metadata = {
+  title: getDictionary(DEFAULT_LOCALE).notFound.metaTitle,
   robots: { index: false },
-});
+};
 
-export default async function GlobalNotFound() {
-  const locale = await notFoundLocale();
-
+export default function GlobalNotFound() {
   return (
-    <html lang={locale} className={`${commissioner.variable} antialiased`}>
+    <html lang={DEFAULT_LOCALE} className={`${commissioner.variable} antialiased`}>
       <body className="grain min-h-dvh">
-        <NotFoundView locale={locale} />
+        <NotFoundView locale={DEFAULT_LOCALE} />
       </body>
     </html>
   );

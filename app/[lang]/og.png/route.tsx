@@ -1,15 +1,20 @@
+/* eslint-disable @next/next/no-img-element -- JSX for ImageResponse, rendered to a PNG: <img> is its only image element */
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { appMarkSvg } from "../_components/app-mark";
-import { isLocale, type Locale } from "../_i18n/config";
-import { getDictionary } from "../_i18n/dictionaries";
-import { MEALS } from "../_lib/content";
+import { appMarkSvg } from "../../_components/app-mark";
+import { isLocale, LOCALES, type Locale } from "../../_i18n/config";
+import { getDictionary } from "../../_i18n/dictionaries";
+import { OG_IMAGE_SIZE as SIZE } from "../../_i18n/seo";
+import { MEALS } from "../../_lib/content";
 
-// Share preview for every page of a language (legal pages inherit it): mark, headline and the plate in the viewfinder,
-// like the hero. Rendered at build time. Commissioner from the app's font package — the default font has no Cyrillic.
+// Share preview `/{lang}/og.png` for every page of a language, linked by `pageMetadata()`: mark, headline and the plate
+// in the viewfinder, like the hero. A plain route rather than `opengraph-image`: its per-language metadata does not
+// survive the static export. Rendered at build time. Commissioner from the app's font package — the default font has no Cyrillic.
 
-const SIZE = { width: 1200, height: 630 };
+export const dynamic = "force-static";
+
+export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 const COLORS = { ink: "#12162B", text: "#EEF0FF", text2: "#A3ABD6", apricot: "#FFB078", lilac: "#B7A6FF" };
 
 const fonts = Promise.all([
@@ -18,12 +23,6 @@ const fonts = Promise.all([
 ]);
 
 const localeOf = (lang: string): Locale => (isLocale(lang) ? lang : "en");
-
-export const generateImageMetadata = async ({ params }: { params: Promise<{ lang: string }> | { lang: string } }) => {
-  const { lang } = await params;
-
-  return [{ id: "share", alt: getDictionary(localeOf(lang)).meta.ogImageAlt, size: SIZE, contentType: "image/png" }];
-};
 
 const Corner = ({ position }: { position: "tl" | "bl" | "br" }) => {
   const side = 64;
@@ -37,7 +36,7 @@ const Corner = ({ position }: { position: "tl" | "bl" | "br" }) => {
   return <div style={{ position: "absolute", width: side, height: side, display: "flex", ...styles }} />;
 };
 
-export default async function OpenGraphImage({ params }: { params: Promise<{ lang: string }> }) {
+export async function GET(_request: Request, { params }: RouteContext<"/[lang]/og.png">) {
   const { lang } = await params;
   const t = getDictionary(localeOf(lang));
   const [extraBold, medium] = await fonts;

@@ -4,7 +4,7 @@
 
 Лендинг мобильного приложения AIFit+ — подсчёт калорий по фото еды. Проект приложения — `../aifitplus`; его `CLAUDE.md` — источник правды о продукте, цветах и текстах. На сайте: главная с анимированной демонстрацией приложения, политика конфиденциальности, условия использования, страница 404. Только тёмная тема. Три языка: английский (по умолчанию), украинский, русский.
 
-Владелец — ФОП 3-й группы (Украина). Россия — не целевой рынок: приложение там недоступно, юридические тексты пишутся под GDPR, без ссылок на российские законы. Домен `aifitplus.com` зарегистрирован 30.09.2026 (регистратор Hosting Ukraine); где будет хоститься сайт, пока не решено.
+Владелец — ФОП 3-й группы (Украина). Россия — не целевой рынок: приложение там недоступно, юридические тексты пишутся под GDPR, без ссылок на российские законы. Домен `aifitplus.com` зарегистрирован 30.09.2026 у Hosting Ukraine (ukraine.com.ua), там же и хостинг — **виртуальный, тариф «Кращий», без Node.js**. Поэтому сайт — статическая сборка (`output: "export"`), которую отдаёт Apache; всё серверное — в `public/.htaccess`. Настройка хостинга и деплой — `docs/deploy.md`.
 
 ## Статус
 
@@ -16,29 +16,32 @@
 
 ## Команды
 
-- `npm run dev` — dev-сервер на **порту 3002** (порт выбран владельцем, не менять). Для превью — конфигурация `web` в `.claude/launch.json`. Если порт занят процессом `next-server` этого проекта — это уже запущенный dev-сервер: подключаться к нему, а не поднимать второй. После правки `next.config.ts` сервер перезапускается сам.
-- `npm run build` — продакшен-сборка: страницы и картинки соцсетей статические (по каждой на язык), 404 и `proxy.ts` — динамические. Если сборка падает на `.next/dev/types/validator.ts` со ссылками на несуществующие маршруты — это устаревшие типы dev-сервера: удалить `.next/dev/types` и собрать снова.
-- `npx tsc --noEmit` и `npx eslint app proxy.ts scripts` — перед завершением задачи без ошибок.
+- `npm run dev` — dev-сервер на **порту 3002** (порт выбран владельцем, не менять). Для превью — конфигурация `web` в `.claude/launch.json`. Если порт занят процессом `next-server` этого проекта — это уже запущенный dev-сервер: подключаться к нему, а не поднимать второй. После правки `next.config.ts` сервер перезапускается сам. `.htaccess` dev-сервер не читает: `/` ведёт на `/en` (редирект только для dev в `next.config.ts`), выбор языка по cookie и `Accept-Language` и 404 на языке адреса там не проверить.
+- `npm run build` — статическая сборка в `out/`: каждая страница, 404 и картинка соцсетей — файл на каждый язык. Если сборка падает на `.next/dev/types/validator.ts` со ссылками на несуществующие маршруты — это устаревшие типы dev-сервера: удалить `.next/dev/types` и собрать снова.
+- `npm run preview:static` — собранный `out/` на встроенном в macOS Apache с `.htaccess`, как на хостинге: http://127.0.0.1:8088. Правки `.htaccess` проверять здесь.
+- `npm run deploy` — сборка и загрузка на хостинг по SSH (`scripts/deploy.sh`, настройки в `.env.deploy`, см. `docs/deploy.md`). Только из закоммиченного состояния. Деплоить — только по просьбе владельца.
+- `npx tsc --noEmit` и `npx eslint app next.config.ts scripts` — перед завершением задачи без ошибок.
 - `npm run icons` — пересобрать favicon и иконки из знака приложения (`scripts/build-icons.mjs`, нужен `brew install librsvg`). Результаты (`app/favicon.ico`, `app/icon.svg`, `app/apple-icon.png`, `public/icons/*`) коммитятся, руками не править.
 
 ## Стек
 
-- **Next.js 16.3, App Router.** API отличаются от привычных — перед кодом читать доки в `node_modules/next/dist/docs/`. Уже встречалось: middleware называется `proxy`; `priority` у `next/image` заменён на `preload`; `images.qualities` по умолчанию `[75]`; `remotePatterns` без `search` пропускает любую строку запроса; для 404 при корневом layout в динамическом сегменте нужен `global-not-found` (экспериментальный флаг).
+- **Next.js 16.3, App Router, статический экспорт.** API отличаются от привычных — перед кодом читать доки в `node_modules/next/dist/docs/`. Уже встречалось: `priority` у `next/image` заменён на `preload`; для 404 при корневом layout в динамическом сегменте нужен `global-not-found` (экспериментальный флаг).
+- **Ограничения статики** (сборка падает): нельзя `proxy.ts`, `cookies()` / `headers()`, Server Actions, `redirects`/`rewrites`/`headers` в конфиге (кроме dev-редиректа), оптимизатор картинок Next. Маршрутам с `[lang]` нужен `generateStaticParams`, метаданным-маршрутам (`robots.ts`, `sitemap.ts`, `manifest.ts`) — `dynamic = "force-static"`; `generateImageMetadata` у `opengraph-image` в экспорте не работает. Если понадобится сервер — это бизнес-хостинг, решает владелец.
 - **React 19**, **TypeScript**.
 - **Tailwind CSS 4**: токены — в `@theme` в `app/globals.css`, конфига `tailwind.config` нет.
 - **Motion 13** (импорт из `motion/react`) — анимации; **Lenis** — плавный скролл (`_components/smooth-scroll.tsx`).
 - Шрифт — **Commissioner** через `next/font/google` с осями `FLAR` и `VOLM`, как в приложении; кириллица покрывает и украинский.
-- Фото блюд — Unsplash (бесплатная лицензия) через `next/image`; в `next.config.ts` разрешён только `images.unsplash.com` с фиксированной строкой запроса `PHOTO_QUERY` из `_lib/photo.ts`. Ссылки на фото строить только через `unsplash(id)`.
+- Фото блюд — Unsplash (бесплатная лицензия) через `next/image` с загрузчиком `_lib/image-loader.ts`: размер под экран отдаёт сам Unsplash (параметр `w`). Ссылки на фото строить только через `unsplash(id)` из `_lib/photo.ts`.
 
 ## Структура
 
 **Маршруты и языки**
 
-- `proxy.ts` — у каждой страницы есть языковой префикс (`/en`, `/uk`, `/ru`). Адрес без него перенаправляется на язык из cookie `NEXT_LOCALE`, иначе из `Accept-Language`, иначе на `en`. Для адресов с префиксом ставит заголовок `x-aifit-locale` — по нему 404 узнаёт язык.
+- `public/.htaccess` — у каждой страницы есть языковой префикс (`/en`, `/uk`, `/ru`). Адрес без него перенаправляется на язык из cookie `NEXT_LOCALE`, иначе на первый поддерживаемый в `Accept-Language`, иначе на `en`. Там же: адреса без `.html` и без завершающего `/`, 404 по языку адреса, `www` → без `www`, кэш. Название cookie и список языков продублированы там — при изменении `_i18n/config.ts` править и его.
 - `app/[lang]/layout.tsx` — корневой layout: `<html lang>`, шрифт, `I18nProvider`, метаданные; `dynamicParams = false` — других языков нет.
 - `app/[lang]/page.tsx` — главная, порядок секций: `Nav`, `Hero`, `VelocityMarquee`, `HowItWorks`, `DayTimeline`, `PlanCalculator`, `FinalCta`, `Footer`.
 - `app/[lang]/privacy`, `app/[lang]/terms` — юридические страницы на общем макете `_components/legal-page.tsx` (оглавление с подсветкой раздела, прогресс чтения).
-- `app/global-not-found.tsx` — 404 для любого несуществующего адреса (`experimental.globalNotFound` в `next.config.ts`). Рендерится без layout, поэтому сам подключает шрифт и стили. `app/[lang]/not-found.tsx` — для вызовов `notFound()` внутри страниц. Разметка обеих — `_components/not-found-view.tsx`: камера над пустой тарелкой, «Блюдо не найдено»; серверная, только CSS-анимации; `noindex`.
+- 404: `app/[lang]/404/page.tsx` → `out/{lang}/404.html`, Apache показывает её для отсутствующих адресов под `/{lang}/`; `app/global-not-found.tsx` (`experimental.globalNotFound`) → `out/404.html`, английская, для остального. Глобальная рендерится без layout, поэтому сама подключает шрифт и стили. Разметка обеих — `_components/not-found-view.tsx`: камера над пустой тарелкой, «Блюдо не найдено»; серверная, только CSS-анимации; `noindex`.
 - `app/_i18n/`:
   - `config.ts` — языки, язык по умолчанию, названия, форматы, имена cookie и заголовка, `languageAlternates` для `hreflang`;
   - `dictionaries/ru.ts` — тексты интерфейса и **тип `Dictionary`**; `en.ts`, `uk.ts` обязаны ему соответствовать — TypeScript не даст забыть перевод;
@@ -49,7 +52,7 @@
 **SEO**
 
 - Каждая страница получает метаданные через `pageMetadata()`; тексты — `meta` в словарях.
-- `app/[lang]/opengraph-image.tsx` — картинка для соцсетей на языке страницы (1200×630, собирается при сборке; юридические страницы наследуют её). Шрифт — `assets/fonts/` (Commissioner TTF, OFL, из пакета `@expo-google-fonts/commissioner` мобильного проекта): шрифт `next/og` по умолчанию без кириллицы. Знак — `appMarkSvg()` из `_components/app-mark.tsx`.
+- `app/[lang]/og.png/route.tsx` — картинка для соцсетей `/{lang}/og.png` (1200×630, собирается при сборке), подключается в `pageMetadata()` с подписью на языке страницы. Обычный маршрут, а не `opengraph-image`: у того в статическом экспорте не работает `generateImageMetadata`. Шрифт — `assets/fonts/` (Commissioner TTF, OFL, из пакета `@expo-google-fonts/commissioner` мобильного проекта): шрифт `next/og` по умолчанию без кириллицы. Знак — `appMarkSvg()` из `_components/app-mark.tsx`.
 - `app/sitemap.ts` — все языковые версии со ссылками друг на друга; `app/robots.ts`; `app/manifest.ts`; иконки — из `npm run icons`.
 - **Новая страница:** маршрут в `app/[lang]/…`, метаданные через `pageMetadata()`, тексты во все три словаря, адрес в `PAGES` в `sitemap.ts`.
 
@@ -73,6 +76,7 @@
 **Прочее**
 
 - `docs/store-name-reservation.md` — регистрация аккаунтов Apple и Google Play для ФОП и резерв названия.
+- `docs/deploy.md` — настройка хостинга (сайт, SSL, SSH-ключ) и деплой.
 - `public/*.svg` (кроме `public/icons/`) — остатки шаблона Create Next App, не используются.
 
 ## Дизайн
@@ -118,7 +122,7 @@
 ## Проверка
 
 - Смотреть в браузере минимум на 375×812, 360×740, 768×1024 и 1440×900, на всех трёх языках (`/en`, `/uk`, `/ru`) — длина текстов разная; проверять, что нет горизонтального скролла (`document.documentElement.scrollWidth === innerWidth`).
-- Редиректы и 404 удобно проверять `curl` с заголовком `Accept-Language` и cookie `NEXT_LOCALE`; у 404 — код ответа и `<html lang>`.
+- Редиректы и 404 — на `npm run preview:static`, `curl` с заголовком `Accept-Language` и cookie `NEXT_LOCALE`; у 404 — код ответа и `<html lang>`. Список проверок — в `docs/deploy.md`.
 - Если панель браузера скрыта, `requestAnimationFrame` в ней не идёт: анимации Motion «застывают» на первом кадре (в том числе появление меню языков). Это не баг страницы — делать скриншот или проверять состояние через JS.
 
 ## Git

@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getDictionary } from "./_i18n/dictionaries";
 
+// Written to a file at build time (static export)
+export const dynamic = "force-static";
+
 // One manifest for the whole site, in the default language; icons come from `npm run icons`
 export default function manifest(): MetadataRoute.Manifest {
   const t = getDictionary("en");

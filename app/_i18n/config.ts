@@ -1,15 +1,12 @@
-// Site languages. URLs are always prefixed: /en, /uk, /ru; `proxy.ts` sends «/» to the visitor's language.
+// Site languages. URLs are always prefixed: /en, /uk, /ru; `public/.htaccess` sends «/» to the visitor's language.
 
 export const LOCALES = ["en", "uk", "ru"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "en";
 
-/** Remembers the language picked in the switcher; read by `proxy.ts` */
+/** Remembers the language picked in the switcher; read by `public/.htaccess` (the name is hard-coded there) */
 export const LOCALE_COOKIE = "NEXT_LOCALE";
-
-/** Request header with the language from the URL, set by `proxy.ts` for `app/global-not-found.tsx` */
-export const LOCALE_HEADER = "x-aifit-locale";
 
 export const isLocale = (value: string): value is Locale => (LOCALES as readonly string[]).includes(value);
 

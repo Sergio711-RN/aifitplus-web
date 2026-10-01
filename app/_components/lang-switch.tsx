@@ -14,7 +14,7 @@ export const localizedPath = (pathname: string, target: Locale) => {
   return `/${[target, ...rest].join("/")}`.replace(/\/$/, "");
 };
 
-/** Remembered by `proxy.ts` when the visitor comes back to «/» */
+/** Remembered by `public/.htaccess` when the visitor comes back to «/» */
 export const rememberLocale = (locale: Locale) => {
   document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=31536000; samesite=lax`;
 };

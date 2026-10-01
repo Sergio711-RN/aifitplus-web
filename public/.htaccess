@@ -1,0 +1,66 @@
+# Apache on the Hosting Ukraine shared plan serves the static export (`out/`, this file is copied there by `next build`).
+# Here is everything a Node server would otherwise do: language redirects, clean URLs, 404 per language, caching.
+# Checked locally with Apache 2.4 — see docs/deploy.md.
+
+Options -Indexes -MultiViews
+# /en and /en/privacy are both a page (en.html) and a folder (en/ with navigation data): no automatic «/en/»
+DirectorySlash Off
+
+AddType application/manifest+json .webmanifest
+AddDefaultCharset utf-8
+
+RewriteEngine On
+
+# www.aifitplus.com → aifitplus.com
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+# /en/privacy.html and /en/privacy/ → /en/privacy: one address per page
+RewriteCond %{THE_REQUEST} \s/([^?\s]+)\.html[\s?]
+RewriteRule ^ /%1 [R=301,L]
+RewriteCond %{REQUEST_URI} ^(/.+)/$
+RewriteRule ^ %1 [R=301,L]
+
+# Address without a language (/, /privacy) → the same page in the visitor's language: the one picked in the switcher
+# (cookie NEXT_LOCALE, `app/_i18n/config.ts`), else the first supported one in Accept-Language, else English.
+# Not for files (favicon.ico, sitemap.xml) and Next assets
+RewriteRule ^ - [E=SITE_LANG:en]
+RewriteCond %{HTTP:Accept-Language} (?:^|,)\s*(en|uk|ru)(?:[-;,]|$) [NC]
+RewriteRule ^ - [E=SITE_LANG:%1]
+RewriteCond %{HTTP_COOKIE} (?:^|;\s*)NEXT_LOCALE=(en|uk|ru)(?:;|$)
+RewriteRule ^ - [E=SITE_LANG:%1]
+RewriteCond %{REQUEST_URI} !^/(en|uk|ru)(/|$)
+RewriteCond %{REQUEST_URI} !^/_next/
+RewriteCond %{REQUEST_URI} !\.\w+$
+RewriteCond %{REQUEST_URI} ^(/.+?)?/?$
+RewriteRule ^ /%{ENV:SITE_LANG}%1 [R=302,L]
+
+# Clean URLs: /en/privacy is the file en/privacy.html
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ /$1.html [L]
+
+# Missing page: 404 in the language of the address (`app/[lang]/404`), elsewhere the English one (`app/global-not-found.tsx`)
+ErrorDocument 404 /404.html
+<If "%{REQUEST_URI} =~ m#^/uk(/|$)#">
+  ErrorDocument 404 /uk/404.html
+</If>
+<ElseIf "%{REQUEST_URI} =~ m#^/ru(/|$)#">
+  ErrorDocument 404 /ru/404.html
+</ElseIf>
+<ElseIf "%{REQUEST_URI} =~ m#^/en(/|$)#">
+  ErrorDocument 404 /en/404.html
+</ElseIf>
+
+<IfModule mod_headers.c>
+  # Hashed file names change with every build: cache for a year. Pages and the rest — check for a new version each time
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+  <Else>
+    Header set Cache-Control "no-cache"
+  </Else>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/javascript application/javascript application/json application/manifest+json application/xml image/svg+xml
+</IfModule>

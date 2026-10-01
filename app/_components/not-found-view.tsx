@@ -1,14 +1,6 @@
-import { headers } from "next/headers";
-import { isLocale, LOCALE_HEADER, DEFAULT_LOCALE, type Locale } from "../_i18n/config";
+import type { Locale } from "../_i18n/config";
 import { getDictionary } from "../_i18n/dictionaries";
 import { AppMark, sparkPath } from "./app-mark";
-
-/** Language of the 404: from the URL (header set by `proxy.ts`), otherwise the default */
-export const notFoundLocale = async (): Promise<Locale> => {
-  const value = (await headers()).get(LOCALE_HEADER);
-
-  return value && isLocale(value) ? value : DEFAULT_LOCALE;
-};
 
 const CORNERS = [
   "top-0 left-0 rounded-tl-3xl border-t-4 border-l-4",

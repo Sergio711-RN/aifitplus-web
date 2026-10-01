@@ -3,6 +3,9 @@ import { LOCALES } from "./_i18n/config";
 import { SITE_URL } from "./_i18n/seo";
 import { LEGAL } from "./_lib/legal";
 
+// Written to a file at build time (static export)
+export const dynamic = "force-static";
+
 /** Pages without the language prefix */
 const PAGES = [
   { path: "", changeFrequency: "monthly", priority: 1 },
