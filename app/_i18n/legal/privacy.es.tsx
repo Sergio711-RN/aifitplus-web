@@ -37,7 +37,7 @@ const SECTIONS: ILegalSection[] = [
         <h3>Datos de salud y del cuerpo</h3>
         <p>
           Sus respuestas en el primer inicio: sexo, año de nacimiento, estatura, peso e historial de pesajes, peso meta y ritmo, nivel de
-          actividad, tipo de alimentación, lo que desea mejorar, grupo sanguíneo y factor Rh (opcional). Se trata de una categoría especial
+          actividad, tipo de alimentación y lo que desea mejorar. Se trata de una categoría especial
           de datos: llegan a nuestro servidor solo después de que usted da un consentimiento aparte al registrarse. Hasta ese momento, sus
           respuestas se guardan únicamente en su dispositivo.
         </p>

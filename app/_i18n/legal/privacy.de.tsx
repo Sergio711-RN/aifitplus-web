@@ -36,7 +36,7 @@ const SECTIONS: ILegalSection[] = [
         <h3>Gesundheits- und Körperdaten</h3>
         <p>
           Ihre Antworten beim ersten Start: Geschlecht, Geburtsjahr, Größe, Gewicht und Wiegeverlauf, Zielgewicht und Tempo,
-          Aktivitätsniveau, Ernährungsform, was Sie verbessern möchten, Blutgruppe und Rhesusfaktor (freiwillig). Dabei handelt es sich um
+          Aktivitätsniveau, Ernährungsform und was Sie verbessern möchten. Dabei handelt es sich um
           eine besondere Kategorie personenbezogener Daten: Sie gelangen erst auf unseren Server, nachdem Sie bei der Registrierung
           gesondert eingewilligt haben. Bis dahin werden Ihre Antworten ausschließlich auf Ihrem Gerät gespeichert.
         </p>

@@ -34,7 +34,7 @@ const SECTIONS: ILegalSection[] = [
         <h3>Health and body data</h3>
         <p>
           Your answers at first launch: sex, year of birth, height, weight and weigh-in history, target weight and pace, activity level, diet
-          type, what you want to improve, blood type and Rh factor (optional). This is a special category of data: it reaches our server only
+          type and what you want to improve. This is a special category of data: it reaches our server only
           after you give separate consent at sign-up. Until then, your answers are stored only on your device.
         </p>
         <h3>Food diary</h3>
