@@ -70,9 +70,11 @@
       transform: translateY(var(--rise, 16px));
     }
   }
+  /* Not from 0: an image first painted fully transparent is never counted by the browser as the page's main image
+     (Largest Contentful Paint) — a later photo of the demo would be, seconds after the load */
   @keyframes phone-in {
     from {
-      opacity: 0;
+      opacity: 0.01;
       transform: translateY(80px) rotateX(30deg);
     }
   }

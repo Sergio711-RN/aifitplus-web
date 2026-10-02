@@ -77,6 +77,8 @@ npm run deploy
 ```sh
 curl -sI https://aifitplus.com/ -H 'Accept-Language: uk' | grep -i location      # → /uk
 curl -sI https://aifitplus.com/ -b 'NEXT_LOCALE=ru' | grep -i location           # → /ru
+curl -sI https://aifitplus.com/ -H 'Accept-Language: fr-CA,fr;q=0.9' | grep -i location  # → /fr (так же de, es, it)
+curl -s https://aifitplus.com/de/nothing -o /dev/null -w '%{http_code}\n'        # → 404 (немецкая страница)
 curl -sI https://aifitplus.com/en/privacy | head -1                              # → 200
 curl -sI https://aifitplus.com/en/privacy/ | grep -i location                    # → /en/privacy
 curl -s https://aifitplus.com/uk/nothing -o /dev/null -w '%{http_code}\n'        # → 404 (украинская страница)

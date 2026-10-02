@@ -5,7 +5,7 @@ import { DEFAULT_LOCALE } from "./_i18n/config";
 import { getDictionary } from "./_i18n/dictionaries";
 import "./globals.css";
 
-// `out/404.html`: Apache shows it for missing files outside the language folders (/en, /uk, /ru have their own,
+// `out/404.html`: Apache shows it for missing files outside the language folders (the language folders — /en, /uk, /fr… — have their own,
 // `app/[lang]/404`). Renders without the `[lang]` layout, so it brings its own font and styles
 
 const commissioner = Commissioner({

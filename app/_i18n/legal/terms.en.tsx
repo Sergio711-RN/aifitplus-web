@@ -11,7 +11,7 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          These terms are an agreement between you and <Fill value={LEGAL.operatorName} label="company name" /> (“we”) on the use of
+          These terms are an agreement between you and <Fill value={LEGAL.operatorNameWith.en} label="operator name" /> (“we”) on the use of
           the AIFit+ app and the aifitplus.com website.
         </p>
         <p>
@@ -49,8 +49,19 @@ const SECTIONS: ILegalSection[] = [
           result and correct it by hand.
         </p>
         <p>
+          Meal recognition, follow-up questions and tips are produced by an artificial intelligence system, not by a person.
+        </p>
+        <p>
+          <strong>Allergies and intolerances.</strong> The app cannot see every ingredient in a photo and does not check food for allergens
+          or safety. If you have an allergy, an intolerance or a medical diet, do not rely on the recognised ingredients.
+        </p>
+        <p>
           Talk to a doctor before changing your diet if you are pregnant or breastfeeding, have diabetes, kidney, heart or metabolic disease,
           have or have had an eating disorder, or take medicines that depend on your diet.
+        </p>
+        <p>
+          Do not use the app to reach or keep a dangerously low calorie intake or body weight. The World Health Organization considers a
+          body mass index of 18.5 to 25 a healthy weight for adults.
         </p>
       </>
     ),
@@ -146,6 +157,10 @@ const SECTIONS: ILegalSection[] = [
           basis of the app’s calculations and estimates, or for indirect losses.
         </p>
         <p>
+          This limitation does not apply to harm to life or health caused by our fault, to harm we cause intentionally or through gross
+          negligence, or to any liability that cannot be excluded by law.
+        </p>
+        <p>
           These terms do not limit the rights you have as a consumer under the laws of the country where you live.
         </p>
       </>
@@ -166,7 +181,7 @@ const SECTIONS: ILegalSection[] = [
     title: "Governing law and disputes",
     body: (
       <p>
-        These terms are governed by the law of <Fill value={LEGAL.governingLaw.en} label="country of company registration" />. We will first try
+        These terms are governed by the law of <Fill value={LEGAL.governingLaw.en} label="governing law country" />. We will first try
         to resolve any dispute by correspondence — write to <ContactEmail label="contact email" /> and we will reply within 10 working days.
       </p>
     ),
@@ -186,9 +201,8 @@ const SECTIONS: ILegalSection[] = [
     title: "Contacts",
     body: (
       <p>
-        <Fill value={LEGAL.operatorName} label="company name" />,{" "}
-        <Fill value={LEGAL.operatorIds} label="company registration number" />,{" "}
-        <Fill value={LEGAL.operatorAddress} label="postal address" />. Email: <ContactEmail label="contact email" />.
+        <Fill value={LEGAL.operatorName.en} label="operator name" />,{" "}
+        <Fill value={LEGAL.operatorAddress.en} label="postal address" />. Email: <ContactEmail label="contact email" />.
       </p>
     ),
   },

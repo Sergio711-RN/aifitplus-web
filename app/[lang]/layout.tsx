@@ -16,7 +16,7 @@ const commissioner = Commissioner({
   axes: ["FLAR", "VOLM"],
 });
 
-// Only /en, /uk and /ru exist; anything else is a 404
+// Only the languages of `LOCALES` exist (/en, /uk, /ru, /fr, /de, /es, /it); anything else is a 404
 export const dynamicParams = false;
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));

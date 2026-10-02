@@ -25,11 +25,11 @@ RewriteRule ^ %1 [R=301,L]
 # (cookie NEXT_LOCALE, `app/_i18n/config.ts`), else the first supported one in Accept-Language, else English.
 # Not for files (favicon.ico, sitemap.xml) and Next assets
 RewriteRule ^ - [E=SITE_LANG:en]
-RewriteCond %{HTTP:Accept-Language} (?:^|,)\s*(en|uk|ru)(?:[-;,]|$) [NC]
+RewriteCond %{HTTP:Accept-Language} (?:^|,)\s*(en|uk|ru|fr|de|es|it)(?:[-;,]|$) [NC]
 RewriteRule ^ - [E=SITE_LANG:%1]
-RewriteCond %{HTTP_COOKIE} (?:^|;\s*)NEXT_LOCALE=(en|uk|ru)(?:;|$)
+RewriteCond %{HTTP_COOKIE} (?:^|;\s*)NEXT_LOCALE=(en|uk|ru|fr|de|es|it)(?:;|$)
 RewriteRule ^ - [E=SITE_LANG:%1]
-RewriteCond %{REQUEST_URI} !^/(en|uk|ru)(/|$)
+RewriteCond %{REQUEST_URI} !^/(en|uk|ru|fr|de|es|it)(/|$)
 RewriteCond %{REQUEST_URI} !^/_next/
 RewriteCond %{REQUEST_URI} !\.\w+$
 RewriteCond %{REQUEST_URI} ^(/.+?)?/?$
@@ -46,6 +46,18 @@ ErrorDocument 404 /404.html
 </If>
 <ElseIf "%{REQUEST_URI} =~ m#^/ru(/|$)#">
   ErrorDocument 404 /ru/404.html
+</ElseIf>
+<ElseIf "%{REQUEST_URI} =~ m#^/fr(/|$)#">
+  ErrorDocument 404 /fr/404.html
+</ElseIf>
+<ElseIf "%{REQUEST_URI} =~ m#^/de(/|$)#">
+  ErrorDocument 404 /de/404.html
+</ElseIf>
+<ElseIf "%{REQUEST_URI} =~ m#^/es(/|$)#">
+  ErrorDocument 404 /es/404.html
+</ElseIf>
+<ElseIf "%{REQUEST_URI} =~ m#^/it(/|$)#">
+  ErrorDocument 404 /it/404.html
 </ElseIf>
 <ElseIf "%{REQUEST_URI} =~ m#^/en(/|$)#">
   ErrorDocument 404 /en/404.html

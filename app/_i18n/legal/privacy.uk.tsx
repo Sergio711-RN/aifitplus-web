@@ -11,9 +11,8 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Оператор персональних даних — <Fill value={LEGAL.operatorName} label="назва компанії" />,{" "}
-          <Fill value={LEGAL.operatorIds} label="реєстраційний номер компанії" />, адреса:{" "}
-          <Fill value={LEGAL.operatorAddress} label="поштова адреса" />. Далі — «ми».
+          Оператор персональних даних — <Fill value={LEGAL.operatorName.uk} label="ім’я оператора" />, адреса:{" "}
+          <Fill value={LEGAL.operatorAddress.uk} label="поштова адреса" />. Далі — «ми».
         </p>
         <p>
           Політика стосується мобільного застосунку AIFit+ для iOS і Android та сайту aifitplus.com. З питань щодо даних пишіть на{" "}

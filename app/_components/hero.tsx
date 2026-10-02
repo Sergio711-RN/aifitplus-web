@@ -155,7 +155,9 @@ export const Hero = () => {
         {/* On phones the mockup takes whatever height is left between the headline and the store buttons */}
         <FitPhone className="flex-1 py-4 sm:py-6 lg:h-[619px] lg:flex-none lg:self-center lg:py-0 lg:[grid-area:phone]">
           <motion.div className="relative [perspective:1400px]" style={{ y: phoneY, scale: phoneScale }}>
-            <div className="animate-phone-in" style={{ animationDelay: "0.4s" }}>
+            {/* Tilts in around its top edge: the photo then starts no smaller than it ends up, and stays the largest image
+                of the page for the browser (Largest Contentful Paint) — see `scan-demo.tsx` */}
+            <div className="origin-top animate-phone-in" style={{ animationDelay: "0.4s" }}>
               <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}>
                 {/* Halo behind the phone */}
                 <div className="absolute inset-[-12%] -z-10 rounded-full bg-[conic-gradient(from_0deg,var(--color-apricot),var(--color-lilac),var(--color-mint),var(--color-apricot))] opacity-25 blur-[70px] animate-[spin_14s_linear_infinite]" />

@@ -11,9 +11,8 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          The data controller is <Fill value={LEGAL.operatorName} label="company name" />,{" "}
-          <Fill value={LEGAL.operatorIds} label="company registration number" />, address:{" "}
-          <Fill value={LEGAL.operatorAddress} label="postal address" />. In this policy, “we” means this company.
+          The data controller is <Fill value={LEGAL.operatorName.en} label="operator name" />, address:{" "}
+          <Fill value={LEGAL.operatorAddress.en} label="postal address" />. In this policy, “we” means the controller.
         </p>
         <p>
           This policy covers the AIFit+ mobile app for iOS and Android and the aifitplus.com website. For questions about your data, write to{" "}

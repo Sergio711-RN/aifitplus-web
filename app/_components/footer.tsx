@@ -14,26 +14,39 @@ export const Footer = () => {
 
   return (
     <footer className="border-t border-line/70 px-5 py-10 md:px-10">
-      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 text-[14px] text-text-3 md:flex-row md:items-center">
-        <div className="flex items-center gap-2">
-          <AppMark size={24} animated={false} />
-          <span className="font-extrabold text-text">
-            AIFit<span className="text-apricot">+</span>
-          </span>
-          <span className="ml-2">© 2026</span>
+      {/* Two rows: mark and links, then the languages — seven of them do not fit beside the links */}
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 text-[14px] text-text-3">
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+          <div className="flex items-center gap-2 whitespace-nowrap">
+            <AppMark size={24} animated={false} />
+            <span className="font-extrabold text-text">
+              AIFit<span className="text-apricot">+</span>
+            </span>
+            <span className="ml-2">© 2026</span>
+          </div>
+          <nav className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link
+              href={`/${locale}/privacy`}
+              className="transition-colors hover:text-text"
+            >
+              {t.footer.privacy}
+            </Link>
+            <Link
+              href={`/${locale}/terms`}
+              className="transition-colors hover:text-text"
+            >
+              {t.footer.terms}
+            </Link>
+            <button
+              type="button"
+              onClick={openConsentSettings}
+              className="transition-colors hover:text-text"
+            >
+              {t.footer.cookies}
+            </button>
+          </nav>
         </div>
-        <nav className="flex flex-wrap gap-x-6 gap-y-2">
-          <Link href={`/${locale}/privacy`} className="transition-colors hover:text-text">
-            {t.footer.privacy}
-          </Link>
-          <Link href={`/${locale}/terms`} className="transition-colors hover:text-text">
-            {t.footer.terms}
-          </Link>
-          <button type="button" onClick={openConsentSettings} className="transition-colors hover:text-text">
-            {t.footer.cookies}
-          </button>
-        </nav>
-        <nav aria-label={t.nav.language} className="flex gap-1">
+        <nav aria-label={t.nav.language} className="-mx-3 flex flex-wrap gap-1">
           {LOCALES.map((option) => (
             <Link
               key={option}
