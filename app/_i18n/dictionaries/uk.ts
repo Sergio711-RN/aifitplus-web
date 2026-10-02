@@ -119,7 +119,7 @@ export const uk: Dictionary = {
   consent: {
     label: "Згода на cookie",
     text: "Ми хочемо розуміти, скільки людей заходить на сайт і звідки. Для цього потрібні cookie Google Analytics — увімкнемо їх, лише якщо ви погоджуєтеся.",
-    more: "Докладніше",
+    more: "Як ми використовуємо cookie",
     accept: "Прийняти",
     decline: "Відхилити",
   },

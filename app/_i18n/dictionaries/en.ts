@@ -120,7 +120,7 @@ export const en: Dictionary = {
   consent: {
     label: "Cookie consent",
     text: "We'd like to know how many people visit the site and where they come from. That needs Google Analytics cookies — we only switch them on if you agree.",
-    more: "Learn more",
+    more: "How we use cookies",
     accept: "Accept",
     decline: "Decline",
   },

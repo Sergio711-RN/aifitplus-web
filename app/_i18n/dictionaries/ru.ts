@@ -120,7 +120,7 @@ export const ru = {
   consent: {
     label: "Согласие на cookie",
     text: "Мы хотим понимать, сколько людей заходит на сайт и откуда. Для этого нужны cookie Google Analytics — включим их, только если вы согласны.",
-    more: "Подробнее",
+    more: "Как мы используем cookie",
     accept: "Принять",
     decline: "Отклонить",
   },

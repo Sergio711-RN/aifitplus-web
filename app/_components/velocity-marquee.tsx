@@ -3,6 +3,7 @@
 import {
   motion,
   useAnimationFrame,
+  useInView,
   useMotionValue,
   useScroll,
   useSpring,
@@ -23,9 +24,12 @@ const VelocityRow = ({ children, baseVelocity }: { children: ReactNode; baseVelo
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], { clamp: false });
   const direction = useRef(1);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(rowRef);
   const x = useTransform(offset, (value) => `${wrap(-25, -50, value)}%`);
 
   useAnimationFrame((_, delta) => {
+    if (!isInView) return;
     const factor = velocityFactor.get();
     if (factor < 0) direction.current = -1;
     else if (factor > 0) direction.current = 1;
@@ -33,7 +37,7 @@ const VelocityRow = ({ children, baseVelocity }: { children: ReactNode; baseVelo
   });
 
   return (
-    <div className="flex overflow-hidden whitespace-nowrap">
+    <div ref={rowRef} className="flex overflow-hidden whitespace-nowrap">
       <motion.div className="flex shrink-0 gap-0" style={{ x }}>
         {[0, 1, 2, 3].map((copy) => (
           <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy > 0}>

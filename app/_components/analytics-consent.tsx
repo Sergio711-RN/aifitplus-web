@@ -107,31 +107,31 @@ export const AnalyticsConsent = () => {
           <motion.section
             role="region"
             aria-label={t.consent.label}
-            className="fixed inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-50 mx-auto max-w-[440px] rounded-2xl border border-line bg-surface-raised/95 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:left-6 sm:mx-0 sm:p-5"
+            className="fixed inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-50 mx-auto max-w-[440px] rounded-2xl border border-line bg-surface-raised/95 p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:left-6 sm:mx-0 sm:p-5 md:flex md:max-w-[760px] md:items-center md:gap-5 md:py-4"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="text-[14px] leading-relaxed text-text-2">
+            <p className="text-[13px] leading-snug text-text-2 sm:text-[14px] sm:leading-relaxed md:flex-1">
               {t.consent.text}{" "}
               <Link href={`/${locale}/privacy#data`} className="text-text underline decoration-line underline-offset-4 hover:decoration-text">
                 {t.consent.more}
               </Link>
             </p>
-            {/* Declining is as easy as accepting: same size, side by side */}
-            <div className="mt-4 grid grid-cols-2 gap-2">
+            {/* Declining is as easy as accepting: same size, side by side. From `md` the banner is a low strip, text beside the buttons */}
+            <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 md:mt-0 md:shrink-0">
               <button
                 type="button"
                 onClick={() => answer("denied")}
-                className="rounded-full border border-line px-4 py-2.5 text-[15px] font-semibold text-text-2 transition-colors hover:border-text-off hover:text-text"
+                className="rounded-full border border-line px-4 py-2 text-[14px] font-semibold sm:py-2.5 sm:text-[15px] text-text-2 transition-colors hover:border-text-off hover:text-text"
               >
                 {t.consent.decline}
               </button>
               <button
                 type="button"
                 onClick={() => answer("granted")}
-                className="rounded-full bg-apricot px-4 py-2.5 text-[15px] font-bold text-ink transition-colors hover:bg-apricot-light"
+                className="rounded-full bg-apricot px-4 py-2 text-[14px] font-bold text-ink transition-colors hover:bg-apricot-light sm:py-2.5 sm:text-[15px]"
               >
                 {t.consent.accept}
               </button>

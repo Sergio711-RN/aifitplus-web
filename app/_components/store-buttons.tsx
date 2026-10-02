@@ -61,7 +61,7 @@ const StoreButton = ({ href, top, soonTop, soonLabel, bottom, icon, stretch }: I
       </a>
     </Magnetic>
   ) : (
-    <div className={`${BOX} border-dashed border-line bg-surface/50 ${stretch ? STRETCH : "inline-flex"}`} aria-label={soonLabel}>
+    <div className={`${BOX} border-dashed border-line bg-surface/50 ${stretch ? STRETCH : "inline-flex"}`} role="img" aria-label={soonLabel}>
       <span className="opacity-60" aria-hidden>
         {icon}
       </span>

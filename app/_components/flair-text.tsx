@@ -1,10 +1,9 @@
 "use client";
 
-import { motion } from "motion/react";
 import { useEffect, useRef, type ElementType } from "react";
 
 // Headline set in Commissioner with its own axes as the effect:
-// letters arrive thin and blurred and settle at the final weight, then swell («volume» + «flair» + weight)
+// letters arrive thin and blurred and settle at the final weight (CSS `letter-in`, so the text shows before the scripts load), then swell («volume» + «flair» + weight)
 // around the cursor, like a lens moving over the line.
 
 interface IFlairTextProps {
@@ -80,17 +79,21 @@ export const FlairText = ({ text, as: Tag = "h1", className, weight = 760, delay
             const index = charIndex++;
 
             return (
-              <motion.span
+              // The box is held by an invisible copy of the letter at its resting weight (`.flair-char::before`):
+              // the thin letter of the entrance is narrower, and without it the line would re-wrap while letters arrive
+              <span
                 key={index}
-                data-char
-                className="inline-block transition-[font-variation-settings] duration-200 ease-out"
+                data-char={char}
+                className="flair-char relative inline-block transition-[font-variation-settings] duration-200 ease-out"
                 style={{ fontVariationSettings: settings(weight, 0, 0) }}
-                initial={{ opacity: 0, y: "0.35em", filter: "blur(10px)", fontVariationSettings: settings(200, 0, 0) }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)", fontVariationSettings: settings(weight, 0, 0) }}
-                transition={{ delay: delay + index * 0.022, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               >
-                {char}
-              </motion.span>
+                <span
+                  className="absolute inset-0 animate-letter-in text-center"
+                  style={{ animationDelay: `${(delay + index * 0.022).toFixed(3)}s` }}
+                >
+                  {char}
+                </span>
+              </span>
             );
           })}
         </span>,

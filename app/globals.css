@@ -36,6 +36,11 @@
   --animate-spin-slow: spin 3.2s linear infinite;
   --animate-pulse-bar: pulse-bar 1.6s ease-in-out infinite;
   --animate-scan: scan 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
+  /* Entrances of the first screen run in CSS: the headline and the phone show before the scripts load.
+     Delay — inline `animation-delay` */
+  --animate-letter-in: letter-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-rise-in: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-phone-in: phone-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 
   @keyframes wave {
     to {
@@ -49,6 +54,26 @@
     }
     50% {
       transform: scaleY(1.12);
+    }
+  }
+  @keyframes letter-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em);
+      filter: blur(10px);
+      font-variation-settings: "wght" 200, "VOLM" 0, "FLAR" 0;
+    }
+  }
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--rise, 16px));
+    }
+  }
+  @keyframes phone-in {
+    from {
+      opacity: 0;
+      transform: translateY(80px) rotateX(30deg);
     }
   }
   @keyframes scan {
@@ -109,6 +134,58 @@ body {
   100% { transform: translate(3%, -1%); }
 }
 
+/* Background glow drifting to (--dx, --dy) and back; `drift-2` visits a second point on the way */
+@keyframes drift {
+  50% {
+    transform: translate(var(--dx), var(--dy));
+  }
+}
+@keyframes drift-2 {
+  33% {
+    transform: translate(var(--dx), var(--dy));
+  }
+  66% {
+    transform: translate(var(--dx2), var(--dy2));
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Phone mockup (290×619, laid out in fixed pixels) scaled down to the box it gets, never up.
+   The scale is the ratio of two lengths, which CSS gives only through atan2; without it — the size that fits most phones */
+.fit-phone {
+  container-type: size;
+}
+.fit-phone > div {
+  --fit: 0.8;
+  width: calc(290px * var(--fit));
+  height: calc(619px * var(--fit));
+}
+.fit-phone > div > div {
+  width: 290px;
+  transform: scale(var(--fit));
+  transform-origin: top left;
+}
+@supports (width: calc(1px * tan(atan2(1cqh, 1px)))) {
+  .fit-phone > div {
+    --fit: max(0.5, min(1, tan(atan2(100cqh, 619px)), tan(atan2(100cqw, 290px))));
+  }
+}
+
+/* Letter box of `FlairText`: an invisible copy of the letter, the visible one is laid over it */
+.flair-char::before {
+  content: attr(data-char);
+  visibility: hidden;
+}
+
 /* Card whose border lights up under the cursor; --x/--y are set from pointer events */
 .spotlight {
   position: relative;
@@ -143,6 +220,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }

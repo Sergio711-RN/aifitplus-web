@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3002
+    },
+    {
+      "name": "static",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "preview:static"],
+      "port": 8088
     }
   ]
 }

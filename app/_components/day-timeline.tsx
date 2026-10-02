@@ -73,7 +73,7 @@ const MealRow = ({ time, mealType, meal, isVisible, isNew = false }: IMealRowPro
           <div className="flex items-center gap-3">
             <FoodThumb dish={meal.dish} size={46} />
             <div className="min-w-0 flex-1">
-              <div className="truncate text-[15px] font-semibold sm:text-[16px]">{t.meals[meal.dish]}</div>
+              <div className="line-clamp-2 text-[15px] leading-snug font-semibold sm:text-[16px]">{t.meals[meal.dish]}</div>
               <div className="mt-0.5 flex gap-2 text-[12px] font-semibold whitespace-nowrap sm:gap-3">
                 <span className="text-apricot">
                   {t.macros.carbsShort} {meal.carbsG}
@@ -173,60 +173,62 @@ export const DayTimeline = () => {
           </div>
 
           {/* Timeline */}
-          <ol ref={listRef} className="relative space-y-6">
+          <div className="relative">
             <span className="absolute top-3 bottom-3 left-[7px] w-0.5 rounded-full bg-line sm:left-[calc(4.5rem+2.5rem-21px)]" />
             <motion.span
               className="absolute top-3 bottom-3 left-[7px] w-0.5 origin-top rounded-full bg-gradient-to-b from-apricot via-lilac to-mint sm:left-[calc(4.5rem+2.5rem-21px)]"
               style={{ scaleY: railScale }}
             />
-            {DAY.map((entry, index) => (
-              <MealRow key={entry.time} {...entry} isVisible={index < visibleCount} />
-            ))}
-            <AnimatePresence>
-              {isTipAdded && <MealRow time="19:10" mealType="dinner" meal={TIP_MEAL} isVisible isNew />}
-            </AnimatePresence>
+            <ol ref={listRef} className="relative space-y-6">
+              {DAY.map((entry, index) => (
+                <MealRow key={entry.time} {...entry} isVisible={index < visibleCount} />
+              ))}
+              <AnimatePresence>
+                {isTipAdded && <MealRow time="19:10" mealType="dinner" meal={TIP_MEAL} isVisible isNew />}
+              </AnimatePresence>
 
-            {/* AI tip, like on the app's Home */}
-            <motion.li
-              className="grid grid-cols-1 pl-7 sm:grid-cols-[4.5rem_minmax(0,1fr)] sm:gap-10 sm:pl-0"
-              animate={{ opacity: isTipVisible ? 1 : 0, y: isTipVisible ? 0 : 30 }}
-              transition={{ type: "spring", stiffness: 140, damping: 20 }}
-            >
-              <div className="hidden justify-end pt-4 sm:flex">
-                <Spark className="size-5 text-lilac" spin />
-              </div>
-              <div className="rounded-[22px] border border-lilac-line bg-lilac-surface p-4 sm:p-5">
-                <div className="text-[13px] font-semibold text-lilac">{t.day.tipTitle}</div>
-                <p className="mt-1.5 min-h-[3em] text-[15px] leading-relaxed sm:text-[16px]">
-                  {isTipVisible && (
-                    <Typewriter
-                      text={t.day.tip(String(dayProtein), String(PROTEIN_TARGET_G), String(TIP_MEAL.proteinG))}
-                      speed={22}
-                    />
-                  )}
-                </p>
-                <motion.button
-                  type="button"
-                  disabled={isTipAdded}
-                  onClick={() => setIsTipAdded(true)}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-lilac px-4 py-2 text-[14px] font-bold text-ink transition-opacity disabled:bg-mint"
-                  whileTap={{ scale: 0.94 }}
-                  layout
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.span
-                      key={isTipAdded ? "done" : "add"}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                    >
-                      {isTipAdded ? t.day.added : t.day.add}
-                    </motion.span>
-                  </AnimatePresence>
-                </motion.button>
-              </div>
-            </motion.li>
-          </ol>
+              {/* AI tip, like on the app's Home */}
+              <motion.li
+                className="grid grid-cols-1 pl-7 sm:grid-cols-[4.5rem_minmax(0,1fr)] sm:gap-10 sm:pl-0"
+                animate={{ opacity: isTipVisible ? 1 : 0, y: isTipVisible ? 0 : 30 }}
+                transition={{ type: "spring", stiffness: 140, damping: 20 }}
+              >
+                <div className="hidden justify-end pt-4 sm:flex">
+                  <Spark className="size-5 text-lilac" spin />
+                </div>
+                <div className="rounded-[22px] border border-lilac-line bg-lilac-surface p-4 sm:p-5">
+                  <div className="text-[13px] font-semibold text-lilac">{t.day.tipTitle}</div>
+                  <p className="mt-1.5 min-h-[3em] text-[15px] leading-relaxed sm:text-[16px]">
+                    {isTipVisible && (
+                      <Typewriter
+                        text={t.day.tip(String(dayProtein), String(PROTEIN_TARGET_G), String(TIP_MEAL.proteinG))}
+                        speed={22}
+                      />
+                    )}
+                  </p>
+                  <motion.button
+                    type="button"
+                    disabled={isTipAdded}
+                    onClick={() => setIsTipAdded(true)}
+                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-lilac px-4 py-2 text-[14px] font-bold text-ink transition-opacity disabled:bg-mint"
+                    whileTap={{ scale: 0.94 }}
+                    layout
+                  >
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.span
+                        key={isTipAdded ? "done" : "add"}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                      >
+                        {isTipAdded ? t.day.added : t.day.add}
+                      </motion.span>
+                    </AnimatePresence>
+                  </motion.button>
+                </div>
+              </motion.li>
+            </ol>
+          </div>
         </div>
       </div>
     </section>

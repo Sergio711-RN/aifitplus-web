@@ -39,6 +39,14 @@ const CORNERS = [
   "right-0 bottom-0 rounded-br-2xl border-r-[3px] border-b-[3px]",
 ];
 
+/** The next dish comes into focus, the previous one falls out of it */
+const REFOCUS = {
+  initial: { opacity: 0, scale: 1.2, filter: "blur(14px)" },
+  animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
+  exit: { opacity: 0, scale: 0.94, filter: "blur(8px)" },
+  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+} as const;
+
 interface IMacroBarProps {
   label: string;
   unit: string;
@@ -74,6 +82,8 @@ export const ScanDemo = () => {
   const [phase, setPhase] = useState<Phase>("scan");
   const { meal, mealType } = SEQUENCE[step % SEQUENCE.length];
   const next = SEQUENCE[(step + 1) % SEQUENCE.length].meal;
+  const current = step % SEQUENCE.length;
+  const previous = (step + SEQUENCE.length - 1) % SEQUENCE.length;
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -95,27 +105,47 @@ export const ScanDemo = () => {
     <div className="absolute inset-0 overflow-hidden bg-ink-deep">
       {/* Live camera view: the whole plate sits sharp in the viewfinder, the same frame spills out blurred and dark
           around it; the next dish refocuses in, then the camera slowly drifts closer */}
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={step}
-          className="absolute inset-0"
-          initial={{ opacity: 0, scale: 1.2, filter: "blur(14px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          exit={{ opacity: 0, scale: 0.94, filter: "blur(8px)" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="absolute inset-0 scale-125 blur-xl brightness-[0.3] saturate-150">
-            <Image src={meal.photo} alt="" fill sizes="160px" className="object-cover" />
-          </div>
-          <motion.div
-            className="absolute inset-x-0 top-[78px] aspect-square [mask-image:radial-gradient(circle,#000_56%,transparent_71%)]"
-            animate={{ scale: [1, 1.07], x: [0, -4], y: [0, 3] }}
-            transition={{ duration: (SCAN_MS + RESULT_MS) / 1000, ease: "linear" }}
-          >
-            <Image src={meal.photo} alt={t.meals[meal.dish]} fill sizes="300px" preload className="object-cover" />
+      {/* All three blurred frames are on the page from the start, the current one on top: a frame that first appeared
+          with its dish would be the largest image painted so far and would move Largest Contentful Paint to that moment.
+          Blurred anyway, so the smallest copy of the photo is enough */}
+      <div className="absolute inset-0 isolate">
+        {SEQUENCE.map(({ meal: frame }, index) => {
+          const isCurrent = index === current;
+
+          return (
+            <motion.div
+              key={frame.dish}
+              className={`absolute inset-0 ${isCurrent ? "z-[2]" : index === previous ? "z-[1]" : ""}`}
+              initial={false}
+              animate={isCurrent ? { opacity: [0, 1], scale: [1.2, 1], filter: ["blur(14px)", "blur(0px)"] } : { opacity: 1, scale: 1 }}
+              transition={isCurrent ? REFOCUS.transition : { duration: 0 }}
+            >
+              <div className="absolute inset-0 scale-125 blur-xl brightness-[0.3] saturate-150">
+                <Image src={frame.photo} alt="" fill sizes="16px" loading="eager" className="object-cover" />
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+      {/* The viewfinder window stays put and the photo moves inside it. The browser takes the largest image painted
+          before the first tap or scroll as the page's main one (Largest Contentful Paint): a photo zooming in from
+          beyond the window would be larger than the first and move that moment seconds past the load. For the same
+          reason later photos are cut a few pixels in, where the mask is already transparent */}
+      <div
+        className={`absolute inset-x-0 top-[78px] aspect-square overflow-hidden [mask-image:radial-gradient(circle,#000_56%,transparent_71%)] ${step > 0 ? "[clip-path:inset(6px)]" : ""}`}
+      >
+        <AnimatePresence initial={false}>
+          <motion.div key={step} className="absolute inset-0" {...REFOCUS}>
+            <motion.div
+              className="absolute inset-0"
+              animate={{ scale: [1, 1.07], x: [0, -4], y: [0, 3] }}
+              transition={{ duration: (SCAN_MS + RESULT_MS) / 1000, ease: "linear" }}
+            >
+              <Image src={meal.photo} alt={t.meals[meal.dish]} fill sizes="300px" loading="eager" fetchPriority="high" className="object-cover" />
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
       {/* Warm the next photo so the swap never shows an empty frame */}
       <Image src={next.photo} alt="" width={1} height={1} className="pointer-events-none absolute opacity-0" sizes="300px" />
 
@@ -158,16 +188,19 @@ export const ScanDemo = () => {
           {/* Scan beam */}
           <AnimatePresence>
             {phase === "scan" && (
+              // The beam rides a layer as tall as the viewfinder, moved by `transform`: animating `top` would be a layout shift every frame
               <motion.div
                 key={`beam-${step}`}
-                className="pointer-events-none absolute inset-x-[4%] h-20 -translate-y-full"
-                initial={{ top: "6%", opacity: 0 }}
-                animate={{ top: ["6%", "94%", "6%"], opacity: 1 }}
+                className="pointer-events-none absolute inset-0"
+                initial={{ y: "6%", opacity: 0 }}
+                animate={{ y: ["6%", "94%", "6%"], opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ top: { delay: 0.4, duration: (SCAN_MS - 400) / 1000, ease: "easeInOut" }, opacity: { duration: 0.2 } }}
+                transition={{ y: { delay: 0.4, duration: (SCAN_MS - 400) / 1000, ease: "easeInOut" }, opacity: { duration: 0.2 } }}
               >
-                <div className="h-full bg-gradient-to-b from-transparent to-apricot/30" />
-                <div className="h-0.5 rounded-full bg-apricot shadow-[0_0_18px_5px_rgba(255,176,120,0.7)]" />
+                <div className="absolute inset-x-[4%] top-0 h-20 -translate-y-full">
+                  <div className="h-full bg-gradient-to-b from-transparent to-apricot/30" />
+                  <div className="h-0.5 rounded-full bg-apricot shadow-[0_0_18px_5px_rgba(255,176,120,0.7)]" />
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

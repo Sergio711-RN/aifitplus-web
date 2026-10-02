@@ -34,7 +34,7 @@ const Photo = ({ className, sizes = "300px" }: { className?: string; sizes?: str
 const SnapScreen = () => (
   <div className="relative flex h-full flex-col items-center pt-16">
     <div className="absolute inset-0 scale-125 blur-xl brightness-[0.3] saturate-150">
-      <Photo className="size-full" sizes="160px" />
+      <Photo className="size-full" sizes="16px" />
     </div>
     <motion.div
       className="absolute inset-x-0 top-[38px] aspect-square [mask-image:radial-gradient(circle,#000_56%,transparent_71%)]"
@@ -57,10 +57,12 @@ const SnapScreen = () => (
         />
       ))}
       <motion.div
-        className="absolute inset-x-[4%] h-0.5 rounded-full bg-apricot shadow-[0_0_16px_4px_rgba(255,176,120,0.55)]"
-        animate={{ top: ["6%", "94%", "6%"] }}
+        className="absolute inset-0"
+        animate={{ y: ["6%", "94%", "6%"] }}
         transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-      />
+      >
+        <div className="absolute inset-x-[4%] top-0 h-0.5 rounded-full bg-apricot shadow-[0_0_16px_4px_rgba(255,176,120,0.55)]" />
+      </motion.div>
     </div>
     <div className="relative mt-auto mb-7 flex w-full items-center justify-between px-8">
       <div className="flex gap-1.5">

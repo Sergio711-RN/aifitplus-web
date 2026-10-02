@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
+import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react";
 import { useI18n } from "../_i18n/i18n-provider";
 import { MEALS, type IMeal } from "../_lib/content";
 import { FlairText } from "./flair-text";
@@ -10,11 +10,12 @@ import { PhoneFrame } from "./phone-frame";
 import { ScanDemo } from "./scan-demo";
 import { StoreButtons } from "./store-buttons";
 
-/** Recognised-meal cards floating around the phone; `depth` scales their response to the cursor */
+/** Recognised-meal cards floating around the phone; `depth` scales their response to the cursor.
+ * The left ones are pinned by their right edge: a longer dish name (Ukrainian, Russian) grows away from the phone, not over its screen */
 const FLOATING: { meal: IMeal; className: string; rotate: number; depth: number }[] = [
-  { meal: MEALS.lavash, className: "-left-56 top-[8%]", rotate: -6, depth: 34 },
+  { meal: MEALS.lavash, className: "right-[calc(100%-2.5rem)] top-[8%]", rotate: -6, depth: 34 },
   { meal: MEALS.salad, className: "-right-40 top-[42%]", rotate: 5, depth: -26 },
-  { meal: MEALS.chickenRice, className: "-left-60 bottom-[24%]", rotate: 3, depth: 20 },
+  { meal: MEALS.chickenRice, className: "right-[calc(100%-1.75rem)] bottom-[24%]", rotate: 3, depth: 20 },
 ];
 
 const FloatingCard = ({
@@ -53,36 +54,21 @@ const FloatingCard = ({
   );
 };
 
-const PHONE_WIDTH = 290;
-const PHONE_HEIGHT = 619;
-
-/** Scales the phone mockup (laid out in fixed pixels) down to the space its box gets, never up */
-const FitPhone = ({ children, className }: { children: ReactNode; className?: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.8);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    const observer = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
-      setScale(Math.max(0.5, Math.min(1, height / PHONE_HEIGHT, width / PHONE_WIDTH)));
-    });
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className={`flex min-h-0 justify-center ${className ?? ""}`}>
-      <div className="relative shrink-0" style={{ width: PHONE_WIDTH * scale, height: PHONE_HEIGHT * scale }}>
-        <div className="absolute top-0 left-0 origin-top-left" style={{ width: PHONE_WIDTH, transform: `scale(${scale})` }}>
-          {children}
-        </div>
-      </div>
+/** Scales the phone mockup (laid out in fixed pixels) down to the space its box gets, never up — `.fit-phone` in `globals.css` */
+const FitPhone = ({ children, className }: { children: ReactNode; className?: string }) => (
+  <div className={`fit-phone flex min-h-0 justify-center ${className ?? ""}`}>
+    <div className="relative shrink-0">
+      <div className="absolute top-0 left-0">{children}</div>
     </div>
-  );
-};
+  </div>
+);
+
+/** Drifting glows of the evening sky: position, size and colour; `to` — where it drifts and back, `via` — a second point */
+const GLOWS: { className: string; to: [number, number]; via?: [number, number]; duration: number }[] = [
+  { className: "top-[-10%] left-[-10%] size-[620px] bg-lilac/20 blur-[120px]", to: [120, 60], duration: 18 },
+  { className: "right-[-12%] bottom-[-20%] size-[680px] bg-apricot/15 blur-[140px]", to: [-100, -80], duration: 22 },
+  { className: "top-[30%] left-[40%] size-[380px] bg-mint/10 blur-[110px]", to: [80, -60], via: [-60, 40], duration: 26 },
+];
 
 export const Hero = () => {
   const { t } = useI18n();
@@ -129,21 +115,21 @@ export const Hero = () => {
     >
       {/* Evening sky: three macro-coloured glows drifting, stars, and a soft light following the cursor */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
-        <motion.div
-          className="absolute top-[-10%] left-[-10%] size-[620px] rounded-full bg-lilac/20 blur-[120px]"
-          animate={{ x: [0, 120, 0], y: [0, 60, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute right-[-12%] bottom-[-20%] size-[680px] rounded-full bg-apricot/15 blur-[140px]"
-          animate={{ x: [0, -100, 0], y: [0, -80, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-[30%] left-[40%] size-[380px] rounded-full bg-mint/10 blur-[110px]"
-          animate={{ x: [0, 80, -60, 0], y: [0, -60, 40, 0] }}
-          transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
-        />
+        {GLOWS.map((glow) => (
+          <div
+            key={glow.className}
+            className={`absolute rounded-full ${glow.className}`}
+            style={
+              {
+                "--dx": `${glow.to[0]}px`,
+                "--dy": `${glow.to[1]}px`,
+                "--dx2": `${glow.via?.[0] ?? 0}px`,
+                "--dy2": `${glow.via?.[1] ?? 0}px`,
+                animation: `${glow.via ? "drift-2" : "drift"} ${glow.duration}s ease-in-out infinite`,
+              } as CSSProperties
+            }
+          />
+        ))}
         <Stars />
         <motion.div className="absolute inset-0" style={{ background: glow }} />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink" />
@@ -151,15 +137,14 @@ export const Hero = () => {
 
       <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col lg:grid lg:flex-none lg:grid-cols-[1.1fr_0.9fr] lg:grid-rows-[1fr_auto_auto_1fr] lg:gap-x-16 lg:[grid-template-areas:'._phone''head_phone''cta_phone''._phone']">
         <motion.div className="shrink-0 text-center lg:text-left lg:[grid-area:head]" style={{ y: copyY, opacity: copyOpacity }}>
-          <motion.div
-            className="mb-7 hidden items-center gap-2 rounded-full border border-lilac-line bg-lilac-surface/70 py-1.5 pr-4 pl-1.5 text-[14px] text-lilac backdrop-blur lg:inline-flex"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+          {/* The first screen enters with CSS animations, not Motion: it is visible before the scripts load */}
+          <div
+            className="mb-7 hidden animate-rise-in items-center gap-2 rounded-full border border-lilac-line bg-lilac-surface/70 py-1.5 pr-4 pl-1.5 text-[14px] text-lilac backdrop-blur lg:inline-flex"
+            style={{ animationDelay: "0.1s" }}
           >
             <span className="rounded-full bg-lilac px-2.5 py-0.5 text-[12px] font-bold text-ink">{t.hero.badgeAi}</span>
             {t.hero.badge}
-          </motion.div>
+          </div>
           <FlairText
             text={t.hero.title}
             className="mx-auto max-w-[16ch] text-[clamp(1.85rem,8.4vw,5.6rem)] lg:text-[clamp(3rem,4.9vw,4.5rem)] [text-wrap:balance] lg:[text-wrap:wrap] leading-[0.98] tracking-[-0.035em] lg:mx-0 lg:max-w-[16ch]"
@@ -170,11 +155,7 @@ export const Hero = () => {
         {/* On phones the mockup takes whatever height is left between the headline and the store buttons */}
         <FitPhone className="flex-1 py-4 sm:py-6 lg:h-[619px] lg:flex-none lg:self-center lg:py-0 lg:[grid-area:phone]">
           <motion.div className="relative [perspective:1400px]" style={{ y: phoneY, scale: phoneScale }}>
-            <motion.div
-              initial={{ opacity: 0, y: 80, rotateX: 30 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{ delay: 0.4, duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <div className="animate-phone-in" style={{ animationDelay: "0.4s" }}>
               <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}>
                 {/* Halo behind the phone */}
                 <div className="absolute inset-[-12%] -z-10 rounded-full bg-[conic-gradient(from_0deg,var(--color-apricot),var(--color-lilac),var(--color-mint),var(--color-apricot))] opacity-25 blur-[70px] animate-[spin_14s_linear_infinite]" />
@@ -182,7 +163,7 @@ export const Hero = () => {
                   <ScanDemo />
                 </PhoneFrame>
               </motion.div>
-            </motion.div>
+            </div>
             {FLOATING.map((card, index) => (
               <FloatingCard key={card.meal.dish} {...card} pointerX={smoothX} pointerY={smoothY} index={index} />
             ))}
@@ -190,21 +171,15 @@ export const Hero = () => {
         </FitPhone>
 
         <motion.div className="shrink-0 lg:[grid-area:cta]" style={{ y: copyY, opacity: copyOpacity }}>
-          <motion.p
-            className="mt-7 hidden max-w-[34rem] text-[clamp(1.05rem,1.6vw,1.25rem)] leading-relaxed text-text-2 lg:block"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          <p
+            className="mt-7 hidden max-w-[30rem] animate-rise-in text-[clamp(1.05rem,1.6vw,1.25rem)] leading-relaxed text-text-2 lg:block"
+            style={{ animationDelay: "1.1s" }}
           >
             {t.hero.subtitle}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
+          </p>
+          <div className="animate-rise-in" style={{ animationDelay: "1.3s" }}>
             <StoreButtons stretch className="sm:mx-auto sm:max-w-md lg:mx-0 lg:mt-9 lg:max-w-none" />
-          </motion.div>
+          </div>
         </motion.div>
       </div>
 
@@ -236,7 +211,6 @@ const Stars = () => (
         }}
       />
     ))}
-    <style>{`@keyframes twinkle { 0%,100% { opacity: .15 } 50% { opacity: .8 } }`}</style>
   </div>
 );
 
