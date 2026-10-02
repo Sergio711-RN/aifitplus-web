@@ -13,8 +13,12 @@ const nextConfig: NextConfig = {
     globalNotFound: true,
   },
   images: {
-    // Dish photos from Unsplash (free licence), resized by Unsplash: there is no image optimiser in a static export
+    // There is no image optimiser in a static export: dish photos are ready files in `public/photos`, one per width below
+    // (`scripts/build-photos.mjs` — keep its list in step with these two)
+    loader: "custom",
     loaderFile: "./app/_lib/image-loader.ts",
+    imageSizes: [32, 64, 96, 128, 256, 384],
+    deviceSizes: [640],
   },
 };
 

@@ -8,6 +8,7 @@
     "start": "next start -p 3002",
     "lint": "eslint",
     "icons": "node scripts/build-icons.mjs",
+    "photos": "node scripts/build-photos.mjs",
     "preview:static": "sh scripts/preview-static.sh",
     "deploy": "sh scripts/deploy.sh"
   },

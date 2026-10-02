@@ -1,6 +1,9 @@
-// Sample meals shared by the sections; their names and all copy are in `app/_i18n/dictionaries`. Photos: Unsplash, free licence (unsplash.com/license).
+// Sample meals shared by the sections; their names and all copy are in `app/_i18n/dictionaries`. Photos: Unsplash, free licence
+// (unsplash.com/license); the originals are in `assets/photos`, the copies the site serves — in `public/photos` (`npm run photos`).
+// Unsplash ids: syrniki — photo-1693422662014-cfd9a489e2af, salad — photo-1761315600943-d8a5bb0c499f, chickenRice — photo-1788090485550-ca71c6d578fb,
+// yogurt — photo-1678651561454-64dfc5d113db, lavash — photo-1777994505601-fe18ab41f8f0, bowl — photo-1546069901-d5bfd2cbfb1f.
 
-import { unsplash } from "./photo";
+import { photo } from "./photo";
 
 export type Dish = "syrniki" | "salad" | "chickenRice" | "yogurt" | "lavash" | "bowl";
 
@@ -25,7 +28,7 @@ export const MEALS: Record<Dish, IMeal> = {
     proteinG: 24,
     fatG: 18,
     carbsG: 50,
-    photo: unsplash("photo-1693422662014-cfd9a489e2af"),
+    photo: photo("syrniki"),
   },
   salad: {
     dish: "salad",
@@ -34,7 +37,7 @@ export const MEALS: Record<Dish, IMeal> = {
     proteinG: 36,
     fatG: 26,
     carbsG: 12,
-    photo: unsplash("photo-1761315600943-d8a5bb0c499f"),
+    photo: photo("salad"),
   },
   chickenRice: {
     dish: "chickenRice",
@@ -43,7 +46,7 @@ export const MEALS: Record<Dish, IMeal> = {
     proteinG: 40,
     fatG: 18,
     carbsG: 78,
-    photo: unsplash("photo-1788090485550-ca71c6d578fb"),
+    photo: photo("chickenRice"),
   },
   yogurt: {
     dish: "yogurt",
@@ -52,7 +55,7 @@ export const MEALS: Record<Dish, IMeal> = {
     proteinG: 14,
     fatG: 9,
     carbsG: 23,
-    photo: unsplash("photo-1678651561454-64dfc5d113db"),
+    photo: photo("yogurt"),
   },
   lavash: {
     dish: "lavash",
@@ -61,7 +64,7 @@ export const MEALS: Record<Dish, IMeal> = {
     proteinG: 32,
     fatG: 22,
     carbsG: 52,
-    photo: unsplash("photo-1777994505601-fe18ab41f8f0"),
+    photo: photo("lavash"),
   },
   bowl: {
     dish: "bowl",
@@ -70,7 +73,7 @@ export const MEALS: Record<Dish, IMeal> = {
     proteinG: 22,
     fatG: 18,
     carbsG: 30,
-    photo: unsplash("photo-1546069901-d5bfd2cbfb1f"),
+    photo: photo("bowl"),
   },
 };
 

@@ -1,9 +1,5 @@
-// `next/image` loader for the static export: no Next image server, so Unsplash resizes the photo itself.
-// Every photo comes from `unsplash(id)`; the loader only swaps in the width the browser needs.
-export default function unsplashLoader({ src, width, quality }: { src: string; width: number; quality?: number }) {
-  const url = new URL(src);
-  url.searchParams.set("w", String(width));
-  if (quality) url.searchParams.set("q", String(quality));
-
-  return url.href;
+// `next/image` loader for the static export: there is no Next image server, so every width is a ready file in
+// `public/photos` (`npm run photos`). `src` is the photo without width and extension: «/photos/syrniki».
+export default function photoLoader({ src, width }: { src: string; width: number }) {
+  return `${src}-${width}.webp`;
 }
