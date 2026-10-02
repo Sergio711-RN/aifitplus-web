@@ -5,6 +5,7 @@ import { useId, useRef, useState } from "react";
 import { useI18n } from "../_i18n/i18n-provider";
 import { buildPlan, type Activity, type Goal, type IPlanInput, type Sex } from "../_lib/nutrition-plan";
 import { CountUp } from "./count-up";
+import { type IGlow, SectionBackdrop } from "./section-backdrop";
 
 const Segmented = <T extends string>({
   label,
@@ -136,6 +137,13 @@ const MacroRings = ({ shares, calories }: { shares: { color: string; share: numb
   );
 };
 
+/** The plan is the AI's work, so lilac leads behind the card; apricot and mint are the macros it splits the norm into */
+const PLAN_GLOWS: IGlow[] = [
+  { className: "top-1/3 left-1/2 h-[500px] w-[min(56rem,100%)] -translate-x-1/2 bg-lilac/20 blur-[140px]", x: [0, 60, -60, 0], y: [0, 30, 0, 0], duration: 22 },
+  { className: "top-[-10%] right-[-10%] size-[520px] bg-apricot/15 blur-[130px]", x: [0, -80, 0], y: [0, 60, 0], duration: 20 },
+  { className: "bottom-[-12%] left-[-12%] size-[520px] bg-mint/10 blur-[130px]", x: [0, 80, 0], y: [0, -50, 0], duration: 24 },
+];
+
 export const PlanCalculator = () => {
   const { t } = useI18n();
   const [input, setInput] = useState<IPlanInput>({
@@ -156,8 +164,8 @@ export const PlanCalculator = () => {
   ];
 
   return (
-    <section id="plan" className="relative px-5 py-28 md:px-10 md:py-40">
-      <div className="pointer-events-none absolute inset-x-0 top-1/3 -z-10 mx-auto h-[500px] max-w-4xl rounded-full bg-lilac/10 blur-[140px]" />
+    <section id="plan" className="relative isolate px-5 py-28 md:px-10 md:py-40">
+      <SectionBackdrop glows={PLAN_GLOWS} />
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">

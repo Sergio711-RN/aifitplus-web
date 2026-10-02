@@ -5,11 +5,12 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
+  type MotionValue,
   useMotionValueEvent,
   useScroll,
-  useSpring,
   useTransform,
 } from "motion/react";
+import { useLenis } from "lenis/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "../_i18n/i18n-provider";
@@ -266,7 +267,7 @@ const STEP_GLOWS = ["rgba(255, 176, 120, 0.26)", "rgba(183, 166, 255, 0.3)", "rg
 
 const Backdrop = ({ active }: { active: number }) => (
   <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
-    <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-ink)_0%,#171c3a_45%,#151a34_70%,var(--color-ink)_100%)]" />
+    <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-ink)_0%,var(--color-dusk)_45%,var(--color-dusk-deep)_70%,var(--color-ink)_100%)]" />
     <motion.div
       className="absolute top-[-12%] left-1/2 size-[560px] -translate-x-1/2 rounded-full blur-[110px] lg:top-1/2 lg:right-[-6%] lg:left-auto lg:size-[880px] lg:translate-x-0 lg:-translate-y-1/2"
       animate={{ backgroundColor: STEP_GLOWS[active], scale: [1, 1.08, 1] }}
@@ -287,59 +288,99 @@ const Backdrop = ({ active }: { active: number }) => (
   </div>
 );
 
+/** Share of step `index` already scrolled through, 0…1 — the rail segment after its dot and its bar on the phone fill with it */
+const useStepProgress = (progress: MotionValue<number>, index: number) =>
+  useTransform(progress, (value) => Math.min(1, Math.max(0, value * STEP_COUNT - index)));
+
+const RailFill = ({ progress, index }: { progress: MotionValue<number>; index: number }) => (
+  <motion.span className="absolute inset-0 origin-top rounded-full bg-apricot" style={{ scaleY: useStepProgress(progress, index) }} />
+);
+
+const StoryBar = ({ progress, index }: { progress: MotionValue<number>; index: number }) => (
+  <span className="h-1 flex-1 overflow-hidden rounded-full bg-text/20">
+    <motion.span className="block h-full origin-left rounded-full bg-text" style={{ scaleX: useStepProgress(progress, index) }} />
+  </span>
+);
+
 export const HowItWorks = () => {
   const { t } = useI18n();
+  const lenis = useLenis();
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  // Lenis already smooths the scroll, so the progress is used as is: the rail, the bars and the screen switch stay in step
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
-  const railHeight = useTransform(progress, [0, 1], ["0%", "100%"]);
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     setActive(Math.min(STEP_COUNT - 1, Math.floor(value * STEP_COUNT)));
   });
 
+  /** Scrolls to where the step starts, a little past the switch so it is not on the edge */
+  const goToStep = (index: number) => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const top = section.getBoundingClientRect().top + window.scrollY;
+    const range = section.offsetHeight - window.innerHeight;
+    const target = top + (range * (index + (index === 0 ? 0 : 0.04))) / STEP_COUNT;
+
+    if (lenis) lenis.scrollTo(target, { duration: 1 + Math.abs(index - active) * 0.3 });
+    else window.scrollTo({ top: target });
+  };
+
   const Screen = SCREENS[active];
 
   return (
     <section ref={sectionRef} id="how" className="relative" style={{ height: `${STEP_COUNT * 100 + 40}vh` }}>
-      <div className="sticky top-0 isolate flex h-dvh items-center overflow-hidden px-5 md:px-10">
+      {/* Below lg the block hangs from the top: the active step text only grows downwards and the phone stays put */}
+      <div className="sticky top-0 isolate flex h-dvh items-start overflow-hidden px-5 pt-16 sm:pt-24 md:px-10 lg:items-center lg:pt-0">
         <Backdrop active={active} />
         <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[1fr_auto] lg:gap-24 lg:pr-12">
           <div className="order-2 lg:order-1">
             <h2 className="mb-4 text-[clamp(1.75rem,4.5vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em] lg:mb-12">
               {t.how.title}
             </h2>
-            <ol className="relative space-y-1 pl-8 lg:space-y-8">
-              {/* Progress rail */}
-              <span className="absolute top-2 bottom-2 left-[7px] w-0.5 rounded-full bg-line" />
-              <motion.span className="absolute top-2 left-[7px] w-0.5 rounded-full bg-apricot" style={{ height: railHeight }} />
+            <ol className="pl-8">
               {t.how.steps.map((step, index) => (
-                <li key={step.title} className="relative">
+                <li key={step.title} className="relative pb-1 last:pb-0 lg:pb-8">
+                  {/* Rail to the next dot, filled while this step is being scrolled through */}
+                  {index < STEP_COUNT - 1 && (
+                    <span className="absolute top-4 -bottom-4 -left-[25px] w-0.5 rounded-full bg-line">
+                      <RailFill progress={scrollYProgress} index={index} />
+                    </span>
+                  )}
                   <motion.span
-                    className="absolute top-2 -left-8 grid size-4 place-items-center rounded-full border-2"
+                    className="absolute top-2 -left-8 z-10 grid size-4 place-items-center rounded-full border-2"
                     animate={{
                       borderColor: index <= active ? "var(--color-apricot)" : "var(--color-line)",
                       backgroundColor: index < active ? "var(--color-apricot)" : "var(--color-ink)",
                       scale: index === active ? 1.25 : 1,
                     }}
                   />
-                  <motion.div animate={{ opacity: index === active ? 1 : 0.35 }} transition={{ duration: 0.4 }}>
+                  <motion.div
+                    animate={{ opacity: index === active ? 1 : 0.4 }}
+                    whileHover={{ opacity: index === active ? 1 : 0.75 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="text-[14px] font-semibold text-text-3">{t.how.step(index + 1)}</div>
-                    <h3 className="text-[clamp(1.35rem,2.4vw,2rem)] font-bold tracking-tight">{step.title}</h3>
-                    <AnimatePresence initial={false}>
-                      {index === active && (
-                        <motion.p
-                          className="max-w-md overflow-hidden text-[16px] leading-relaxed text-text-2 lg:text-[18px]"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                        >
-                          <span className="block pt-2">{step.text}</span>
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
+                    <h3 className="text-[clamp(1.35rem,2.4vw,2rem)] font-bold tracking-tight">
+                      {/* The whole step, dot included, is the hit area */}
+                      <button
+                        type="button"
+                        onClick={() => goToStep(index)}
+                        aria-current={index === active ? "step" : undefined}
+                        className="cursor-pointer text-left outline-none after:absolute after:-inset-y-1 after:right-0 after:-left-9 after:z-20 after:rounded-xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-apricot"
+                      >
+                        {step.title}
+                      </button>
+                    </h3>
+                    {/* Phones show only the active step's text; on desktop all stay open so the dots don't jump while scrolling */}
+                    <div
+                      className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:grid-rows-[1fr] lg:opacity-100 ${index === active ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                    >
+                      <p className="max-w-md overflow-hidden text-[16px] leading-relaxed text-text-2 lg:text-[18px]">
+                        <span className="block pt-2">{step.text}</span>
+                      </p>
+                    </div>
                   </motion.div>
                 </li>
               ))}
@@ -348,6 +389,12 @@ export const HowItWorks = () => {
 
           <div className="order-1 mx-auto -mb-[260px] origin-top scale-[0.58] sm:-mb-[93px] sm:scale-[0.85] lg:order-2 lg:mb-0 lg:origin-center lg:scale-110 lg:[@media(min-height:860px)]:scale-125 lg:[@media(min-height:960px)]:scale-[1.38]">
             <PhoneFrame>
+              {/* Like stories: one bar per step, so it is clear there are three screens and scrolling moves through them */}
+              <div className="absolute inset-x-6 top-[46px] z-20 flex gap-1.5" aria-hidden>
+                {SCREENS.map((_, index) => (
+                  <StoryBar key={index} progress={scrollYProgress} index={index} />
+                ))}
+              </div>
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
                   key={active}
@@ -364,6 +411,22 @@ export const HowItWorks = () => {
             </PhoneFrame>
           </div>
         </div>
+
+        {/* Until the first scroll: the page stands still here, so say that scrolling turns the steps */}
+        <motion.div
+          className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-3 text-[13px] font-medium text-text-3 lg:flex"
+          style={{ opacity: hintOpacity }}
+          aria-hidden
+        >
+          <span className="flex h-9 w-5 justify-center rounded-full border border-line pt-1.5">
+            <motion.span
+              className="block h-2 w-1 rounded-full bg-apricot"
+              animate={{ y: [0, 12, 0], opacity: [1, 0.2, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </span>
+          {t.how.hint}
+        </motion.div>
       </div>
     </section>
   );

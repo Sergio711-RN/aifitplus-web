@@ -57,6 +57,8 @@ export const en: Dictionary = {
   how: {
     title: "How it works",
     step: (number: number) => `Step ${number}`,
+    /** Under the pinned section until the first scroll */
+    hint: "Scroll to go through the steps",
     steps: [
       { title: "Snap your plate", text: "A couple of shots from different angles make it more accurate." },
       { title: "AI breaks the dish down", text: "It finds the ingredients and portion. If something is unclear, it asks a quick question." },

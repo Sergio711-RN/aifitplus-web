@@ -9,6 +9,7 @@ import { CountUp } from "./count-up";
 import { FoodThumb } from "./food-thumb";
 import { GlassMeter } from "./glass-meter";
 import { Typewriter } from "./how-it-works";
+import { type IGlow, SectionBackdrop } from "./section-backdrop";
 
 const PROTEIN_TARGET_G = 130;
 const TIP_MEAL = MEALS.salad;
@@ -97,6 +98,13 @@ const MealRow = ({ time, mealType, meal, isVisible, isNew = false }: IMealRowPro
   );
 };
 
+/** The day goes from breakfast to dinner like the timeline rail: apricot at the top, lilac (the AI tip) in the middle, mint (the day closed) at the bottom */
+const DAY_GLOWS: IGlow[] = [
+  { className: "top-[-8%] left-[-12%] size-[560px] bg-apricot/15 blur-[130px]", x: [0, 90, 0], y: [0, 50, 0], duration: 20 },
+  { className: "top-[35%] right-[-14%] size-[620px] bg-lilac/20 blur-[140px]", x: [0, -80, 0], y: [0, 60, 0], duration: 24 },
+  { className: "bottom-[-14%] left-[15%] size-[520px] bg-mint/10 blur-[130px]", x: [0, 70, -40, 0], y: [0, -50, 30, 0], duration: 26 },
+];
+
 export const DayTimeline = () => {
   const { t, formatNumber } = useI18n();
   const listRef = useRef<HTMLOListElement>(null);
@@ -123,7 +131,8 @@ export const DayTimeline = () => {
   }, [eatenKcal, level]);
 
   return (
-    <section id="day" className="relative overflow-x-clip px-5 py-28 md:px-10 md:py-40">
+    <section id="day" className="relative isolate overflow-x-clip px-5 py-28 md:px-10 md:py-40">
+      <SectionBackdrop glows={DAY_GLOWS} />
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">

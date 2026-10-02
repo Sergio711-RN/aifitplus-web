@@ -56,6 +56,8 @@ export const ru = {
   how: {
     title: "Как это работает",
     step: (number: number) => `Шаг ${number}`,
+    /** Under the pinned section until the first scroll */
+    hint: "Листайте — шаги сменятся",
     steps: [
       { title: "Снимите тарелку", text: "Можно сделать пару кадров с разных сторон — так точнее." },
       { title: "ИИ разберёт блюдо", text: "Определит состав и порцию. Если что-то неясно — задаст короткий вопрос." },

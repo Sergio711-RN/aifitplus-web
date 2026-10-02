@@ -56,6 +56,8 @@ export const uk: Dictionary = {
   how: {
     title: "Як це працює",
     step: (number: number) => `Крок ${number}`,
+    /** Under the pinned section until the first scroll */
+    hint: "Гортайте — кроки зміняться",
     steps: [
       { title: "Зніміть тарілку", text: "Можна зробити кілька кадрів з різних боків — так точніше." },
       { title: "ШІ розбере страву", text: "Визначить склад і порцію. Якщо щось незрозуміло — поставить коротке запитання." },

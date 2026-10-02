@@ -7,6 +7,9 @@
 @theme {
   --color-ink: #12162b;
   --color-ink-deep: #0d1022;
+  /* Middle of the section backgrounds' vertical gradient */
+  --color-dusk: #171c3a;
+  --color-dusk-deep: #151a34;
   --color-surface: #1a1f3b;
   --color-surface-raised: #1c2240;
   --color-surface-muted: #232a4e;
