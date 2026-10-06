@@ -45,6 +45,10 @@ const SECTIONS: ILegalSection[] = [
         <ul>
           <li>Fotos de comidas que usted toma o elige de su galería.</li>
           <li>
+            Descripciones de comidas que usted escribe o dicta. La voz se convierte en texto mientras habla; guardamos solo el texto, no la
+            grabación de su voz.
+          </li>
+          <li>
             Resultados del reconocimiento: plato, ingredientes, peso de la porción, calorías, proteínas, grasas, carbohidratos, sus
             correcciones y sus respuestas a las preguntas aclaratorias.
           </li>
@@ -163,8 +167,15 @@ const SECTIONS: ILegalSection[] = [
             y las fotos. Servidores en Irlanda (UE).
           </li>
           <li>
-            <strong>Anthropic</strong>: reconocimiento de comidas. Fotos y texto de las respuestas a las preguntas aclaratorias. Estados
-            Unidos.
+            <strong>Anthropic</strong>: reconocimiento de comidas. Fotos, descripciones de comidas y texto de las respuestas a las preguntas
+            aclaratorias. Estados Unidos.
+          </li>
+          <li>
+            <strong>Google</strong>: reconocimiento de voz en teléfonos Android que no pueden reconocer la voz en el propio dispositivo.
+            Mientras usted dicta, la grabación de su voz la procesa el servicio de reconocimiento de voz de Google: en el teléfono, si está
+            descargado el paquete de idioma de Google; de lo contrario, en los servidores de Google. Google devuelve el texto; la grabación
+            no se nos transmite. En iPhone y en teléfonos Android con reconocimiento en el dispositivo, su voz no sale del teléfono. Google
+            LLC, Estados Unidos.
           </li>
           <li>
             <strong>Resend</strong>: envío de los correos con el código de inicio de sesión. Dirección de correo electrónico e idioma del
@@ -196,9 +207,9 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Nuestro almacenamiento principal está en la Unión Europea (Irlanda). El reconocimiento de fotos, los correos, la gestión de
-          suscripciones y las estadísticas del sitio web están a cargo de proveedores ubicados en Estados Unidos, por lo que algunos datos
-          se transfieren fuera del Espacio Económico Europeo.
+          Nuestro almacenamiento principal está en la Unión Europea (Irlanda). El reconocimiento de fotos, el reconocimiento de voz en
+          algunos teléfonos Android, los correos, la gestión de suscripciones y las estadísticas del sitio web están a cargo de proveedores
+          ubicados en Estados Unidos, por lo que algunos datos se transfieren fuera del Espacio Económico Europeo.
         </p>
         <p>
           Estas transferencias se basan en la decisión de adecuación de la Comisión Europea (Marco de Privacidad de Datos UE-EE. UU.) para

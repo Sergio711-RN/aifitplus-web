@@ -45,6 +45,10 @@ const SECTIONS: ILegalSection[] = [
         <ul>
           <li>Le foto dei pasti che scatti o scegli dalla galleria.</li>
           <li>
+            Le descrizioni dei pasti che scrivi o detti. La voce viene trasformata in testo mentre parli; salviamo solo il testo, non la
+            registrazione della tua voce.
+          </li>
+          <li>
             I risultati del riconoscimento: piatto, ingredienti, peso della porzione, calorie, proteine, grassi, carboidrati, le tue
             correzioni e le risposte alle domande di chiarimento.
           </li>
@@ -165,7 +169,14 @@ const SECTIONS: ILegalSection[] = [
             in Irlanda (UE).
           </li>
           <li>
-            <strong>Anthropic</strong> — riconoscimento dei pasti. Le foto e il testo delle risposte alle domande di chiarimento. Stati
+            <strong>Anthropic</strong> — riconoscimento dei pasti. Le foto, le descrizioni dei pasti e il testo delle risposte alle domande
+            di chiarimento. Stati Uniti.
+          </li>
+          <li>
+            <strong>Google</strong> — riconoscimento vocale sui telefoni Android che non riconoscono la voce sul dispositivo. Mentre detti,
+            la registrazione della tua voce viene elaborata dal servizio di riconoscimento vocale di Google: sul telefono, se è scaricato il
+            pacchetto lingua di Google, altrimenti sui server di Google. Google restituisce il testo; la registrazione non viene trasmessa a
+            noi. Su iPhone e sui telefoni Android con riconoscimento sul dispositivo, la tua voce non lascia il telefono. Google LLC, Stati
             Uniti.
           </li>
           <li>
@@ -197,9 +208,9 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Il nostro archivio principale si trova nell’Unione europea (Irlanda). Il riconoscimento delle foto, le email, la gestione degli
-          abbonamenti e le statistiche del sito sono affidati a fornitori con sede negli Stati Uniti, perciò alcuni dati vengono
-          trasferiti al di fuori dello Spazio economico europeo.
+          Il nostro archivio principale si trova nell’Unione europea (Irlanda). Il riconoscimento delle foto, il riconoscimento vocale su
+          alcuni telefoni Android, le email, la gestione degli abbonamenti e le statistiche del sito sono affidati a fornitori con sede
+          negli Stati Uniti, perciò alcuni dati vengono trasferiti al di fuori dello Spazio economico europeo.
         </p>
         <p>
           Questi trasferimenti si basano sulla decisione di adeguatezza della Commissione europea (EU-US Data Privacy Framework) per i

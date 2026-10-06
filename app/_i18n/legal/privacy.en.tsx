@@ -40,6 +40,10 @@ const SECTIONS: ILegalSection[] = [
         <h3>Food diary</h3>
         <ul>
           <li>Photos of meals that you take or pick from your gallery.</li>
+          <li>
+            Meal descriptions that you type or dictate. Speech is turned into text while you speak; we save only the text, not the recording
+            of your voice.
+          </li>
           <li>Recognition results: dish, ingredients, portion weight, calories, protein, fat, carbs, your edits and answers to follow-up questions.</li>
           <li>Time and type of meal.</li>
         </ul>
@@ -146,7 +150,13 @@ const SECTIONS: ILegalSection[] = [
             <strong>Supabase</strong> — database, sign-in and file storage. All account data, the diary, photos. Servers in Ireland (EU).
           </li>
           <li>
-            <strong>Anthropic</strong> — meal recognition. Photos and the text of follow-up answers. USA.
+            <strong>Anthropic</strong> — meal recognition. Photos, meal descriptions and the text of follow-up answers. USA.
+          </li>
+          <li>
+            <strong>Google</strong> — speech recognition on Android phones that cannot recognise speech on the device. While you dictate,
+            the recording of your voice is processed by Google’s speech recognition service: on the phone if the Google language pack is
+            downloaded, otherwise on Google’s servers. Google returns the text; the recording is not passed to us. On iPhone and on Android
+            phones with on-device recognition, your voice does not leave the phone. Google LLC, USA.
           </li>
           <li>
             <strong>Resend</strong> — sending sign-in code emails. Email address and email language. USA.
@@ -175,8 +185,9 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Our main storage is in the European Union (Ireland). Photo recognition, emails, subscription management and website statistics are
-          handled by providers in the USA, so some data is transferred outside the European Economic Area.
+          Our main storage is in the European Union (Ireland). Photo recognition, speech recognition on some Android phones, emails,
+          subscription management and website statistics are handled by providers in the USA, so some data is transferred outside the
+          European Economic Area.
         </p>
         <p>
           These transfers rely on the European Commission’s adequacy decision (EU–US Data Privacy Framework) for providers certified under it,

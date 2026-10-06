@@ -44,6 +44,10 @@ const SECTIONS: ILegalSection[] = [
         <ul>
           <li>Fotos von Mahlzeiten, die Sie aufnehmen oder aus Ihrer Galerie auswählen.</li>
           <li>
+            Beschreibungen von Mahlzeiten, die Sie eintippen oder diktieren. Die Sprache wird während des Sprechens in Text umgewandelt; wir
+            speichern nur den Text, nicht die Aufnahme Ihrer Stimme.
+          </li>
+          <li>
             Ergebnisse der Erkennung: Gericht, Zutaten, Portionsgewicht, Kalorien, Eiweiß, Fett, Kohlenhydrate, Ihre Korrekturen und Ihre
             Antworten auf Rückfragen.
           </li>
@@ -167,7 +171,15 @@ const SECTIONS: ILegalSection[] = [
             (EU).
           </li>
           <li>
-            <strong>Anthropic</strong> – Erkennung von Mahlzeiten. Fotos und der Text Ihrer Antworten auf Rückfragen. USA.
+            <strong>Anthropic</strong> – Erkennung von Mahlzeiten. Fotos, Beschreibungen von Mahlzeiten und der Text Ihrer Antworten auf
+            Rückfragen. USA.
+          </li>
+          <li>
+            <strong>Google</strong> – Spracherkennung auf Android-Smartphones, die Sprache nicht auf dem Gerät erkennen können. Während Sie
+            diktieren, wird die Aufnahme Ihrer Stimme vom Spracherkennungsdienst von Google verarbeitet: auf dem Smartphone, wenn das
+            Google-Sprachpaket heruntergeladen ist, sonst auf den Servern von Google. Google gibt den Text zurück; die Aufnahme wird nicht
+            an uns übermittelt. Auf dem iPhone und auf Android-Smartphones mit Spracherkennung auf dem Gerät verlässt Ihre Stimme das
+            Smartphone nicht. Google LLC, USA.
           </li>
           <li>
             <strong>Resend</strong> – Versand der E-Mails mit dem Anmeldecode. E-Mail-Adresse und Sprache der E-Mail. USA.
@@ -196,9 +208,9 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Unser Hauptspeicher befindet sich in der Europäischen Union (Irland). Fotoerkennung, E-Mail-Versand, Abo-Verwaltung und
-          Website-Statistik übernehmen Anbieter in den USA, daher werden einige Daten in Länder außerhalb des Europäischen Wirtschaftsraums
-          übermittelt.
+          Unser Hauptspeicher befindet sich in der Europäischen Union (Irland). Fotoerkennung, Spracherkennung auf manchen
+          Android-Smartphones, E-Mail-Versand, Abo-Verwaltung und Website-Statistik übernehmen Anbieter in den USA, daher werden einige
+          Daten in Länder außerhalb des Europäischen Wirtschaftsraums übermittelt.
         </p>
         <p>
           Diese Übermittlungen stützen sich auf den Angemessenheitsbeschluss der Europäischen Kommission (EU-US Data Privacy Framework) für
