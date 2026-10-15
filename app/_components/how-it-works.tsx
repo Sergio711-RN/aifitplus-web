@@ -270,11 +270,24 @@ const STEP_GLOWS = ["rgba(255, 176, 120, 0.26)", "rgba(183, 166, 255, 0.3)", "rg
 const Backdrop = ({ active }: { active: number }) => (
   <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
     <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-ink)_0%,var(--color-dusk)_45%,var(--color-dusk-deep)_70%,var(--color-ink)_100%)]" />
+    {/* One blurred layer per step colour, cross-faded with `opacity`: animating `background-color` of a 560 px blur
+        repainted it on the main thread at every step change */}
     <motion.div
-      className="absolute top-[-12%] left-1/2 size-[560px] -translate-x-1/2 rounded-full blur-[110px] lg:top-1/2 lg:right-[-6%] lg:left-auto lg:size-[880px] lg:translate-x-0 lg:-translate-y-1/2"
-      animate={{ backgroundColor: STEP_GLOWS[active], scale: [1, 1.08, 1] }}
-      transition={{ backgroundColor: { duration: 1.2, ease: "easeInOut" }, scale: { duration: 8, repeat: Infinity, ease: "easeInOut" } }}
-    />
+      className="absolute top-[-12%] left-1/2 size-[560px] -translate-x-1/2 lg:top-1/2 lg:right-[-6%] lg:left-auto lg:size-[880px] lg:translate-x-0 lg:-translate-y-1/2"
+      animate={{ scale: [1, 1.08, 1] }}
+      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+    >
+      {STEP_GLOWS.map((glow, index) => (
+        <motion.div
+          key={glow}
+          className="absolute inset-0 rounded-full blur-[110px]"
+          style={{ backgroundColor: glow }}
+          initial={false}
+          animate={{ opacity: index === active ? 1 : 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+      ))}
+    </motion.div>
     <motion.div
       className="absolute -top-48 -left-40 size-[620px] rounded-full bg-lilac/10 blur-[130px]"
       animate={{ x: [0, 80, 0], y: [0, 50, 0] }}
@@ -350,14 +363,12 @@ export const HowItWorks = () => {
                       <RailFill progress={scrollYProgress} index={index} />
                     </span>
                   )}
-                  <motion.span
-                    className="absolute top-2 -left-8 z-10 grid size-4 place-items-center rounded-full border-2"
-                    animate={{
-                      borderColor: index <= active ? "var(--color-apricot)" : "var(--color-line)",
-                      backgroundColor: index < active ? "var(--color-apricot)" : "var(--color-ink)",
-                      scale: index === active ? 1.25 : 1,
-                    }}
-                  />
+                  {/* Grey ring on ink; the apricot ring and the apricot fill are layers cross-faded with `opacity`, so the
+                      compositor does it (`border-color` and `background-color` would run on the main thread) */}
+                  <motion.span className="absolute top-2 -left-8 z-10 size-4 rounded-full border-2 border-line bg-ink" animate={{ scale: index === active ? 1.25 : 1 }}>
+                    <motion.span className="absolute -inset-0.5 rounded-full border-2 border-apricot" initial={false} animate={{ opacity: index <= active ? 1 : 0 }} />
+                    <motion.span className="absolute inset-0 rounded-full bg-apricot" initial={false} animate={{ opacity: index < active ? 1 : 0 }} />
+                  </motion.span>
                   <motion.div
                     animate={{ opacity: index === active ? 1 : 0.4 }}
                     whileHover={{ opacity: index === active ? 1 : 0.75 }}

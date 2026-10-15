@@ -183,7 +183,8 @@ const MealRow = ({ time, mealType, meal, isVisible, isNew = false }: IMealRowPro
     <motion.li
       className="relative grid grid-cols-1 gap-2 pl-7 sm:grid-cols-[4.5rem_minmax(0,1fr)] sm:gap-10 sm:pl-0"
       initial={false}
-      animate={{ opacity: isVisible ? 1 : 0.12, x: isVisible ? 0 : 40, filter: isVisible ? "blur(0px)" : "blur(6px)" }}
+      // Fully transparent until its time, not a 12 % ghost: Lighthouse read the ghosts as text with too little contrast
+      animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 40, filter: isVisible ? "blur(0px)" : "blur(6px)" }}
       transition={{ type: "spring", stiffness: 140, damping: 20 }}
     >
       <div className="flex items-baseline gap-2 sm:block sm:pt-4 sm:text-right">
@@ -191,11 +192,14 @@ const MealRow = ({ time, mealType, meal, isVisible, isNew = false }: IMealRowPro
         <div className="text-[12px] text-text-3">{t.mealTypes[mealType]}</div>
       </div>
       <div className="relative min-w-0">
+        {/* The dot lights up by cross-fading an apricot layer over the grey one: `background-color` animates on the main thread */}
         <motion.span
-          className="absolute top-6 -left-[26px] size-3 rounded-full border-2 border-ink"
-          animate={{ backgroundColor: isVisible ? "var(--color-apricot)" : "var(--color-line)", scale: isVisible ? [1, 1.6, 1] : 1 }}
+          className="absolute top-6 -left-[26px] size-3 rounded-full border-2 border-ink bg-line"
+          animate={{ scale: isVisible ? [1, 1.6, 1] : 1 }}
           transition={{ duration: 0.5 }}
-        />
+        >
+          <motion.span className="absolute inset-0 rounded-full bg-apricot" animate={{ opacity: isVisible ? 1 : 0 }} transition={{ duration: 0.5 }} />
+        </motion.span>
         <div
           className={`rounded-[22px] border p-4 transition-colors ${isNew ? "border-mint/50 bg-mint/5" : "border-line bg-surface-raised"}`}
         >

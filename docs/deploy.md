@@ -85,6 +85,7 @@ curl -s https://aifitplus.com/uk/nothing -o /dev/null -w '%{http_code}\n'       
 curl -sI http://aifitplus.com/en | grep -i location                              # → https://aifitplus.com/en
 curl -sI https://www.aifitplus.com/en | grep -i location                         # → https://aifitplus.com/en
 curl -sI https://aifitplus.com/en/og.png | grep -i content-type                  # → image/png
+curl -sI https://aifitplus.com/en | grep -i -E 'strict-transport|frame|nosniff|referrer|opener'  # → шесть заголовков безопасности из .htaccess
 ```
 
 Плюс открыть сайт в браузере: фото грузятся, переключатель языков и ссылки в футере работают без перезагрузки.

@@ -46,7 +46,8 @@ export const Footer = () => {
             </button>
           </nav>
         </div>
-        <nav aria-label={t.nav.language} className="-mx-3 flex flex-wrap gap-1">
+        {/* System font: the native names need Cyrillic, and the brand font would pull its 42 KB file onto every page */}
+        <nav aria-label={t.nav.language} className="-mx-3 flex flex-wrap gap-1 font-system">
           {LOCALES.map((option) => (
             <Link
               key={option}

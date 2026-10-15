@@ -31,6 +31,9 @@
   --color-plate-well: #d5daf0;
 
   --font-sans: var(--font-commissioner), system-ui, sans-serif;
+  /* Language names in the footer and the menu («Українська», «Русский»…): in Commissioner they made every page,
+     /en included, download the 42 KB Cyrillic file for two words (PageSpeed, 16.10.2026) */
+  --font-system: system-ui, sans-serif;
 
   --animate-wave: wave 2.6s linear infinite;
   --animate-spin-slow: spin 3.2s linear infinite;
@@ -62,13 +65,14 @@
       transform: scale(0.8);
     }
   }
-  /* No `font-variation-settings` here: letters thickening from "wght" 200 reshaped the headline on the main thread
-     every frame — PageSpeed's 980 ms of style and layout on mobile, ×3 the blocking time (15.10.2026) */
+  /* Only `opacity` and `transform`: the compositor runs those. No `font-variation-settings` — letters thickening from
+     "wght" 200 reshaped the headline on the main thread every frame (980 ms of style and layout in PageSpeed, 15.10.2026);
+     no `filter: blur()` — Chrome keeps blur animations on the main thread too, 57 letters at once during the first
+     second (62 «non-composited animations» in PageSpeed, 16.10.2026) */
   @keyframes letter-in {
     from {
       opacity: 0;
       transform: translateY(0.35em);
-      filter: blur(10px);
     }
   }
   @keyframes rise-in {

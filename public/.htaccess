@@ -71,6 +71,16 @@ ErrorDocument 404 /404.html
   <Else>
     Header set Cache-Control "no-cache"
   </Else>
+  # Security headers (Lighthouse «Trust and safety»). nginx in front serves files with static extensions itself,
+  # so these reach the pages (/en, /en/privacy…), which is where they matter. A full Content-Security-Policy is not
+  # possible: the static export inlines scripts without nonces, so only frame-ancestors. HSTS without
+  # includeSubDomains — only the apex and www have certificates
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Content-Security-Policy "frame-ancestors 'none'"
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
 </IfModule>
 
 <IfModule mod_deflate.c>

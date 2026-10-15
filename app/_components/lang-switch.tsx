@@ -68,7 +68,8 @@ export const LangSwitch = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.ul
-            className="absolute top-full right-0 z-10 mt-2 min-w-[190px] origin-top-right rounded-2xl border border-line bg-surface-raised/95 p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+            // System font for the native names: see `--font-system` in globals.css
+            className="absolute top-full right-0 z-10 mt-2 min-w-[190px] origin-top-right rounded-2xl border border-line bg-surface-raised/95 p-1.5 font-system shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl"
             initial={{ opacity: 0, y: -6, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.96 }}

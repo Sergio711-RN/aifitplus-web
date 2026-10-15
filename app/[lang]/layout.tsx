@@ -10,8 +10,9 @@ import { pageMetadata, SITE_URL } from "../_i18n/seo";
 import "../globals.css";
 
 // Same family as the app; variable, with the «flair» and «volume» axes animated in headlines. The CSS has every subset
-// (Cyrillic covers Ukrainian too); `subsets` only says what to preload. Only Latin: on /en, /fr, /de, /es, /it the
-// Cyrillic file (42 KB) is never used, and on /ru and /uk the browser asks for it as soon as the CSS is in
+// (Cyrillic covers Ukrainian too); `subsets` only says what to preload. Only Latin: on /en, /fr, /de, /es, /it no text
+// needs the Cyrillic file (42 KB) — the language names in the footer and the menu are set in the system font for that —
+// and on /ru and /uk the browser asks for it as soon as the CSS is in
 const commissioner = Commissioner({
   variable: "--font-commissioner",
   subsets: ["latin"],
