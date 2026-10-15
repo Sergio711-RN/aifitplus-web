@@ -62,12 +62,13 @@
       transform: scale(0.8);
     }
   }
+  /* No `font-variation-settings` here: letters thickening from "wght" 200 reshaped the headline on the main thread
+     every frame — PageSpeed's 980 ms of style and layout on mobile, ×3 the blocking time (15.10.2026) */
   @keyframes letter-in {
     from {
       opacity: 0;
       transform: translateY(0.35em);
       filter: blur(10px);
-      font-variation-settings: "wght" 200, "VOLM" 0, "FLAR" 0;
     }
   }
   @keyframes rise-in {

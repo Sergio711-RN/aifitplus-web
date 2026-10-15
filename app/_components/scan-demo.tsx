@@ -146,8 +146,11 @@ export const ScanDemo = () => {
           </motion.div>
         </AnimatePresence>
       </div>
-      {/* Warm the next photo so the swap never shows an empty frame */}
-      <Image src={next.photo} alt="" width={1} height={1} className="pointer-events-none absolute opacity-0" sizes="300px" />
+      {/* Warm the next photo so the swap never shows an empty frame — from the first result on, not in the HTML: on the
+          first load its 54 KB competed with the first photo (PageSpeed, 15.10.2026), and the swap is seconds away */}
+      {(step > 0 || phase === "result") && (
+        <Image src={next.photo} alt="" width={1} height={1} className="pointer-events-none absolute opacity-0" sizes="300px" />
+      )}
 
       {/* Legibility: dark top and bottom, a dim veil while the result is shown */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ink/90 to-transparent" />
