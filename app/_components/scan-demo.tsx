@@ -172,18 +172,20 @@ export const ScanDemo = () => {
           {CORNERS.map((corner) => (
             <span key={corner} className={`absolute size-9 border-apricot drop-shadow-[0_0_6px_rgba(0,0,0,0.5)] ${corner}`} />
           ))}
-          <svg viewBox="0 0 20 20" className="absolute -top-2 -right-2 size-7 text-lilac drop-shadow-[0_0_8px_rgba(183,166,255,0.8)]" aria-hidden>
-            <motion.path
-              d={sparkPath(10, 10, 10)}
-              fill="currentColor"
-              animate={{ rotate: phase === "scan" ? 360 : 0, scale: phase === "scan" ? [1, 0.8, 1] : 1.15 }}
-              transition={{
-                rotate: { duration: 1.6, repeat: phase === "scan" ? Infinity : 0, ease: "linear" },
-                scale: { duration: 0.8, repeat: phase === "scan" ? Infinity : 0 },
-              }}
-              style={{ transformBox: "fill-box", transformOrigin: "center" }}
-            />
-          </svg>
+          {/* AI spark: spins, pulses while scanning, grows with the result. CSS animations of HTML boxes run on the
+              compositor; Motion on the SVG path ran on the main thread and stuttered while the page was busy */}
+          <span
+            aria-hidden
+            className={`absolute -top-2 -right-2 size-7 transition-transform duration-500 ${phase === "scan" ? "" : "scale-[1.15]"}`}
+          >
+            <span className="block size-full animate-[spin_1.6s_linear_infinite]">
+              <span className={`block size-full ${phase === "scan" ? "animate-spark-pulse" : ""}`}>
+                <svg viewBox="0 0 20 20" className="size-full text-lilac drop-shadow-[0_0_8px_rgba(183,166,255,0.8)]">
+                  <path d={sparkPath(10, 10, 10)} fill="currentColor" />
+                </svg>
+              </span>
+            </span>
+          </span>
 
           {/* Scan beam, clipped by the frame: the trail above the line would otherwise stick out over the top corners while
               the line is near the top edge */}

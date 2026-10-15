@@ -27,14 +27,16 @@ export const Nav = () => {
   });
 
   return (
+    // The entrance is a CSS animation of the pill (`rise-in` from above), not Motion's `initial`: Motion would keep the
+    // header hidden in the HTML until the scripts load — on a slow phone (Galaxy Note 10+) seconds, then a jump in
     <motion.header
       className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4"
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: isHidden ? -96 : 0, opacity: 1 }}
+      initial={false}
+      animate={{ y: isHidden ? -96 : 0 }}
       transition={{ type: "spring", stiffness: 260, damping: 30 }}
     >
       <nav
-        className={`flex w-full max-w-5xl items-center justify-between rounded-full border px-3 py-2 pl-4 transition-colors duration-500 ${
+        className={`flex w-full max-w-5xl animate-rise-in items-center justify-between rounded-full border px-3 py-2 pl-4 transition-colors duration-500 [--rise:-24px] ${
           isScrolled ? "border-line bg-ink/70 backdrop-blur-xl" : "border-transparent"
         }`}
       >

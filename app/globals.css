@@ -35,6 +35,7 @@
   --animate-wave: wave 2.6s linear infinite;
   --animate-spin-slow: spin 3.2s linear infinite;
   --animate-pulse-bar: pulse-bar 1.6s ease-in-out infinite;
+  --animate-spark-pulse: spark-pulse 0.8s ease-in-out infinite;
   --animate-scan: scan 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
   /* Entrances of the first screen run in CSS: the headline and the phone show before the scripts load.
      Delay — inline `animation-delay` */
@@ -54,6 +55,11 @@
     }
     50% {
       transform: scaleY(1.12);
+    }
+  }
+  @keyframes spark-pulse {
+    50% {
+      transform: scale(0.8);
     }
   }
   @keyframes letter-in {

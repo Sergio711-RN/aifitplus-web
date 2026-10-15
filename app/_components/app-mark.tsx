@@ -35,38 +35,52 @@ interface IAppMarkProps {
   className?: string;
 }
 
+/** The mark's box in the SVG geometry above: the tile's inner square, x and y from 17 to 143 */
+const VIEW_MIN = 17;
+const VIEW_SIZE = 126;
+const SPARK = { cx: 80, cy: 34, r: 10 };
+const share = (value: number) => `${((value / VIEW_SIZE) * 100).toFixed(3)}%`;
+
+/**
+ * The mark on the page is built of HTML boxes, not SVG shapes: Chrome animates `transform` of shapes inside an SVG on the
+ * main thread, so the bars and the spark stopped and jumped whenever the page was busy (seen on a Galaxy Note 10+,
+ * 15.10.2026). A transform animation of an HTML box runs on the compositor and stays smooth
+ */
 export const AppMark = ({ size = 32, animated = true, className }: IAppMarkProps) => (
-  <svg width={size} height={size} viewBox="17 17 126 126" aria-hidden className={className}>
+  <span aria-hidden className={`relative inline-block shrink-0 ${className ?? ""}`} style={{ width: size, height: size }}>
     {BARS.map((bar, index) => (
-      <rect
+      <span
         key={bar.key}
-        x={bar.x}
-        y={BAR_BOTTOM - bar.height}
-        width={BAR_WIDTH}
-        height={bar.height}
-        rx={BAR_WIDTH / 2}
-        fill={bar.color}
-        className={animated ? "animate-pulse-bar" : undefined}
-        style={{ transformBox: "fill-box", transformOrigin: "bottom", animationDelay: `${index * 0.2}s` }}
+        className={`absolute origin-bottom rounded-full ${animated ? "animate-pulse-bar" : ""}`}
+        style={{
+          left: share(bar.x - VIEW_MIN),
+          top: share(BAR_BOTTOM - bar.height - VIEW_MIN),
+          width: share(BAR_WIDTH),
+          height: share(bar.height),
+          background: bar.color,
+          animationDelay: `${index * 0.2}s`,
+        }}
       />
     ))}
-    <path
-      d={sparkPath(80, 34, 10)}
-      fill="var(--color-text)"
-      className={animated ? "animate-spin-slow" : undefined}
-      style={{ transformBox: "fill-box", transformOrigin: "center" }}
-    />
-  </svg>
+    <svg
+      viewBox="0 0 20 20"
+      className={`absolute ${animated ? "animate-spin-slow" : ""}`}
+      style={{
+        left: share(SPARK.cx - SPARK.r - VIEW_MIN),
+        top: share(SPARK.cy - SPARK.r - VIEW_MIN),
+        width: share(SPARK.r * 2),
+        height: share(SPARK.r * 2),
+      }}
+    >
+      <path d={sparkPath(10, 10, 10)} fill="var(--color-text)" />
+    </svg>
+  </span>
 );
 
 /** Four-point AI spark on its own, sized by the parent */
 export const Spark = ({ className, spin = false }: { className?: string; spin?: boolean }) => (
-  <svg viewBox="0 0 20 20" aria-hidden className={className}>
-    <path
-      d={sparkPath(10, 10, 10)}
-      fill="currentColor"
-      className={spin ? "animate-spin-slow" : undefined}
-      style={{ transformBox: "fill-box", transformOrigin: "center" }}
-    />
+  // The whole SVG spins, not the path inside: an HTML-level transform animation runs on the compositor (see `AppMark`)
+  <svg viewBox="0 0 20 20" aria-hidden className={`${className ?? ""} ${spin ? "animate-spin-slow" : ""}`}>
+    <path d={sparkPath(10, 10, 10)} fill="currentColor" />
   </svg>
 );
