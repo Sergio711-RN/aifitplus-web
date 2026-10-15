@@ -39,10 +39,12 @@ export const NotFoundView = ({ locale }: { locale: Locale }) => {
           <div className="absolute inset-[13%] rounded-full bg-plate shadow-[0_24px_60px_-12px_rgba(0,0,0,0.6)]">
             <div className="absolute inset-[12%] rounded-full bg-plate-well/70" />
           </div>
-          {/* Scan beam */}
-          <div className="animate-scan absolute inset-x-[5%] h-16 -translate-y-full">
-            <div className="h-full bg-gradient-to-b from-transparent to-apricot/25" />
-            <div className="h-0.5 rounded-full bg-apricot shadow-[0_0_18px_5px_rgba(255,176,120,0.6)]" />
+          {/* Scan beam, clipped by the frame: the trail above the line would stick out over the top corners */}
+          <div className="absolute inset-0 overflow-hidden rounded-2xl">
+            <div className="animate-scan absolute inset-x-[5%] h-16 -translate-y-full">
+              <div className="h-full bg-gradient-to-b from-transparent to-apricot/25" />
+              <div className="h-0.5 rounded-full bg-apricot shadow-[0_0_18px_5px_rgba(255,176,120,0.6)]" />
+            </div>
           </div>
           <svg viewBox="0 0 20 20" className="animate-spin-slow absolute -top-3 -right-3 size-9 text-lilac" aria-hidden>
             <path d={sparkPath(10, 10, 10)} fill="currentColor" />

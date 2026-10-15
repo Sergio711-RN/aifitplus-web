@@ -185,25 +185,28 @@ export const ScanDemo = () => {
             />
           </svg>
 
-          {/* Scan beam */}
-          <AnimatePresence>
-            {phase === "scan" && (
-              // The beam rides a layer as tall as the viewfinder, moved by `transform`: animating `top` would be a layout shift every frame
-              <motion.div
-                key={`beam-${step}`}
-                className="pointer-events-none absolute inset-0"
-                initial={{ y: "6%", opacity: 0 }}
-                animate={{ y: ["6%", "94%", "6%"], opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ y: { delay: 0.4, duration: (SCAN_MS - 400) / 1000, ease: "easeInOut" }, opacity: { duration: 0.2 } }}
-              >
-                <div className="absolute inset-x-[4%] top-0 h-20 -translate-y-full">
-                  <div className="h-full bg-gradient-to-b from-transparent to-apricot/30" />
-                  <div className="h-0.5 rounded-full bg-apricot shadow-[0_0_18px_5px_rgba(255,176,120,0.7)]" />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Scan beam, clipped by the frame: the trail above the line would otherwise stick out over the top corners while
+              the line is near the top edge */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+            <AnimatePresence>
+              {phase === "scan" && (
+                // The beam rides a layer as tall as the viewfinder, moved by `transform`: animating `top` would be a layout shift every frame
+                <motion.div
+                  key={`beam-${step}`}
+                  className="absolute inset-0"
+                  initial={{ y: "6%", opacity: 0 }}
+                  animate={{ y: ["6%", "94%", "6%"], opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ y: { delay: 0.4, duration: (SCAN_MS - 400) / 1000, ease: "easeInOut" }, opacity: { duration: 0.2 } }}
+                >
+                  <div className="absolute inset-x-[4%] top-0 h-20 -translate-y-full">
+                    <div className="h-full bg-gradient-to-b from-transparent to-apricot/30" />
+                    <div className="h-0.5 rounded-full bg-apricot shadow-[0_0_18px_5px_rgba(255,176,120,0.7)]" />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* AI probes */}
           {phase === "scan" &&
