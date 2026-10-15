@@ -10,7 +10,7 @@ import "./globals.css";
 
 const commissioner = Commissioner({
   variable: "--font-commissioner",
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   axes: ["FLAR", "VOLM"],
 });
 
