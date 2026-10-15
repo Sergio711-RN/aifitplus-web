@@ -23,7 +23,7 @@ import { PhoneFrame } from "./phone-frame";
 // Step copy is the app's «How it works» onboarding step (`t.how.steps`)
 const STEP_COUNT = 3;
 
-const SNAP_MEAL = MEALS.syrniki;
+const SNAP_MEAL = MEALS.fruitBowl;
 
 const Photo = ({ className, sizes = "300px" }: { className?: string; sizes?: string }) => (
   <span className={`relative block overflow-hidden ${className ?? ""}`}>
@@ -86,11 +86,11 @@ const SnapScreen = () => (
   </div>
 );
 
-/** What the AI found on the plate; names are `t.how.parts` in the same order */
+/** What the AI found in the bowl; names are `t.how.parts` in the same order, the sum is `MEALS.fruitBowl` */
 const PARTS = [
-  { grams: 200, kcal: 396 },
-  { grams: 80, kcal: 34 },
-  { grams: 40, kcal: 28 },
+  { grams: 120, kcal: 36 },
+  { grams: 90, kcal: 36 },
+  { grams: 125, kcal: 72 },
 ];
 
 const AnalyseScreen = () => {
@@ -138,7 +138,7 @@ const AnalyseScreen = () => {
           {t.how.answers.map((option, index) => (
             <motion.span
               key={option}
-              className={`rounded-full px-3.5 py-1.5 text-[12px] font-semibold ${index === 0 ? "bg-lilac text-ink" : "bg-surface-tile text-text-2"}`}
+              className={`rounded-full px-3.5 py-1.5 text-[12px] font-semibold whitespace-nowrap ${index === 0 ? "bg-lilac text-ink" : "bg-surface-tile text-text-2"}`}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 2.6 + index * 0.1, type: "spring", stiffness: 300, damping: 16 }}

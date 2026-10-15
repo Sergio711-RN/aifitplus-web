@@ -178,7 +178,13 @@ body {
 }
 @supports (width: calc(1px * tan(atan2(1cqh, 1px)))) {
   .fit-phone > div {
-    --fit: max(0.5, min(1, tan(atan2(100cqh, 619px)), tan(atan2(100cqw, 290px))));
+    --fit: max(0.5, min(var(--fit-max, 1), tan(atan2(100cqh, 619px)), tan(atan2(100cqw, 290px))));
+  }
+}
+/* Tablets and desktops: the phone may grow past its drawn size, up to the room it gets (owner's request, 15.10.2026) */
+@media (min-width: 768px) {
+  .fit-phone > div {
+    --fit-max: 1.15;
   }
 }
 

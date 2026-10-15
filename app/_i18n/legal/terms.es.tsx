@@ -31,9 +31,11 @@ const SECTIONS: ILegalSection[] = [
         <ul>
           <li>Calcula sus metas diarias de calorías, proteínas, grasas y carbohidratos a partir de sus respuestas.</li>
           <li>
-            Reconoce las comidas en fotos mediante inteligencia artificial y estima el peso de la porción, las calorías y los nutrientes.
+            Mediante inteligencia artificial, reconoce las comidas en fotos y a partir de sus descripciones, escritas o habladas, y estima el
+            peso de la porción, las calorías y los nutrientes.
           </li>
-          <li>Lleva un diario de comidas y de peso, y ofrece consejos y recordatorios.</li>
+          <li>Encuentra productos envasados por código de barras y lee las etiquetas nutricionales a partir de una foto.</li>
+          <li>Lleva un diario de comidas y de peso, y envía recordatorios.</li>
         </ul>
         <p>
           La aplicación se distribuye a través del App Store y Google Play en determinados países. No está disponible en la Federación de
@@ -48,7 +50,7 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          AIFit+ le ayuda a llevar el control de su alimentación, pero no diagnostica ni trata nada. Sus cálculos y consejos son solo
+          AIFit+ le ayuda a llevar el control de su alimentación, pero no diagnostica ni trata nada. Sus cálculos y estimaciones son solo
           informativos y no sustituyen la recomendación de un médico o nutricionista.
         </p>
         <p>
@@ -56,8 +58,13 @@ const SECTIONS: ILegalSection[] = [
           de los reales. Revise el resultado y corríjalo manualmente.
         </p>
         <p>
-          El reconocimiento de comidas, las preguntas aclaratorias y los consejos los genera un sistema de inteligencia artificial, no una
-          persona.
+          El reconocimiento de comidas, la lectura de etiquetas y las preguntas aclaratorias los genera un sistema de
+          inteligencia artificial, no una persona.
+        </p>
+        <p>
+          Los datos de los productos encontrados por código de barras provienen de Open Food Facts, una base de datos gratuita que completan
+          voluntarios y que se publica bajo la licencia Open Database License. Pueden estar incompletos o ser incorrectos: compárelos con la
+          etiqueta del envase.
         </p>
         <p>
           <strong>Alergias e intolerancias.</strong> La aplicación no puede ver todos los ingredientes en una foto y no verifica si los
@@ -82,7 +89,10 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>Puede usar la aplicación a partir de los {LEGAL.minAge} años.</li>
-        <li>Usted inicia sesión con un código de un solo uso enviado a su correo electrónico. Cada cuenta es para una sola persona.</li>
+        <li>
+          Usted inicia sesión con un código de un solo uso enviado a su correo electrónico, con su Apple ID o con su cuenta de Google. El
+          inicio de sesión a través de Apple o Google también está sujeto a sus términos. Cada cuenta es para una sola persona.
+        </li>
         <li>Proporcione información veraz sobre usted: sus metas se calculan a partir de ella.</li>
         <li>No comparta los códigos de inicio de sesión con otras personas. Las acciones realizadas en su cuenta se consideran suyas.</li>
         <li>Puede eliminar su cuenta en cualquier momento desde la aplicación: toque su foto de perfil → “Eliminar cuenta”.</li>
@@ -105,7 +115,6 @@ const SECTIONS: ILegalSection[] = [
           <strong>Eliminar su cuenta no cancela su suscripción</strong>: cancélela por separado en la tienda.
         </li>
         <li>Los reembolsos los gestionan el App Store y Google Play conforme a sus propias reglas.</li>
-        <li>Un código promocional agrega días gratuitos. No se puede canjear por dinero.</li>
         <li>
           Si cambiamos el precio, el nuevo precio se aplica a partir del siguiente período, y la tienda le pedirá su consentimiento con
           antelación.
@@ -126,7 +135,8 @@ const SECTIONS: ILegalSection[] = [
           <li>Revender el acceso al servicio.</li>
         </ul>
         <p>
-          Para prevenir abusos, el número de reconocimientos por día está limitado. Ese límite no interfiere con el uso normal.
+          Para prevenir abusos, el número de reconocimientos y recálculos con IA por día está limitado. Ese límite no interfiere con el uso
+          normal.
         </p>
       </>
     ),
@@ -136,8 +146,9 @@ const SECTIONS: ILegalSection[] = [
     title: "Sus fotos y sus datos",
     body: (
       <p>
-        Sus fotos y las entradas de su diario siguen siendo suyas. Usted nos autoriza a almacenarlas y tratarlas únicamente para que el
-        servicio funcione para usted: mostrar su diario, reconocer las comidas y sincronizar sus dispositivos. No publicamos su contenido.
+        Sus fotos, descripciones y las entradas de su diario siguen siendo suyas. Usted nos autoriza a almacenarlas y tratarlas únicamente
+        para que el servicio funcione para usted: mostrar su diario, reconocer las comidas y las etiquetas, y sincronizar sus dispositivos.
+        No publicamos su contenido.
         Para más detalles, consulte la <Link href="/es/privacy">Política de privacidad</Link>.
       </p>
     ),

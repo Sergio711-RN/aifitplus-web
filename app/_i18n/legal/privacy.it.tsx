@@ -31,27 +31,42 @@ const SECTIONS: ILegalSection[] = [
       <>
         <h3>Account</h3>
         <ul>
-          <li>Indirizzo email — per accedere con un codice.</li>
+          <li>
+            Indirizzo email — per accedere. Puoi accedere con un codice monouso inviato alla tua email, con il tuo ID Apple (su iPhone) o con
+            il tuo account Google.
+          </li>
+          <li>
+            Se accedi con Apple o Google, riceviamo da loro il tuo indirizzo email e, se lo consenti, il tuo nome. Apple ti permette di
+            nascondere la tua email: in quel caso riceviamo solo un indirizzo di inoltro. Non prendiamo la tua foto del profilo da Google.
+            Dopo l’accesso con Apple conserviamo un token rilasciato da Apple, per poter revocare l’accesso dell’app al tuo ID Apple quando
+            elimini l’account.
+          </li>
           <li>Nome, lingua dell’interfaccia e foto del profilo — se li fornisci.</li>
         </ul>
         <h3>Dati sulla salute e sul corpo</h3>
         <p>
-          Le risposte che dai al primo avvio: sesso, anno di nascita, altezza, peso e storico delle pesate, peso obiettivo e ritmo, livello
+          Le risposte che dai al primo avvio: sesso, età, altezza, peso e storico delle pesate, peso obiettivo e ritmo, livello
           di attività, tipo di alimentazione e che cosa vuoi migliorare. Si tratta di una
           categoria particolare di dati: arrivano sul nostro server solo dopo che hai dato un consenso separato al momento della
           registrazione. Fino ad allora le tue risposte restano soltanto sul tuo dispositivo.
         </p>
         <h3>Diario alimentare</h3>
         <ul>
-          <li>Le foto dei pasti che scatti o scegli dalla galleria.</li>
+          <li>Le foto dei pasti che scatti o scegli dalla galleria, compresa una vista laterale facoltativa.</li>
           <li>
             Le descrizioni dei pasti che scrivi o detti. La voce viene trasformata in testo mentre parli; salviamo solo il testo, non la
             registrazione della tua voce.
           </li>
           <li>
+            I codici a barre dei prodotti che scansioni o inserisci. Se un prodotto non è nel database, puoi fotografarne l’etichetta
+            nutrizionale: l’IA legge i valori e salviamo il prodotto nel tuo account (nome, marca, valori nutrizionali per 100 g, peso della
+            confezione e della porzione), così la scansione successiva lo trova. La foto dell’etichetta non viene salvata.
+          </li>
+          <li>
             I risultati del riconoscimento: piatto, ingredienti, peso della porzione, calorie, proteine, grassi, carboidrati, le tue
             correzioni e le risposte alle domande di chiarimento.
           </li>
+          <li>I pasti che aggiungi a «Salvati».</li>
           <li>Ora e tipo di pasto.</li>
         </ul>
         <h3>Abbonamento</h3>
@@ -59,12 +74,31 @@ const SECTIONS: ILegalSection[] = [
           Stato dell’abbonamento, piano, date della prova e del rinnovo. I pagamenti sono gestiti da App Store e Google Play: noi non
           riceviamo il numero della tua carta né altri dati di pagamento.
         </p>
+        <h3>Messaggi all’assistenza</h3>
+        <p>
+          Se ci scrivi dall’app, riceviamo l’argomento, l’indirizzo email per la nostra risposta, il testo del messaggio, la versione
+          dell’app, il sistema operativo del telefono e la lingua dell’interfaccia. Il messaggio viene salvato nel tuo account e inviato
+          alla nostra casella di posta.
+        </p>
         <h3>Impostazioni e dati tecnici</h3>
         <ul>
-          <li>Orari dei promemoria, unità di misura, codice promozionale inserito.</li>
-          <li>Un identificativo utente interno e una chiave di sessione sul tuo dispositivo.</li>
+          <li>Impostazioni dei promemoria e unità di misura.</li>
+          <li>Un identificativo utente interno e una chiave di sessione cifrata sul tuo dispositivo.</li>
+          <li>
+            Un registro di ogni richiesta all’IA: tipo, ora, esito e dimensione. Ci serve per il limite giornaliero e per sapere quanto
+            costa il servizio.
+          </li>
           <li>
             Log tecnici del server: indirizzo IP, ora e tipo di richiesta. Ci servono per far funzionare il servizio e proteggerlo.
+          </li>
+          <li>
+            Report di arresti anomali ed errori: identificativo utente interno, modello del dispositivo, sistema operativo, versione
+            dell’app, la schermata in cui si è verificato l’errore e gli ultimi passaggi tecnici dell’app prima dell’errore. I report non
+            contengono la tua email, il tuo indirizzo IP né screenshot.
+          </li>
+          <li>
+            Sul telefono l’app conserva una copia del diario e delle statistiche caricati più di recente, per poterli vedere anche offline,
+            e dei prodotti trovati tramite codice a barre. Tutto questo viene cancellato quando esci dall’account.
           </li>
         </ul>
         <h3>Sito web</h3>
@@ -93,8 +127,9 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Funzionamento dell’app</strong>: accesso, calcolo dei tuoi obiettivi giornalieri, riconoscimento dei pasti, diario,
-          sincronizzazione tra dispositivi. Base giuridica: il nostro contratto con te (<Link href="/it/terms">Condizioni d’uso</Link>),
+          <strong>Funzionamento dell’app</strong>: accesso, calcolo dei tuoi obiettivi giornalieri, riconoscimento dei pasti e delle
+          etichette nutrizionali, ricerca dei prodotti tramite codice a barre, diario, sincronizzazione tra dispositivi, risposte ai tuoi
+          messaggi. Base giuridica: il nostro contratto con te (<Link href="/it/terms">Condizioni d’uso</Link>),
           art. 6, par. 1, lett. b) del GDPR.
         </li>
         <li>
@@ -107,8 +142,9 @@ const SECTIONS: ILegalSection[] = [
           lett. b) del GDPR.
         </li>
         <li>
-          <strong>Sicurezza</strong>: protezione da intrusioni e abusi, ad esempio un limite giornaliero alle richieste all’IA. Base
-          giuridica: il nostro legittimo interesse a offrire un servizio funzionante, art. 6, par. 1, lett. f) del GDPR.
+          <strong>Sicurezza e stabilità</strong>: protezione da intrusioni e abusi, ad esempio un limite giornaliero alle richieste
+          all’IA; report degli errori per individuare e correggere i bug. Base giuridica: il nostro legittimo interesse a offrire un
+          servizio funzionante, art. 6, par. 1, lett. f) del GDPR.
         </li>
         <li>
           <strong>Statistiche del sito</strong>: quante persone visitano il sito e da dove arrivano, per poterlo migliorare. Base
@@ -116,7 +152,9 @@ const SECTIONS: ILegalSection[] = [
           cookie», in fondo alla pagina.
         </li>
         <li>
-          <strong>I promemoria</strong> vengono inviati solo se li attivi e autorizzi le notifiche nelle impostazioni di sistema.
+          <strong>I promemoria</strong> vengono programmati sul tuo telefono e mostrati solo se li attivi e autorizzi le notifiche nelle
+          impostazioni di sistema. Le impostazioni dei promemoria vengono salvate nel tuo account, così le ritrovi su un altro
+          dispositivo.
         </li>
       </ul>
     ),
@@ -135,17 +173,23 @@ const SECTIONS: ILegalSection[] = [
   },
   {
     id: "ai",
-    title: "Come funziona il riconoscimento delle foto",
+    title: "Come funziona il riconoscimento",
     body: (
       <>
         <p>
           La foto viene compressa sul tuo dispositivo e caricata in uno spazio di archiviazione privato a cui può accedere solo il tuo
           account. Il server la invia a un modello di intelligenza artificiale, riceve l’analisi del pasto e salva il risultato nel tuo
-          diario.
+          diario. Le descrizioni dei pasti che scrivi o detti e le foto delle etichette nutrizionali arrivano al modello nello stesso modo.
         </p>
         <p>
-          Il modello è fornito da Anthropic. Anthropic tratta la foto per nostro conto e solo per rispondere alla richiesta. Secondo le
-          condizioni della sua API commerciale, il contenuto delle richieste non viene usato per addestrare i modelli.
+          Il modello è Gemini di Google. Google tratta la richiesta per nostro conto e solo per rispondere. Usiamo l’API Gemini a
+          pagamento: secondo le sue condizioni, il contenuto delle richieste non viene usato per addestrare i modelli di Google; Google può
+          conservarlo per un periodo limitato al solo scopo di individuare abusi.
+        </p>
+        <p>
+          La foto originale e la vista laterale vengono eliminate dall’archivio 30 giorni dopo lo scatto; il diario conserva una piccola
+          anteprima finché il pasto vi rimane. Un pasto che non è stato possibile analizzare viene eliminato insieme alle sue foto entro un
+          giorno.
         </p>
         <p>
           Le stime di calorie e nutrienti sono approssimative. Controlla il risultato e correggilo: le tue correzioni vengono salvate nel
@@ -165,12 +209,13 @@ const SECTIONS: ILegalSection[] = [
         </p>
         <ul>
           <li>
-            <strong>Supabase</strong> — database, accesso e archiviazione dei file. Tutti i dati dell’account, il diario, le foto. Server
-            in Irlanda (UE).
+            <strong>Supabase</strong> — database, accesso e archiviazione dei file. Tutti i dati dell’account, il diario, le foto, i
+            messaggi all’assistenza. Server in Irlanda (UE).
           </li>
           <li>
-            <strong>Anthropic</strong> — riconoscimento dei pasti. Le foto, le descrizioni dei pasti e il testo delle risposte alle domande
-            di chiarimento. Stati Uniti.
+            <strong>Google</strong> — riconoscimento dei pasti e delle etichette nutrizionali (API Gemini). Le foto dei pasti e delle
+            etichette, le descrizioni dei pasti, le risposte alle domande di chiarimento e le correzioni degli ingredienti. Google LLC, Stati
+            Uniti.
           </li>
           <li>
             <strong>Google</strong> — riconoscimento vocale sui telefoni Android che non riconoscono la voce sul dispositivo. Mentre detti,
@@ -180,11 +225,22 @@ const SECTIONS: ILegalSection[] = [
             Uniti.
           </li>
           <li>
-            <strong>Resend</strong> — invio delle email con il codice di accesso. Indirizzo email e lingua dell’email. Stati Uniti.
+            <strong>Open Food Facts</strong> — il database dei prodotti. Quando scansioni un codice a barre, l’app cerca il prodotto in Open
+            Food Facts direttamente dal tuo telefono: Open Food Facts riceve il numero del codice a barre e, come qualsiasi sito web, il tuo
+            indirizzo IP. Non gli inviamo i dati del tuo account. Open Food Facts tratta le richieste secondo la propria informativa.
+            Associazione Open Food Facts, Francia.
+          </li>
+          <li>
+            <strong>Resend</strong> — invio delle email con il codice di accesso e consegna dei tuoi messaggi all’assistenza alla nostra
+            casella di posta. Indirizzo email, lingua dell’email, testo del messaggio. Stati Uniti.
           </li>
           <li>
             <strong>RevenueCat</strong> — gestione degli abbonamenti. Identificativo utente interno e cronologia degli acquisti
             proveniente dallo store. Stati Uniti.
+          </li>
+          <li>
+            <strong>Sentry</strong> — report di arresti anomali ed errori (i dati sono elencati in «Impostazioni e dati tecnici»).
+            Functional Software, Inc., Stati Uniti; i dati sono conservati nell’UE (Germania).
           </li>
           <li>
             <strong>Google</strong> — statistiche del sito (Google Analytics), solo con il tuo consenso. Identificativo del browser
@@ -192,8 +248,8 @@ const SECTIONS: ILegalSection[] = [
             essere trattati negli Stati Uniti.
           </li>
           <li>
-            <strong>Apple e Google</strong> — pagamento degli abbonamenti e notifiche. Trattano i dati secondo le proprie informative, in
-            qualità di titolari autonomi del trattamento.
+            <strong>Apple e Google</strong> — pagamento degli abbonamenti e, se lo scegli, accesso con il tuo ID Apple o account Google.
+            Trattano i dati secondo le proprie informative, in qualità di titolari autonomi del trattamento.
           </li>
         </ul>
         <p>
@@ -208,9 +264,10 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Il nostro archivio principale si trova nell’Unione europea (Irlanda). Il riconoscimento delle foto, il riconoscimento vocale su
-          alcuni telefoni Android, le email, la gestione degli abbonamenti e le statistiche del sito sono affidati a fornitori con sede
-          negli Stati Uniti, perciò alcuni dati vengono trasferiti al di fuori dello Spazio economico europeo.
+          Il nostro archivio principale si trova nell’Unione europea (Irlanda), i report degli errori sono conservati in Germania e il
+          database dei prodotti Open Food Facts si trova in Francia. Il riconoscimento di foto, descrizioni ed etichette, il riconoscimento
+          vocale su alcuni telefoni Android, le email, la gestione degli abbonamenti e le statistiche del sito sono affidati a fornitori
+          con sede negli Stati Uniti, perciò alcuni dati vengono trasferiti al di fuori dello Spazio economico europeo.
         </p>
         <p>
           Questi trasferimenti si basano sulla decisione di adeguatezza della Commissione europea (EU-US Data Privacy Framework) per i
@@ -225,15 +282,27 @@ const SECTIONS: ILegalSection[] = [
     title: "Per quanto tempo conserviamo i dati",
     body: (
       <ul>
-        <li>Dati dell’account, diario e foto — finché hai un account.</li>
+        <li>Dati dell’account, diario, pasti salvati e prodotti letti dalle etichette — finché hai un account.</li>
         <li>
-          Quando elimini l’account, il profilo, il piano, lo storico del peso, il diario e le foto vengono eliminati subito. Scompaiono
-          dalle copie di backup del fornitore di hosting entro {LEGAL.backupRetentionDays} giorni.
+          Foto originali dei pasti e viste laterali — 30 giorni; l’anteprima nel diario — finché non elimini il pasto o l’account. Le foto
+          delle etichette non vengono salvate.
         </li>
-        <li>Le risposte inserite prima della registrazione restano soltanto sul tuo dispositivo e vengono cancellate quando esci dall’account.</li>
         <li>
-          App Store, Google Play e RevenueCat conservano i dati sugli acquisti per il tempo richiesto dalle leggi sulla contabilità dei
-          pagamenti.
+          Messaggi all’assistenza — finché non elimini l’account; l’email nella nostra casella di posta — per il tempo necessario a
+          risponderti.
+        </li>
+        <li>Report degli errori — non oltre 90 giorni.</li>
+        <li>
+          Quando elimini l’account, il profilo, il piano, lo storico del peso, il diario, le foto e i messaggi all’assistenza vengono
+          eliminati subito, così come il tuo record cliente presso RevenueCat; se hai effettuato l’accesso con Apple, revochiamo l’accesso
+          dell’app al tuo ID Apple. I dati scompaiono dalle copie di backup del fornitore di hosting
+          entro {LEGAL.backupRetentionDays} giorni.
+        </li>
+        <li>
+          Le risposte inserite prima della registrazione e le copie dei dati sul tuo telefono vengono cancellate quando esci dall’account.
+        </li>
+        <li>
+          App Store e Google Play conservano i dati sugli acquisti per il tempo richiesto dalle leggi sulla contabilità dei pagamenti.
         </li>
       </ul>
     ),
@@ -245,7 +314,8 @@ const SECTIONS: ILegalSection[] = [
       <>
         <ul>
           <li>
-            <strong>Sapere</strong> quali dati conserviamo e ottenerne una copia.
+            <strong>Sapere</strong> quali dati conserviamo e ottenerne una copia. Nell’app: tocca la foto del profilo → «Dati personali» →
+            «Scarica una copia dei miei dati».
           </li>
           <li>
             <strong>Ricevere</strong> i tuoi dati in un formato leggibile da dispositivo automatico, per trasferirli a un altro servizio.
@@ -259,7 +329,7 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>Revocare il consenso</strong> al trattamento dei dati sulla salute. Senza questi dati l’app non può calcolare il tuo
-            piano, quindi revocare il consenso comporta l’eliminazione dell’account.
+            piano, quindi revocare il consenso comporta l’eliminazione dell’account: «Dati personali» → «Revoca il consenso».
           </li>
           <li>
             <strong>Opporti</strong> al trattamento o chiederne la limitazione.
@@ -284,7 +354,11 @@ const SECTIONS: ILegalSection[] = [
         <li>Regole di accesso al database: ogni account vede solo i propri record e i propri file.</li>
         <li>Le foto sono conservate in uno spazio di archiviazione privato e i relativi link non sono pubblici.</li>
         <li>Le chiavi segrete del servizio sono conservate solo sul server, non nell’app.</li>
-        <li>L’accesso avviene con un codice monouso: non ci sono password da rubare.</li>
+        <li>
+          La chiave di sessione sul tuo telefono è cifrata; la chiave di cifratura è conservata nell’archivio sicuro del sistema (Keychain
+          o Keystore).
+        </li>
+        <li>L’accesso avviene con un codice monouso, con l’ID Apple o con un account Google: non ci sono password da rubare.</li>
       </ul>
     ),
   },
@@ -314,7 +388,7 @@ export const privacyIt: ILegalDocument = {
   title: "Informativa sulla privacy",
   lead: (
     <p>
-      AIFit+ conta le calorie a partire dalle foto di ciò che mangi. Per farlo ha bisogno di dati sul tuo corpo e sulla tua alimentazione.
+      AIFit+ conta le calorie e i nutrienti di ciò che mangi. Per farlo ha bisogno di dati sul tuo corpo e sulla tua alimentazione.
       Ecco, in breve e senza giri di parole: che cosa raccogliamo, perché, dove lo conserviamo e come eliminare tutto.
     </p>
   ),

@@ -1,11 +1,11 @@
 // Sample meals shared by the sections; their names and all copy are in `app/_i18n/dictionaries`. Photos: Unsplash, free licence
 // (unsplash.com/license); the originals are in `assets/photos`, the copies the site serves — in `public/photos` (`npm run photos`).
-// Unsplash ids: syrniki — photo-1693422662014-cfd9a489e2af, salad — photo-1761315600943-d8a5bb0c499f, chickenRice — photo-1788090485550-ca71c6d578fb,
+// Unsplash ids: fruitBowl — photo-1519996529931-28324d5a630e (square crop around the bowl), salad — photo-1761315600943-d8a5bb0c499f, chickenRice — photo-1788090485550-ca71c6d578fb,
 // yogurt — photo-1678651561454-64dfc5d113db, lavash — photo-1777994505601-fe18ab41f8f0, bowl — photo-1546069901-d5bfd2cbfb1f.
 
 import { photo } from "./photo";
 
-export type Dish = "syrniki" | "salad" | "chickenRice" | "yogurt" | "lavash" | "bowl";
+export type Dish = "fruitBowl" | "salad" | "chickenRice" | "yogurt" | "lavash" | "bowl";
 
 export type MealType = "breakfast" | "lunch" | "snack" | "dinner";
 
@@ -21,14 +21,15 @@ export interface IMeal {
 }
 
 export const MEALS: Record<Dish, IMeal> = {
-  syrniki: {
-    dish: "syrniki",
-    grams: 320,
-    kcal: 458,
-    proteinG: 24,
-    fatG: 18,
-    carbsG: 50,
-    photo: photo("syrniki"),
+  /** Watermelon 120 g, strawberries and blueberries 90 g, cherries, kiwi and grapefruit 125 g — `t.how.parts` */
+  fruitBowl: {
+    dish: "fruitBowl",
+    grams: 335,
+    kcal: 144,
+    proteinG: 3,
+    fatG: 1,
+    carbsG: 31,
+    photo: photo("fruitBowl"),
   },
   salad: {
     dish: "salad",
@@ -79,7 +80,7 @@ export const MEALS: Record<Dish, IMeal> = {
 
 /** One sample day for the timeline section */
 export const DAY: { time: string; mealType: MealType; meal: IMeal }[] = [
-  { time: "08:20", mealType: "breakfast", meal: MEALS.syrniki },
+  { time: "08:20", mealType: "breakfast", meal: MEALS.fruitBowl },
   { time: "11:40", mealType: "snack", meal: MEALS.yogurt },
   { time: "14:05", mealType: "lunch", meal: MEALS.chickenRice },
   { time: "17:30", mealType: "snack", meal: MEALS.bowl },

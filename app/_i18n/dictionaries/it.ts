@@ -6,7 +6,7 @@ export const it: Dictionary = {
   meta: {
     title: "AIFit+ — contacalorie con IA da una foto del piatto",
     description:
-      "Fotografa il tuo pasto: AIFit+ stima piatto, porzione, calorie e macro. Obiettivo su misura, diario alimentare e consigli dell’IA. Presto su iOS e Android.",
+      "Fotografa il tuo pasto: AIFit+ stima piatto, porzione, calorie e macro. Obiettivo su misura, diario alimentare, codici a barre e voce. Presto su iOS e Android.",
     ogImageAlt: "AIFit+ — calorie e macro da una foto del piatto",
     privacyTitle: "Informativa sulla privacy — AIFit+",
     privacyDescription:
@@ -29,7 +29,7 @@ export const it: Dictionary = {
   macros: { carbs: "Carboidrati", fats: "Grassi", protein: "Proteine", carbsShort: "C", fatsShort: "G", proteinShort: "P" },
   mealTypes: { breakfast: "Colazione", lunch: "Pranzo", snack: "Spuntino", dinner: "Cena" },
   meals: {
-    syrniki: "Frittelle di ricotta, frutti rossi e kiwi",
+    fruitBowl: "Coppa di frutta fresca",
     salad: "Insalata di pollo e avocado",
     chickenRice: "Riso con pollo glassato al sesamo",
     yogurt: "Yogurt ai lamponi",
@@ -60,13 +60,13 @@ export const it: Dictionary = {
     /** Under the pinned section until the first scroll */
     hint: "Scorri per vedere tutti i passi",
     steps: [
-      { title: "Fotografa il piatto", text: "Un paio di scatti da angolazioni diverse rendono la stima più precisa." },
-      { title: "L’IA analizza il piatto", text: "Individua ingredienti e porzione. Se qualcosa non è chiaro, ti fa una domanda veloce." },
+      { title: "Registra cosa mangi", text: "Una foto, un codice a barre, la voce o poche parole: come preferisci." },
+      { title: "L’IA fa i calcoli", text: "Individua ingredienti e porzione. Se qualcosa non è chiaro, ti fa una domanda veloce." },
       { title: "Segui la tua giornata", text: "La schermata principale mostra quanto ti resta e che cosa ti manca." },
     ],
-    parts: ["Frittelle di ricotta, 5 pz", "Fragole e ciliegie", "Kiwi e albicocca"],
-    question: "Le frittelle erano fritte nell’olio o cotte al forno? Sono circa 60 kcal di differenza.",
-    answers: ["Fritte nell’olio", "Al forno"],
+    parts: ["Anguria", "Fragole e mirtilli", "Ciliegie, kiwi, pompelmo"],
+    question: "Sotto la frutta c’è yogurt o granola? Sono circa 150 kcal di differenza.",
+    answers: ["No", "Sì, yogurt"],
     today: "Oggi",
     streak: "Serie: 12 giorni",
     weekdays: ["Lu", "Ma", "Me", "Gi", "Ve", "Sa", "Do"],
@@ -76,11 +76,16 @@ export const it: Dictionary = {
   day: {
     title: "Tutta la tua giornata in una sola schermata",
     text: "Ogni pasto finisce sulla linea del tempo della giornata e il bicchiere si riempie con quello che hai mangiato. Vedi subito quanto ti resta e che cosa manca.",
-    tipTitle: "Consiglio dell’IA",
-    tip: (eaten: string, target: string, closes: string) =>
-      `Proteine finora: ${eaten} su ${target} g. Una cena con pollo, tonno o fiocchi di latte ne copre circa ${closes} g.`,
-    add: "Aggiungi insalata di pollo",
-    added: "Aggiunta alla cena",
+    quickAdd: {
+      title: "Aggiungi senza foto",
+      placeholder: "Mela, 170 g",
+      hint: "I grammi sono facoltativi: l’IA te li chiederà",
+      analyzing: "Calcolo delle calorie…",
+      send: "Stima",
+      saved: "Salvati",
+      voice: "Detta",
+      added: "Aggiunta alla cena",
+    },
   },
   plan: {
     title: "Un obiettivo giornaliero fatto per te",
@@ -104,7 +109,7 @@ export const it: Dictionary = {
   },
   cta: {
     title: "Presto sul tuo telefono",
-    text: "Stiamo ultimando l’app. AIFit+ sta per arrivare su App Store e Google Play: fotografa il tuo primo piatto il giorno del lancio.",
+    text: "Stiamo ultimando l’app. AIFit+ sta per arrivare su App Store e Google Play: registra il tuo primo pasto il giorno del lancio.",
   },
   common: {
     ofKcal: (kcal: string) => `su ${kcal} kcal`,
@@ -112,7 +117,7 @@ export const it: Dictionary = {
   notFound: {
     metaTitle: "Pagina non trovata — AIFit+",
     chip: "Nessun piatto trovato",
-    title: "Questo piatto è vuoto",
+    title: "Qui non c’è niente da riconoscere",
     text: "Questa pagina non esiste. Forse è stata spostata, oppure c’è un errore nel link.",
     home: "Vai alla pagina iniziale",
     how: "Come funziona AIFit+",

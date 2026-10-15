@@ -6,7 +6,7 @@ export const en: Dictionary = {
   meta: {
     title: "AIFit+ — AI calorie counter from a food photo",
     description:
-      "Snap your meal and AIFit+ estimates the dish, portion, calories and macros. A personal daily target, food diary and AI tips. Coming soon to iOS and Android.",
+      "Snap your meal and AIFit+ estimates the dish, portion, calories and macros. Daily target, food diary, barcodes and voice. Coming soon to iOS and Android.",
     ogImageAlt: "AIFit+ — calories and macros from a food photo",
     privacyTitle: "Privacy Policy — AIFit+",
     privacyDescription:
@@ -29,7 +29,7 @@ export const en: Dictionary = {
   macros: { carbs: "Carbs", fats: "Fat", protein: "Protein", carbsShort: "C", fatsShort: "F", proteinShort: "P" },
   mealTypes: { breakfast: "Breakfast", lunch: "Lunch", snack: "Snack", dinner: "Dinner" },
   meals: {
-    syrniki: "Cheese pancakes with berries and kiwi",
+    fruitBowl: "Fruit and berry bowl",
     salad: "Chicken and avocado salad",
     chickenRice: "Rice with sesame-glazed chicken",
     yogurt: "Yogurt with raspberries",
@@ -60,13 +60,13 @@ export const en: Dictionary = {
     /** Under the pinned section until the first scroll */
     hint: "Scroll to go through the steps",
     steps: [
-      { title: "Snap your plate", text: "A couple of shots from different angles make it more accurate." },
-      { title: "AI breaks the dish down", text: "It finds the ingredients and portion. If something is unclear, it asks a quick question." },
+      { title: "Log what you eat", text: "A photo, a barcode, your voice or a few words — whatever is easiest." },
+      { title: "AI does the maths", text: "It finds the ingredients and portion. If something is unclear, it asks a quick question." },
       { title: "Follow your day", text: "Home shows what's left and what you're missing." },
     ],
-    parts: ["Cheese pancakes, 5 pcs", "Strawberries and cherries", "Kiwi and apricot"],
-    question: "Were the pancakes fried in oil or baked? That's about 60 kcal of difference.",
-    answers: ["Fried in oil", "Baked"],
+    parts: ["Watermelon", "Strawberries and blueberries", "Cherries, kiwi, grapefruit"],
+    question: "Is there yoghurt or granola under the fruit? That's about 150 kcal of difference.",
+    answers: ["No", "Yes, yoghurt"],
     today: "Today",
     streak: "12-day streak",
     weekdays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
@@ -76,11 +76,16 @@ export const en: Dictionary = {
   day: {
     title: "Your whole day on one screen",
     text: "Every meal lands on the day's timeline and the glass fills up with what you've eaten. You can see how much is left and what's missing.",
-    tipTitle: "AI tip",
-    tip: (eaten: string, target: string, closes: string) =>
-      `Protein so far: ${eaten} of ${target} g. A dinner with chicken, tuna or cottage cheese covers about ${closes} g.`,
-    add: "Add chicken salad",
-    added: "Added to dinner",
+    quickAdd: {
+      title: "Add without a photo",
+      placeholder: "Apple, 170 g",
+      hint: "Grams are optional — the AI will ask",
+      analyzing: "Counting calories…",
+      send: "Estimate",
+      saved: "Saved",
+      voice: "Dictate",
+      added: "Added to dinner",
+    },
   },
   plan: {
     title: "A daily target made for you",
@@ -104,7 +109,7 @@ export const en: Dictionary = {
   },
   cta: {
     title: "Coming soon to your phone",
-    text: "We're finishing the app. AIFit+ is coming to the App Store and Google Play — snap your first plate on launch day.",
+    text: "We're finishing the app. AIFit+ is coming to the App Store and Google Play — log your first meal on launch day.",
   },
   common: {
     ofKcal: (kcal: string) => `of ${kcal} kcal`,
@@ -112,7 +117,7 @@ export const en: Dictionary = {
   notFound: {
     metaTitle: "Page not found — AIFit+",
     chip: "No dish found",
-    title: "This plate is empty",
+    title: "Nothing to recognise here",
     text: "This page doesn't exist. It may have moved, or there's a typo in the link.",
     home: "Go to home page",
     how: "How AIFit+ works",

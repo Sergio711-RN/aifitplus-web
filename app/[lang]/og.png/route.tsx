@@ -7,7 +7,7 @@ import { isLocale, LOCALES, type Locale } from "../../_i18n/config";
 import { getDictionary } from "../../_i18n/dictionaries";
 import { OG_IMAGE_SIZE as SIZE } from "../../_i18n/seo";
 
-// Share preview `/{lang}/og.png` for every page of a language, linked by `pageMetadata()`: mark, headline and the plate
+// Share preview `/{lang}/og.png` for every page of a language, linked by `pageMetadata()`: mark, headline and the dish
 // in the viewfinder, like the hero. A plain route rather than `opengraph-image`: its per-language metadata does not
 // survive the static export. Rendered at build time. Commissioner from the app's font package — the default font has no Cyrillic.
 
@@ -39,7 +39,7 @@ export async function GET(_request: Request, { params }: RouteContext<"/[lang]/o
   const { lang } = await params;
   const t = getDictionary(localeOf(lang));
   const [extraBold, medium] = await fonts;
-  const plate = `data:image/jpeg;base64,${(await readFile(join(process.cwd(), "assets/photos/syrniki.jpg"))).toString("base64")}`;
+  const dish = `data:image/jpeg;base64,${(await readFile(join(process.cwd(), "assets/photos/fruitBowl.jpg"))).toString("base64")}`;
   const mark = `data:image/svg+xml;utf8,${encodeURIComponent(appMarkSvg())}`;
   const spark = `data:image/svg+xml;utf8,${encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 0Q10 10 20 10Q10 10 10 20Q10 10 0 10Q10 10 10 0Z" fill="${COLORS.lilac}"/></svg>`,
@@ -76,7 +76,7 @@ export async function GET(_request: Request, { params }: RouteContext<"/[lang]/o
 
         <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: 440, height: 502 }}>
           <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: 420, height: 420 }}>
-            <img src={plate} width={360} height={360} alt="" style={{ borderRadius: 180, objectFit: "cover" }} />
+            <img src={dish} width={360} height={360} alt="" style={{ borderRadius: 180, objectFit: "cover" }} />
             <Corner position="tl" />
             <Corner position="bl" />
             <Corner position="br" />

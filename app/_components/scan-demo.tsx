@@ -15,7 +15,7 @@ import { FoodThumb } from "./food-thumb";
 const MEAL_TYPES: MealType[] = ["breakfast", "lunch", "snack"];
 
 const SEQUENCE: { meal: IMeal; mealType: MealType }[] = [
-  { meal: MEALS.syrniki, mealType: "breakfast" },
+  { meal: MEALS.fruitBowl, mealType: "breakfast" },
   { meal: MEALS.bowl, mealType: "lunch" },
   { meal: MEALS.yogurt, mealType: "snack" },
 ];

@@ -7,7 +7,7 @@ export const es: Dictionary = {
   meta: {
     title: "AIFit+ — contador de calorías con IA a partir de una foto",
     description:
-      "Toma una foto de tu comida y AIFit+ estima plato, porción, calorías y macros. Meta diaria personal, diario de comidas y consejos de IA. Pronto en iOS y Android.",
+      "Toma una foto de tu comida y AIFit+ estima plato, porción, calorías y macros. Meta diaria, diario de comidas, códigos de barras y voz. Pronto en iOS y Android.",
     ogImageAlt: "AIFit+ — calorías y macros a partir de una foto de tu comida",
     privacyTitle: "Política de privacidad — AIFit+",
     privacyDescription:
@@ -30,7 +30,7 @@ export const es: Dictionary = {
   macros: { carbs: "Carbohidratos", fats: "Grasas", protein: "Proteínas", carbsShort: "C", fatsShort: "G", proteinShort: "P" },
   mealTypes: { breakfast: "Desayuno", lunch: "Almuerzo", snack: "Merienda", dinner: "Cena" },
   meals: {
-    syrniki: "Tortitas de queso con frutos rojos y kiwi",
+    fruitBowl: "Tazón de frutas y bayas",
     salad: "Ensalada de pollo y aguacate",
     chickenRice: "Arroz con pollo glaseado al sésamo",
     yogurt: "Yogur con frambuesas",
@@ -61,13 +61,13 @@ export const es: Dictionary = {
     /** Under the pinned section until the first scroll */
     hint: "Desliza para recorrer los pasos",
     steps: [
-      { title: "Fotografía tu plato", text: "Un par de tomas desde distintos ángulos mejoran la precisión." },
-      { title: "La IA analiza el plato", text: "Identifica los ingredientes y la porción. Si algo no queda claro, te hace una pregunta rápida." },
+      { title: "Registra lo que comes", text: "Una foto, un código de barras, tu voz o unas palabras: como te resulte más cómodo." },
+      { title: "La IA hace las cuentas", text: "Identifica los ingredientes y la porción. Si algo no queda claro, te hace una pregunta rápida." },
       { title: "Sigue tu día", text: "El inicio te muestra cuánto te queda y qué te falta." },
     ],
-    parts: ["Tortitas de queso, 5 piezas", "Fresas y cerezas", "Kiwi y albaricoque"],
-    question: "¿Las tortitas se frieron en aceite o se hornearon? Son unas 60 kcal de diferencia.",
-    answers: ["Fritas en aceite", "Al horno"],
+    parts: ["Sandía", "Fresas y arándanos", "Cerezas, kiwi, toronja"],
+    question: "¿Hay yogur o granola debajo de la fruta? Son unas 150 kcal de diferencia.",
+    answers: ["No", "Sí, yogur"],
     today: "Hoy",
     streak: "12 días seguidos",
     weekdays: ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"],
@@ -77,11 +77,16 @@ export const es: Dictionary = {
   day: {
     title: "Todo tu día en una sola pantalla",
     text: "Cada comida se suma a la línea de tiempo del día y el vaso se va llenando con lo que comiste. Ves cuánto te queda y qué te falta.",
-    tipTitle: "Consejo de la IA",
-    tip: (eaten: string, target: string, closes: string) =>
-      `Proteínas hasta ahora: ${eaten} de ${target} g. Una cena con pollo, atún o queso cottage aporta unos ${closes} g.`,
-    add: "Agregar ensalada de pollo",
-    added: "Agregado a la cena",
+    quickAdd: {
+      title: "Agregar sin foto",
+      placeholder: "Manzana, 170 g",
+      hint: "Los gramos son opcionales: la IA te preguntará",
+      analyzing: "Calculando calorías…",
+      send: "Estimar",
+      saved: "Guardados",
+      voice: "Dictar",
+      added: "Agregado a la cena",
+    },
   },
   plan: {
     title: "Una meta diaria hecha para ti",
@@ -105,7 +110,7 @@ export const es: Dictionary = {
   },
   cta: {
     title: "Muy pronto en tu teléfono",
-    text: "Estamos terminando la aplicación. AIFit+ llegará al App Store y a Google Play: fotografía tu primer plato el día del lanzamiento.",
+    text: "Estamos terminando la aplicación. AIFit+ llegará al App Store y a Google Play: registra tu primera comida el día del lanzamiento.",
   },
   common: {
     ofKcal: (kcal: string) => `de ${kcal} kcal`,
@@ -113,7 +118,7 @@ export const es: Dictionary = {
   notFound: {
     metaTitle: "Página no encontrada — AIFit+",
     chip: "Plato no encontrado",
-    title: "Este plato está vacío",
+    title: "Aquí no hay nada que reconocer",
     text: "Esta página no existe. Puede que se haya movido o que el enlace tenga un error.",
     home: "Ir al inicio",
     how: "Cómo funciona AIFit+",

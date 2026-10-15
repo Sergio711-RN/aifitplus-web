@@ -54,7 +54,7 @@ const FloatingCard = ({
   );
 };
 
-/** Scales the phone mockup (laid out in fixed pixels) down to the space its box gets, never up — `.fit-phone` in `globals.css` */
+/** Scales the phone mockup (laid out in fixed pixels) to the space its box gets: on phones never up, from `md` up to 115% — `.fit-phone` in `globals.css` */
 const FitPhone = ({ children, className }: { children: ReactNode; className?: string }) => (
   <div className={`fit-phone flex min-h-0 justify-center ${className ?? ""}`}>
     <div className="relative shrink-0">
@@ -153,7 +153,7 @@ export const Hero = () => {
         </motion.div>
 
         {/* On phones the mockup takes whatever height is left between the headline and the store buttons */}
-        <FitPhone className="flex-1 py-4 sm:py-6 lg:h-[619px] lg:flex-none lg:self-center lg:py-0 lg:[grid-area:phone]">
+        <FitPhone className="flex-1 py-4 sm:py-6 lg:h-[clamp(619px,calc(100dvh-11rem),712px)] lg:flex-none lg:self-center lg:py-0 lg:[grid-area:phone]">
           <motion.div className="relative [perspective:1400px]" style={{ y: phoneY, scale: phoneScale }}>
             {/* Tilts in around its top edge: the photo then starts no smaller than it ends up, and stays the largest image
                 of the page for the browser (Largest Contentful Paint) — see `scan-demo.tsx` */}

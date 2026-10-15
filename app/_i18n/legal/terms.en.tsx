@@ -28,8 +28,12 @@ const SECTIONS: ILegalSection[] = [
       <>
         <ul>
           <li>Calculates your daily calorie, protein, fat and carb targets from your answers.</li>
-          <li>Recognises meals in photos using artificial intelligence and estimates portion weight, calories and nutrients.</li>
-          <li>Keeps a food and weight diary, and gives tips and reminders.</li>
+          <li>
+            Uses artificial intelligence to recognise meals in photos and from your descriptions, typed or spoken, and estimates portion weight,
+            calories and nutrients.
+          </li>
+          <li>Finds packaged products by barcode and reads nutrition labels from a photo.</li>
+          <li>Keeps a food and weight diary and sends reminders.</li>
         </ul>
         <p>The app is distributed through the App Store and Google Play in selected countries. It is not available in the Russian Federation.</p>
       </>
@@ -41,7 +45,7 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          AIFit+ helps you track your diet, but it does not diagnose or treat anything. Its calculations and tips are for information only and
+          AIFit+ helps you track your diet, but it does not diagnose or treat anything. Its calculations and estimates are for information only and
           do not replace advice from a doctor or dietitian.
         </p>
         <p>
@@ -49,7 +53,11 @@ const SECTIONS: ILegalSection[] = [
           result and correct it by hand.
         </p>
         <p>
-          Meal recognition, follow-up questions and tips are produced by an artificial intelligence system, not by a person.
+          Meal recognition, label reading and follow-up questions are produced by an artificial intelligence system, not by a person.
+        </p>
+        <p>
+          Product data found by barcode comes from Open Food Facts, a free database filled in by volunteers and published under the Open Database
+          License. It may be incomplete or wrong: compare it with the label on the package.
         </p>
         <p>
           <strong>Allergies and intolerances.</strong> The app cannot see every ingredient in a photo and does not check food for allergens
@@ -72,7 +80,10 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>You can use the app from the age of {LEGAL.minAge}.</li>
-        <li>You sign in with a one-time code sent to your email. One account is for one person.</li>
+        <li>
+          You sign in with a one-time code sent to your email, with your Apple ID or with your Google account. Sign-in through Apple or Google is
+          also subject to their terms. One account is for one person.
+        </li>
         <li>Give accurate information about yourself: your targets are calculated from it.</li>
         <li>Do not share sign-in codes with other people. Actions in your account are treated as yours.</li>
         <li>You can delete your account at any time in the app: tap your profile photo → “Delete account”.</li>
@@ -95,7 +106,6 @@ const SECTIONS: ILegalSection[] = [
           <strong>Deleting your account does not cancel your subscription</strong> — cancel it in the store separately.
         </li>
         <li>Refunds are handled by the App Store and Google Play under their own rules.</li>
-        <li>A promo code adds free days. It cannot be exchanged for money.</li>
         <li>If we change the price, the new price applies from the next period, and the store will ask for your consent in advance.</li>
       </ul>
     ),
@@ -112,7 +122,9 @@ const SECTIONS: ILegalSection[] = [
           <li>Hack, decompile or copy the app, or get around subscription restrictions.</li>
           <li>Resell access to the service.</li>
         </ul>
-        <p>To prevent abuse, the number of recognitions per day is limited. The limit does not get in the way of normal use.</p>
+        <p>
+          To prevent abuse, the number of AI recognitions and recalculations per day is limited. The limit does not get in the way of normal use.
+        </p>
       </>
     ),
   },
@@ -121,8 +133,8 @@ const SECTIONS: ILegalSection[] = [
     title: "Your photos and data",
     body: (
       <p>
-        Your photos and diary entries remain yours. You allow us to store and process them only to make the service work for you: showing your
-        diary, recognising meals, syncing your devices. We do not publish your content. For details, see the{" "}
+        Your photos, descriptions and diary entries remain yours. You allow us to store and process them only to make the service work for you:
+        showing your diary, recognising meals and labels, syncing your devices. We do not publish your content. For details, see the{" "}
         <Link href="/en/privacy">Privacy Policy</Link>.
       </p>
     ),

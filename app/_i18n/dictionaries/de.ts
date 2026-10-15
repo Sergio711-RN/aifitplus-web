@@ -6,7 +6,7 @@ export const de: Dictionary = {
   meta: {
     title: "AIFit+ – KI-Kalorienzähler per Foto vom Essen",
     description:
-      "Mahlzeit fotografieren – AIFit+ schätzt Gericht, Portion, Kalorien und Makros. Persönliches Tagesziel, Tagebuch und KI-Tipps. Bald für iOS und Android.",
+      "Mahlzeit fotografieren – AIFit+ schätzt Gericht, Portion, Kalorien und Makros. Tagesziel, Tagebuch, Barcodes und Spracheingabe. Bald für iOS und Android.",
     ogImageAlt: "AIFit+ – Kalorien und Makros per Foto vom Essen",
     privacyTitle: "Datenschutzerklärung – AIFit+",
     privacyDescription:
@@ -29,7 +29,7 @@ export const de: Dictionary = {
   macros: { carbs: "Kohlenhydrate", fats: "Fett", protein: "Eiweiß", carbsShort: "K", fatsShort: "F", proteinShort: "E" },
   mealTypes: { breakfast: "Frühstück", lunch: "Mittagessen", snack: "Snack", dinner: "Abendessen" },
   meals: {
-    syrniki: "Quarkpfannkuchen mit Beeren und Kiwi",
+    fruitBowl: "Obstschale mit Beeren",
     salad: "Hähnchen-Avocado-Salat",
     chickenRice: "Reis mit Sesam-Hähnchen",
     yogurt: "Joghurt mit Himbeeren",
@@ -60,13 +60,13 @@ export const de: Dictionary = {
     /** Under the pinned section until the first scroll */
     hint: "Scrolle, um die Schritte durchzugehen",
     steps: [
-      { title: "Fotografiere deinen Teller", text: "Ein paar Aufnahmen aus verschiedenen Winkeln machen das Ergebnis genauer." },
-      { title: "Die KI zerlegt das Gericht", text: "Sie erkennt Zutaten und Portion. Ist etwas unklar, stellt sie eine kurze Rückfrage." },
+      { title: "Erfasse, was du isst", text: "Foto, Barcode, Stimme oder ein paar Worte – wie es dir am besten passt." },
+      { title: "Die KI rechnet alles aus", text: "Sie erkennt Zutaten und Portion. Ist etwas unklar, stellt sie eine kurze Rückfrage." },
       { title: "Behalte deinen Tag im Blick", text: "Die Startseite zeigt, was noch übrig ist und was dir fehlt." },
     ],
-    parts: ["Quarkpfannkuchen, 5 Stück", "Erdbeeren und Kirschen", "Kiwi und Aprikose"],
-    question: "Wurden die Pfannkuchen in Öl gebraten oder gebacken? Das macht etwa 60 kcal Unterschied.",
-    answers: ["In Öl gebraten", "Gebacken"],
+    parts: ["Wassermelone", "Erdbeeren und Heidelbeeren", "Kirschen, Kiwi, Grapefruit"],
+    question: "Ist unter dem Obst Joghurt oder Granola? Das macht etwa 150 kcal Unterschied.",
+    answers: ["Nein", "Ja, Joghurt"],
     today: "Heute",
     streak: "12 Tage in Folge",
     weekdays: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
@@ -76,11 +76,16 @@ export const de: Dictionary = {
   day: {
     title: "Dein ganzer Tag auf einem Bildschirm",
     text: "Jede Mahlzeit landet auf der Zeitleiste des Tages, und das Glas füllt sich mit dem, was du gegessen hast. Du siehst, wie viel noch übrig ist und was fehlt.",
-    tipTitle: "KI-Tipp",
-    tip: (eaten: string, target: string, closes: string) =>
-      `Eiweiß bisher: ${eaten} von ${target} g. Ein Abendessen mit Hähnchen, Thunfisch oder Hüttenkäse deckt etwa ${closes} g.`,
-    add: "Hähnchensalat hinzufügen",
-    added: "Zum Abendessen hinzugefügt",
+    quickAdd: {
+      title: "Ohne Foto hinzufügen",
+      placeholder: "Apfel, 170 g",
+      hint: "Gramm sind optional – die KI fragt nach",
+      analyzing: "Kalorien werden berechnet…",
+      send: "Schätzen",
+      saved: "Gespeichert",
+      voice: "Diktieren",
+      added: "Zum Abendessen hinzugefügt",
+    },
   },
   plan: {
     title: "Ein Tagesziel, das zu dir passt",
@@ -104,7 +109,7 @@ export const de: Dictionary = {
   },
   cta: {
     title: "Bald auf deinem Handy",
-    text: "Wir geben der App den letzten Schliff. AIFit+ kommt in den App Store und zu Google Play – fotografiere deinen ersten Teller gleich am Starttag.",
+    text: "Wir geben der App den letzten Schliff. AIFit+ kommt in den App Store und zu Google Play – erfasse deine erste Mahlzeit gleich am Starttag.",
   },
   common: {
     ofKcal: (kcal: string) => `von ${kcal} kcal`,
@@ -112,7 +117,7 @@ export const de: Dictionary = {
   notFound: {
     metaTitle: "Seite nicht gefunden – AIFit+",
     chip: "Kein Gericht gefunden",
-    title: "Dieser Teller ist leer",
+    title: "Hier gibt es nichts zu erkennen",
     text: "Diese Seite gibt es nicht. Vielleicht wurde sie verschoben, oder im Link steckt ein Tippfehler.",
     home: "Zur Startseite",
     how: "So funktioniert AIFit+",

@@ -28,23 +28,37 @@ const SECTIONS: ILegalSection[] = [
       <>
         <h3>Account</h3>
         <ul>
-          <li>Email address — to sign in with a code.</li>
+          <li>
+            Email address — to sign in. You can sign in with a one-time code sent to your email, with your Apple ID (on iPhone) or with your
+            Google account.
+          </li>
+          <li>
+            If you sign in with Apple or Google, we receive your email address from them and, if you allow it, your name. Apple lets you hide
+            your email — then we receive only a forwarding address. We do not take your profile photo from Google. After you sign in with
+            Apple, we keep a token issued by Apple so that we can revoke the app’s access to your Apple ID when you delete your account.
+          </li>
           <li>Name, interface language and profile photo — if you provide them.</li>
         </ul>
         <h3>Health and body data</h3>
         <p>
-          Your answers at first launch: sex, year of birth, height, weight and weigh-in history, target weight and pace, activity level, diet
+          Your answers at first launch: sex, age, height, weight and weigh-in history, target weight and pace, activity level, diet
           type and what you want to improve. This is a special category of data: it reaches our server only
           after you give separate consent at sign-up. Until then, your answers are stored only on your device.
         </p>
         <h3>Food diary</h3>
         <ul>
-          <li>Photos of meals that you take or pick from your gallery.</li>
+          <li>Photos of meals that you take or pick from your gallery, including an optional side view.</li>
           <li>
             Meal descriptions that you type or dictate. Speech is turned into text while you speak; we save only the text, not the recording
             of your voice.
           </li>
+          <li>
+            Barcodes of products that you scan or type in. If a product is not in the database, you can photograph its nutrition label: the AI
+            reads the numbers, and we save the product in your account (name, brand, nutrition per 100 g, package and serving weight) so the
+            next scan finds it. The label photo itself is not saved.
+          </li>
           <li>Recognition results: dish, ingredients, portion weight, calories, protein, fat, carbs, your edits and answers to follow-up questions.</li>
+          <li>Meals you add to “Saved”.</li>
           <li>Time and type of meal.</li>
         </ul>
         <h3>Subscription</h3>
@@ -52,11 +66,25 @@ const SECTIONS: ILegalSection[] = [
           Subscription status, plan, trial and renewal dates. Payments are taken by the App Store and Google Play — we do not receive your card
           number or payment details.
         </p>
+        <h3>Messages to support</h3>
+        <p>
+          If you write to us from the app, we receive the topic, the email address for our reply, the text of your message, the app version,
+          your phone’s operating system and the interface language. The message is saved in your account and sent to our mailbox.
+        </p>
         <h3>Settings and technical data</h3>
         <ul>
-          <li>Reminder times, units of measurement, the promo code you entered.</li>
-          <li>An internal user ID and a session key on your device.</li>
+          <li>Reminder settings and units of measurement.</li>
+          <li>An internal user ID and an encrypted session key on your device.</li>
+          <li>A record of each request to the AI: its type, time, outcome and size. We need it for the daily limit and to know what the service costs.</li>
           <li>Server technical logs: IP address, time and type of request. We need them to run and protect the service.</li>
+          <li>
+            Crash and error reports: internal user ID, device model, operating system, app version, the screen where the error happened and the
+            app’s last technical steps before it. Reports do not include your email, your IP address or screenshots.
+          </li>
+          <li>
+            On your phone, the app keeps a copy of the most recently loaded diary and statistics, so they can be seen offline, and the products
+            found by barcode. All of this is erased when you sign out.
+          </li>
         </ul>
         <h3>Website</h3>
         <p>
@@ -81,7 +109,8 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Running the app</strong>: sign-in, calculating your daily targets, recognising meals, the diary, syncing between devices.
+          <strong>Running the app</strong>: sign-in, calculating your daily targets, recognising meals and nutrition labels, finding products by
+          barcode, the diary, syncing between devices, replying to your messages.
           Legal basis: our contract with you (<Link href="/en/terms">Terms of Use</Link>), Art. 6(1)(b) GDPR.
         </li>
         <li>
@@ -92,15 +121,16 @@ const SECTIONS: ILegalSection[] = [
           <strong>Subscription</strong>: checking access to paid features. Legal basis: contract, Art. 6(1)(b) GDPR.
         </li>
         <li>
-          <strong>Security</strong>: protection against hacking and abuse, such as a daily limit on AI requests. Legal basis: our legitimate
-          interest in a working service, Art. 6(1)(f) GDPR.
+          <strong>Security and stability</strong>: protection against hacking and abuse, such as a daily limit on AI requests; error reports to
+          find and fix bugs. Legal basis: our legitimate interest in a working service, Art. 6(1)(f) GDPR.
         </li>
         <li>
           <strong>Website statistics</strong>: how many people visit the website and where they come from, so we can improve it. Legal
           basis: your consent in the cookie banner, Art. 6(1)(a) GDPR; you can withdraw it under “Cookie settings” at the bottom of the page.
         </li>
         <li>
-          <strong>Reminders</strong> are sent only if you turn them on and allow notifications in your system settings.
+          <strong>Reminders</strong> are scheduled on your phone and shown only if you turn them on and allow notifications in your system
+          settings. Your reminder settings are saved in your account so that they carry over to another device.
         </li>
       </ul>
     ),
@@ -119,16 +149,21 @@ const SECTIONS: ILegalSection[] = [
   },
   {
     id: "ai",
-    title: "How photo recognition works",
+    title: "How recognition works",
     body: (
       <>
         <p>
           The photo is compressed on your device and uploaded to private storage that only your account can access. The server sends it to an
-          artificial intelligence model, receives the meal breakdown and saves the result to your diary.
+          artificial intelligence model, receives the meal breakdown and saves the result to your diary. Meal descriptions that you type or
+          dictate and photos of nutrition labels reach the model the same way.
         </p>
         <p>
-          The model is provided by Anthropic. Anthropic processes the photo on our behalf and only to answer the request. Under the terms of its
-          commercial API, request content is not used to train models.
+          The model is Gemini by Google. Google processes the request on our behalf and only to answer it. We use the paid Gemini API: under its
+          terms, request content is not used to train Google’s models; Google may keep it for a limited time solely to detect abuse.
+        </p>
+        <p>
+          The original photo and the side view are deleted from storage 30 days after they are taken; the diary keeps a small preview for as long
+          as the meal is in it. A meal that could not be analysed is deleted together with its photos within a day.
         </p>
         <p>
           Calorie and nutrient estimates are approximate. Check the result and correct it — your edits are saved in the diary.
@@ -147,10 +182,12 @@ const SECTIONS: ILegalSection[] = [
         </p>
         <ul>
           <li>
-            <strong>Supabase</strong> — database, sign-in and file storage. All account data, the diary, photos. Servers in Ireland (EU).
+            <strong>Supabase</strong> — database, sign-in and file storage. All account data, the diary, photos, messages to support. Servers in
+            Ireland (EU).
           </li>
           <li>
-            <strong>Anthropic</strong> — meal recognition. Photos, meal descriptions and the text of follow-up answers. USA.
+            <strong>Google</strong> — recognition of meals and nutrition labels (Gemini API). Photos of meals and labels, meal descriptions,
+            answers to follow-up questions and ingredient edits. Google LLC, USA.
           </li>
           <li>
             <strong>Google</strong> — speech recognition on Android phones that cannot recognise speech on the device. While you dictate,
@@ -159,18 +196,28 @@ const SECTIONS: ILegalSection[] = [
             phones with on-device recognition, your voice does not leave the phone. Google LLC, USA.
           </li>
           <li>
-            <strong>Resend</strong> — sending sign-in code emails. Email address and email language. USA.
+            <strong>Open Food Facts</strong> — the product database. When you scan a barcode, the app looks the product up in Open Food Facts
+            directly from your phone: Open Food Facts receives the barcode number and, like any website, your IP address. We do not send it your
+            account data. Open Food Facts processes requests under its own policy. Open Food Facts association, France.
+          </li>
+          <li>
+            <strong>Resend</strong> — sending sign-in code emails and delivering your messages to support to our mailbox. Email address, email
+            language, the text of the message. USA.
           </li>
           <li>
             <strong>RevenueCat</strong> — subscription management. Internal user ID and purchase history from the store. USA.
+          </li>
+          <li>
+            <strong>Sentry</strong> — crash and error reports (the data is listed under “Settings and technical data”). Functional Software, Inc.,
+            USA; data is stored in the EU (Germany).
           </li>
           <li>
             <strong>Google</strong> — website statistics (Google Analytics), only with your consent. Browser identifier from the cookie, pages
             viewed, device type, approximate location. Google Ireland Limited; data may be processed in the USA.
           </li>
           <li>
-            <strong>Apple and Google</strong> — subscription payments and notifications. They process data under their own policies as
-            independent controllers.
+            <strong>Apple and Google</strong> — subscription payments and, if you choose it, sign-in with your Apple ID or Google account. They
+            process data under their own policies as independent controllers.
           </li>
         </ul>
         <p>
@@ -185,9 +232,9 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Our main storage is in the European Union (Ireland). Photo recognition, speech recognition on some Android phones, emails,
-          subscription management and website statistics are handled by providers in the USA, so some data is transferred outside the
-          European Economic Area.
+          Our main storage is in the European Union (Ireland), error reports are stored in Germany, and the Open Food Facts product database is in
+          France. Recognition of photos, descriptions and labels, speech recognition on some Android phones, emails, subscription management and
+          website statistics are handled by providers in the USA, so some data is transferred outside the European Economic Area.
         </p>
         <p>
           These transfers rely on the European Commission’s adequacy decision (EU–US Data Privacy Framework) for providers certified under it,
@@ -201,13 +248,20 @@ const SECTIONS: ILegalSection[] = [
     title: "How long we keep data",
     body: (
       <ul>
-        <li>Account data, the diary and photos — for as long as you have an account.</li>
+        <li>Account data, the diary, saved meals and products read from labels — for as long as you have an account.</li>
         <li>
-          When you delete your account, your profile, plan, weight history, diary and photos are deleted immediately. They disappear from the
-          hosting provider’s backups within {LEGAL.backupRetentionDays} days.
+          Original meal photos and side views — 30 days; the preview in the diary — until you delete the meal or your account. Label photos are
+          not saved.
         </li>
-        <li>Answers entered before sign-up are stored only on your device and are erased when you sign out.</li>
-        <li>The App Store, Google Play and RevenueCat keep purchase records for as long as payment accounting laws require.</li>
+        <li>Messages to support — until you delete your account; the email in our mailbox — for as long as we need it to answer you.</li>
+        <li>Error reports — no longer than 90 days.</li>
+        <li>
+          When you delete your account, your profile, plan, weight history, diary, photos and messages to support are deleted immediately, and so
+          is your customer record at RevenueCat; if you signed in with Apple, we revoke the app’s access to your Apple ID. The data disappears
+          from the hosting provider’s backups within {LEGAL.backupRetentionDays} days.
+        </li>
+        <li>Answers entered before sign-up and the copies of data on your phone are erased when you sign out.</li>
+        <li>The App Store and Google Play keep purchase records for as long as payment accounting laws require.</li>
       </ul>
     ),
   },
@@ -218,7 +272,8 @@ const SECTIONS: ILegalSection[] = [
       <>
         <ul>
           <li>
-            <strong>Find out</strong> what data we hold and get a copy of it.
+            <strong>Find out</strong> what data we hold and get a copy of it. In the app: tap your profile photo → “Personal details” →
+            “Download a copy of my data”.
           </li>
           <li>
             <strong>Take</strong> your data in a machine-readable format to move it to another service.
@@ -232,7 +287,7 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>Withdraw consent</strong> to the processing of your health data. Without this data the app cannot calculate your plan, so
-            withdrawing consent means deleting your account.
+            withdrawing consent means deleting your account: “Personal details” → “Withdraw consent”.
           </li>
           <li>
             <strong>Object</strong> to processing or restrict it.
@@ -257,7 +312,8 @@ const SECTIONS: ILegalSection[] = [
         <li>Database access rules: each account sees only its own records and its own files.</li>
         <li>Photos are kept in private storage, and links to them are not public.</li>
         <li>Secret service keys are stored only on the server, not in the app.</li>
-        <li>Sign-in uses a one-time code — there are no passwords to steal.</li>
+        <li>The session key on your phone is encrypted; the encryption key is kept in the system’s secure storage (Keychain or Keystore).</li>
+        <li>Sign-in uses a one-time code, Apple ID or a Google account — there are no passwords to steal.</li>
       </ul>
     ),
   },
@@ -287,7 +343,7 @@ export const privacyEn: ILegalDocument = {
   title: "Privacy Policy",
   lead: (
     <p>
-      AIFit+ counts calories from photos of your food. To do that, it needs data about your body and your diet. Here is a short, to-the-point
+      AIFit+ counts the calories and nutrients in what you eat. To do that, it needs data about your body and your diet. Here is a short, to-the-point
       summary: what we collect, why, where we store it and how to delete it all.
     </p>
   ),

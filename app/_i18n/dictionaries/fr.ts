@@ -7,7 +7,7 @@ export const fr: Dictionary = {
   meta: {
     title: "AIFit+ — compteur de calories par IA à partir d’une photo",
     description:
-      "Photographiez votre repas : AIFit+ estime plat, portion, calories et macros. Objectif quotidien, journal, conseils de l’IA. Bientôt sur iOS et Android.",
+      "Photographiez votre repas : AIFit+ estime plat, portion, calories et macros. Objectif quotidien, journal, codes-barres, voix. Bientôt sur iOS et Android.",
     ogImageAlt: "AIFit+ — calories et macros à partir d’une photo de repas",
     privacyTitle: "Politique de confidentialité — AIFit+",
     privacyDescription:
@@ -30,7 +30,7 @@ export const fr: Dictionary = {
   macros: { carbs: "Glucides", fats: "Lipides", protein: "Protéines", carbsShort: "G", fatsShort: "L", proteinShort: "P" },
   mealTypes: { breakfast: "Déjeuner", lunch: "Dîner", snack: "Collation", dinner: "Souper" },
   meals: {
-    syrniki: "Galettes de fromage aux petits fruits et kiwi",
+    fruitBowl: "Bol de fruits frais",
     salad: "Salade de poulet et avocat",
     chickenRice: "Riz au poulet glacé au sésame",
     yogurt: "Yogourt aux framboises",
@@ -61,13 +61,13 @@ export const fr: Dictionary = {
     /** Under the pinned section until the first scroll */
     hint: "Faites défiler pour parcourir les étapes",
     steps: [
-      { title: "Photographiez votre assiette", text: "Quelques prises sous différents angles donnent un résultat plus précis." },
-      { title: "L’IA analyse le plat", text: "Elle trouve les ingrédients et la portion. En cas de doute, elle pose une courte question." },
+      { title: "Notez ce que vous mangez", text: "Une photo, un code-barres, la voix ou quelques mots — comme vous préférez." },
+      { title: "L’IA fait le calcul", text: "Elle trouve les ingrédients et la portion. En cas de doute, elle pose une courte question." },
       { title: "Suivez votre journée", text: "L’accueil montre ce qu’il vous reste et ce qui vous manque." },
     ],
-    parts: ["Galettes de fromage, 5 pièces", "Fraises et cerises", "Kiwi et abricot"],
-    question: "Les galettes ont-elles été frites à l’huile ou cuites au four? Cela fait environ 60 kcal de différence.",
-    answers: ["Frites à l’huile", "Au four"],
+    parts: ["Melon d’eau", "Fraises et bleuets", "Cerises, kiwi, pamplemousse"],
+    question: "Y a-t-il du yogourt ou du granola sous les fruits? Cela fait environ 150 kcal de différence.",
+    answers: ["Non", "Oui, du yogourt"],
     today: "Aujourd’hui",
     streak: "12 jours de suite",
     weekdays: ["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"],
@@ -77,11 +77,16 @@ export const fr: Dictionary = {
   day: {
     title: "Toute votre journée sur un seul écran",
     text: "Chaque repas s’ajoute au fil de la journée et le verre se remplit de ce que vous avez mangé. Vous voyez ce qu’il reste et ce qui manque.",
-    tipTitle: "Conseil de l’IA",
-    tip: (eaten: string, target: string, closes: string) =>
-      `Protéines jusqu’ici : ${eaten} sur ${target} g. Un souper avec du poulet, du thon ou du fromage cottage en apporte environ ${closes} g.`,
-    add: "Ajouter la salade de poulet",
-    added: "Ajouté au souper",
+    quickAdd: {
+      title: "Ajouter sans photo",
+      placeholder: "Pomme, 170 g",
+      hint: "Les grammes sont facultatifs — l’IA vous demandera",
+      analyzing: "Calcul des calories…",
+      send: "Estimer",
+      saved: "Enregistrés",
+      voice: "Dicter",
+      added: "Ajouté au souper",
+    },
   },
   plan: {
     title: "Un objectif quotidien fait pour vous",
@@ -105,7 +110,7 @@ export const fr: Dictionary = {
   },
   cta: {
     title: "Bientôt sur votre téléphone",
-    text: "Nous terminons l’application. AIFit+ arrive sur l’App Store et Google Play — photographiez votre première assiette le jour du lancement.",
+    text: "Nous terminons l’application. AIFit+ arrive sur l’App Store et Google Play — notez votre premier repas le jour du lancement.",
   },
   common: {
     ofKcal: (kcal: string) => `sur ${kcal} kcal`,
@@ -113,7 +118,7 @@ export const fr: Dictionary = {
   notFound: {
     metaTitle: "Page introuvable — AIFit+",
     chip: "Aucun plat trouvé",
-    title: "Cette assiette est vide",
+    title: "Rien à reconnaître ici",
     text: "Cette page n’existe pas. Elle a peut-être été déplacée, ou le lien contient une erreur.",
     home: "Aller à l’accueil",
     how: "Comment fonctionne AIFit+",

@@ -30,27 +30,43 @@ const SECTIONS: ILegalSection[] = [
       <>
         <h3>Konto</h3>
         <ul>
-          <li>E-Mail-Adresse – für die Anmeldung per Code.</li>
+          <li>
+            E-Mail-Adresse – für die Anmeldung. Sie können sich mit einem Einmalcode anmelden, der an Ihre E-Mail-Adresse gesendet wird, mit
+            Ihrer Apple-ID (auf dem iPhone) oder mit Ihrem Google-Konto.
+          </li>
+          <li>
+            Wenn Sie sich mit Apple oder Google anmelden, erhalten wir von dort Ihre E-Mail-Adresse und, sofern Sie es erlauben, Ihren Namen.
+            Bei Apple können Sie Ihre E-Mail-Adresse verbergen – dann erhalten wir nur eine Weiterleitungsadresse. Ihr Profilfoto übernehmen
+            wir von Google nicht. Nach der Anmeldung mit Apple speichern wir ein von Apple ausgestelltes Token, damit wir den Zugriff der App
+            auf Ihre Apple-ID widerrufen können, wenn Sie Ihr Konto löschen.
+          </li>
           <li>Name, Sprache der Oberfläche und Profilfoto – sofern Sie diese angeben.</li>
         </ul>
         <h3>Gesundheits- und Körperdaten</h3>
         <p>
-          Ihre Antworten beim ersten Start: Geschlecht, Geburtsjahr, Größe, Gewicht und Wiegeverlauf, Zielgewicht und Tempo,
+          Ihre Antworten beim ersten Start: Geschlecht, Alter, Größe, Gewicht und Wiegeverlauf, Zielgewicht und Tempo,
           Aktivitätsniveau, Ernährungsform und was Sie verbessern möchten. Dabei handelt es sich um
           eine besondere Kategorie personenbezogener Daten: Sie gelangen erst auf unseren Server, nachdem Sie bei der Registrierung
           gesondert eingewilligt haben. Bis dahin werden Ihre Antworten ausschließlich auf Ihrem Gerät gespeichert.
         </p>
         <h3>Ernährungstagebuch</h3>
         <ul>
-          <li>Fotos von Mahlzeiten, die Sie aufnehmen oder aus Ihrer Galerie auswählen.</li>
+          <li>Fotos von Mahlzeiten, die Sie aufnehmen oder aus Ihrer Galerie auswählen, einschließlich einer optionalen Seitenansicht.</li>
           <li>
             Beschreibungen von Mahlzeiten, die Sie eintippen oder diktieren. Die Sprache wird während des Sprechens in Text umgewandelt; wir
             speichern nur den Text, nicht die Aufnahme Ihrer Stimme.
           </li>
           <li>
+            Barcodes von Produkten, die Sie scannen oder eintippen. Ist ein Produkt nicht in der Datenbank, können Sie seine Nährwerttabelle
+            fotografieren: Die KI liest die Zahlen aus, und wir speichern das Produkt in Ihrem Konto (Name, Marke, Nährwerte pro 100 g,
+            Packungs- und Portionsgewicht), damit es beim nächsten Scan gefunden wird. Das Foto der Nährwerttabelle selbst wird nicht
+            gespeichert.
+          </li>
+          <li>
             Ergebnisse der Erkennung: Gericht, Zutaten, Portionsgewicht, Kalorien, Eiweiß, Fett, Kohlenhydrate, Ihre Korrekturen und Ihre
             Antworten auf Rückfragen.
           </li>
+          <li>Mahlzeiten, die Sie zu „Gespeichert“ hinzufügen.</li>
           <li>Uhrzeit und Art der Mahlzeit.</li>
         </ul>
         <h3>Abonnement</h3>
@@ -58,13 +74,32 @@ const SECTIONS: ILegalSection[] = [
           Abo-Status, Tarif, Daten der Testphase und der Verlängerung. Die Zahlungen wickeln der App Store und Google Play ab – wir erhalten
           weder Ihre Kartennummer noch sonstige Zahlungsdaten.
         </p>
+        <h3>Nachrichten an den Support</h3>
+        <p>
+          Wenn Sie uns aus der App schreiben, erhalten wir das Thema, die E-Mail-Adresse für unsere Antwort, den Text Ihrer Nachricht, die
+          App-Version, das Betriebssystem Ihres Smartphones und die Sprache der Oberfläche. Die Nachricht wird in Ihrem Konto gespeichert und
+          an unser Postfach gesendet.
+        </p>
         <h3>Einstellungen und technische Daten</h3>
         <ul>
-          <li>Erinnerungszeiten, Maßeinheiten, der von Ihnen eingegebene Promo-Code.</li>
-          <li>Eine interne Nutzer-ID und ein Sitzungsschlüssel auf Ihrem Gerät.</li>
+          <li>Einstellungen für Erinnerungen und Maßeinheiten.</li>
+          <li>Eine interne Nutzer-ID und ein verschlüsselter Sitzungsschlüssel auf Ihrem Gerät.</li>
+          <li>
+            Ein Eintrag zu jeder Anfrage an die KI: Art, Zeitpunkt, Ergebnis und Umfang. Wir benötigen ihn für das Tageslimit und um zu
+            wissen, was der Dienst kostet.
+          </li>
           <li>
             Technische Serverprotokolle: IP-Adresse, Zeitpunkt und Art der Anfrage. Wir benötigen sie, um den Dienst zu betreiben und zu
             schützen.
+          </li>
+          <li>
+            Absturz- und Fehlerberichte: interne Nutzer-ID, Gerätemodell, Betriebssystem, App-Version, der Bildschirm, auf dem der Fehler
+            aufgetreten ist, und die letzten technischen Schritte der App davor. Die Berichte enthalten weder Ihre E-Mail-Adresse noch Ihre
+            IP-Adresse noch Bildschirmfotos.
+          </li>
+          <li>
+            Auf Ihrem Smartphone bewahrt die App eine Kopie des zuletzt geladenen Tagebuchs und der Statistik auf, damit Sie sie auch offline
+            sehen können, sowie die per Barcode gefundenen Produkte. All das wird beim Abmelden gelöscht.
           </li>
         </ul>
         <h3>Website</h3>
@@ -94,9 +129,9 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Betrieb der App</strong>: Anmeldung, Berechnung Ihrer Tagesziele, Erkennung von Mahlzeiten, Tagebuch, Synchronisierung
-          zwischen Geräten. Rechtsgrundlage: unser Vertrag mit Ihnen (<Link href="/de/terms">Nutzungsbedingungen</Link>), Art. 6 Abs. 1
-          lit. b DSGVO.
+          <strong>Betrieb der App</strong>: Anmeldung, Berechnung Ihrer Tagesziele, Erkennung von Mahlzeiten und Nährwerttabellen, Suche
+          von Produkten per Barcode, Tagebuch, Synchronisierung zwischen Geräten, Antworten auf Ihre Nachrichten. Rechtsgrundlage: unser
+          Vertrag mit Ihnen (<Link href="/de/terms">Nutzungsbedingungen</Link>), Art. 6 Abs. 1 lit. b DSGVO.
         </li>
         <li>
           <strong>Gesundheitsdaten</strong> werden nur verarbeitet, um Ihren Plan zu berechnen und Ihr Tagebuch zu führen. Rechtsgrundlage:
@@ -108,8 +143,9 @@ const SECTIONS: ILegalSection[] = [
           DSGVO.
         </li>
         <li>
-          <strong>Sicherheit</strong>: Schutz vor Angriffen und Missbrauch, etwa durch ein Tageslimit für KI-Anfragen. Rechtsgrundlage:
-          unser berechtigtes Interesse an einem funktionierenden Dienst, Art. 6 Abs. 1 lit. f DSGVO.
+          <strong>Sicherheit und Stabilität</strong>: Schutz vor Angriffen und Missbrauch, etwa durch ein Tageslimit für KI-Anfragen;
+          Fehlerberichte, um Fehler zu finden und zu beheben. Rechtsgrundlage: unser berechtigtes Interesse an einem funktionierenden Dienst,
+          Art. 6 Abs. 1 lit. f DSGVO.
         </li>
         <li>
           <strong>Website-Statistik</strong>: wie viele Menschen die Website besuchen und woher sie kommen, damit wir sie verbessern können.
@@ -117,7 +153,9 @@ const SECTIONS: ILegalSection[] = [
           Ende der Seite widerrufen.
         </li>
         <li>
-          <strong>Erinnerungen</strong> werden nur gesendet, wenn Sie sie einschalten und Mitteilungen in den Systemeinstellungen erlauben.
+          <strong>Erinnerungen</strong> werden auf Ihrem Smartphone geplant und nur angezeigt, wenn Sie sie einschalten und Mitteilungen in
+          den Systemeinstellungen erlauben. Ihre Einstellungen für Erinnerungen werden in Ihrem Konto gespeichert, damit sie auf ein anderes
+          Gerät übernommen werden.
         </li>
       </ul>
     ),
@@ -136,18 +174,24 @@ const SECTIONS: ILegalSection[] = [
   },
   {
     id: "ai",
-    title: "Wie die Fotoerkennung funktioniert",
+    title: "Wie die Erkennung funktioniert",
     body: (
       <>
         <p>
           Das Foto wird auf Ihrem Gerät komprimiert und in einen privaten Speicher hochgeladen, auf den nur Ihr Konto zugreifen kann. Der
           Server sendet es an ein Modell künstlicher Intelligenz, erhält die Aufschlüsselung der Mahlzeit und speichert das Ergebnis in
-          Ihrem Tagebuch.
+          Ihrem Tagebuch. Beschreibungen von Mahlzeiten, die Sie eintippen oder diktieren, und Fotos von Nährwerttabellen gelangen auf
+          demselben Weg zum Modell.
         </p>
         <p>
-          Das Modell wird von Anthropic bereitgestellt. Anthropic verarbeitet das Foto in unserem Auftrag und ausschließlich, um die Anfrage
-          zu beantworten. Nach den Bedingungen der kommerziellen API werden die Inhalte von Anfragen nicht zum Training von Modellen
-          verwendet.
+          Das Modell ist Gemini von Google. Google verarbeitet die Anfrage in unserem Auftrag und ausschließlich, um sie zu beantworten. Wir
+          nutzen die kostenpflichtige Gemini API: Nach ihren Bedingungen werden die Inhalte von Anfragen nicht zum Training der Modelle von
+          Google verwendet; Google kann sie für begrenzte Zeit ausschließlich zur Erkennung von Missbrauch aufbewahren.
+        </p>
+        <p>
+          Das Originalfoto und die Seitenansicht werden 30 Tage nach der Aufnahme aus dem Speicher gelöscht; im Tagebuch bleibt eine kleine
+          Vorschau, solange die Mahlzeit darin steht. Eine Mahlzeit, die nicht analysiert werden konnte, wird zusammen mit ihren Fotos
+          innerhalb eines Tages gelöscht.
         </p>
         <p>
           Die Schätzungen zu Kalorien und Nährstoffen sind Näherungswerte. Prüfen Sie das Ergebnis und korrigieren Sie es – Ihre
@@ -167,12 +211,12 @@ const SECTIONS: ILegalSection[] = [
         </p>
         <ul>
           <li>
-            <strong>Supabase</strong> – Datenbank, Anmeldung und Dateispeicher. Alle Kontodaten, das Tagebuch, die Fotos. Server in Irland
-            (EU).
+            <strong>Supabase</strong> – Datenbank, Anmeldung und Dateispeicher. Alle Kontodaten, das Tagebuch, die Fotos, Nachrichten an
+            den Support. Server in Irland (EU).
           </li>
           <li>
-            <strong>Anthropic</strong> – Erkennung von Mahlzeiten. Fotos, Beschreibungen von Mahlzeiten und der Text Ihrer Antworten auf
-            Rückfragen. USA.
+            <strong>Google</strong> – Erkennung von Mahlzeiten und Nährwerttabellen (Gemini API). Fotos von Mahlzeiten und
+            Nährwerttabellen, Beschreibungen von Mahlzeiten, Antworten auf Rückfragen und Korrekturen der Zutaten. Google LLC, USA.
           </li>
           <li>
             <strong>Google</strong> – Spracherkennung auf Android-Smartphones, die Sprache nicht auf dem Gerät erkennen können. Während Sie
@@ -182,18 +226,29 @@ const SECTIONS: ILegalSection[] = [
             Smartphone nicht. Google LLC, USA.
           </li>
           <li>
-            <strong>Resend</strong> – Versand der E-Mails mit dem Anmeldecode. E-Mail-Adresse und Sprache der E-Mail. USA.
+            <strong>Open Food Facts</strong> – die Produktdatenbank. Wenn Sie einen Barcode scannen, sucht die App das Produkt direkt von
+            Ihrem Smartphone aus in Open Food Facts: Open Food Facts erhält die Barcode-Nummer und, wie jede Website, Ihre IP-Adresse. Ihre
+            Kontodaten übermitteln wir nicht. Open Food Facts verarbeitet die Anfragen nach seiner eigenen Richtlinie. Verein Open Food
+            Facts, Frankreich.
+          </li>
+          <li>
+            <strong>Resend</strong> – Versand der E-Mails mit dem Anmeldecode und Zustellung Ihrer Nachrichten an den Support in unser
+            Postfach. E-Mail-Adresse, Sprache der E-Mail, Text der Nachricht. USA.
           </li>
           <li>
             <strong>RevenueCat</strong> – Abo-Verwaltung. Interne Nutzer-ID und Kaufhistorie aus dem Store. USA.
+          </li>
+          <li>
+            <strong>Sentry</strong> – Absturz- und Fehlerberichte (die Daten sind unter „Einstellungen und technische Daten“ aufgeführt).
+            Functional Software, Inc., USA; die Daten werden in der EU (Deutschland) gespeichert.
           </li>
           <li>
             <strong>Google</strong> – Website-Statistik (Google Analytics), nur mit Ihrer Einwilligung. Browserkennung aus dem Cookie,
             aufgerufene Seiten, Gerätetyp, ungefährer Standort. Google Ireland Limited; die Daten können in den USA verarbeitet werden.
           </li>
           <li>
-            <strong>Apple und Google</strong> – Abo-Zahlungen und Mitteilungen. Sie verarbeiten Daten nach ihren eigenen Richtlinien als
-            eigenständige Verantwortliche.
+            <strong>Apple und Google</strong> – Abo-Zahlungen und, wenn Sie das wählen, die Anmeldung mit Ihrer Apple-ID oder Ihrem
+            Google-Konto. Sie verarbeiten Daten nach ihren eigenen Richtlinien als eigenständige Verantwortliche.
           </li>
         </ul>
         <p>
@@ -208,9 +263,10 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          Unser Hauptspeicher befindet sich in der Europäischen Union (Irland). Fotoerkennung, Spracherkennung auf manchen
-          Android-Smartphones, E-Mail-Versand, Abo-Verwaltung und Website-Statistik übernehmen Anbieter in den USA, daher werden einige
-          Daten in Länder außerhalb des Europäischen Wirtschaftsraums übermittelt.
+          Unser Hauptspeicher befindet sich in der Europäischen Union (Irland), Fehlerberichte werden in Deutschland gespeichert, und die
+          Produktdatenbank Open Food Facts befindet sich in Frankreich. Die Erkennung von Fotos, Beschreibungen und Nährwerttabellen, die
+          Spracherkennung auf manchen Android-Smartphones, E-Mail-Versand, Abo-Verwaltung und Website-Statistik übernehmen Anbieter in den
+          USA, daher werden einige Daten in Länder außerhalb des Europäischen Wirtschaftsraums übermittelt.
         </p>
         <p>
           Diese Übermittlungen stützen sich auf den Angemessenheitsbeschluss der Europäischen Kommission (EU-US Data Privacy Framework) für
@@ -225,14 +281,29 @@ const SECTIONS: ILegalSection[] = [
     title: "Wie lange wir Daten aufbewahren",
     body: (
       <ul>
-        <li>Kontodaten, Tagebuch und Fotos – solange Sie ein Konto haben.</li>
         <li>
-          Wenn Sie Ihr Konto löschen, werden Ihr Profil, Ihr Plan, Ihr Gewichtsverlauf, Ihr Tagebuch und Ihre Fotos sofort gelöscht. Aus den
-          Sicherungskopien des Hosting-Anbieters verschwinden sie innerhalb von {LEGAL.backupRetentionDays} Tagen.
+          Kontodaten, Tagebuch, gespeicherte Mahlzeiten und aus Nährwerttabellen ausgelesene Produkte – solange Sie ein Konto haben.
         </li>
-        <li>Antworten, die Sie vor der Registrierung eingeben, werden nur auf Ihrem Gerät gespeichert und beim Abmelden gelöscht.</li>
         <li>
-          Der App Store, Google Play und RevenueCat bewahren Kaufbelege so lange auf, wie es die handels- und steuerrechtlichen Aufbewahrungspflichten verlangen.
+          Originalfotos von Mahlzeiten und Seitenansichten – 30 Tage; die Vorschau im Tagebuch – bis Sie die Mahlzeit oder Ihr Konto
+          löschen. Fotos von Nährwerttabellen werden nicht gespeichert.
+        </li>
+        <li>
+          Nachrichten an den Support – bis Sie Ihr Konto löschen; die E-Mail in unserem Postfach – solange wir sie benötigen, um Ihnen zu
+          antworten.
+        </li>
+        <li>Fehlerberichte – höchstens 90 Tage.</li>
+        <li>
+          Wenn Sie Ihr Konto löschen, werden Ihr Profil, Ihr Plan, Ihr Gewichtsverlauf, Ihr Tagebuch, Ihre Fotos und Ihre Nachrichten an den
+          Support sofort gelöscht, ebenso Ihr Kundendatensatz bei RevenueCat; wenn Sie sich mit Apple angemeldet haben, widerrufen wir den
+          Zugriff der App auf Ihre Apple-ID. Aus den Sicherungskopien des Hosting-Anbieters verschwinden die Daten innerhalb von{" "}
+          {LEGAL.backupRetentionDays} Tagen.
+        </li>
+        <li>
+          Antworten, die Sie vor der Registrierung eingeben, und die Kopien von Daten auf Ihrem Smartphone werden beim Abmelden gelöscht.
+        </li>
+        <li>
+          Der App Store und Google Play bewahren Kaufbelege so lange auf, wie es die handels- und steuerrechtlichen Aufbewahrungspflichten verlangen.
         </li>
       </ul>
     ),
@@ -244,7 +315,8 @@ const SECTIONS: ILegalSection[] = [
       <>
         <ul>
           <li>
-            <strong>Auskunft</strong> darüber erhalten, welche Daten wir über Sie gespeichert haben, und eine Kopie davon bekommen.
+            <strong>Auskunft</strong> darüber erhalten, welche Daten wir über Sie gespeichert haben, und eine Kopie davon bekommen. In der
+            App: Tippen Sie auf Ihr Profilfoto → „Persönliche Daten“ → „Kopie meiner Daten herunterladen“.
           </li>
           <li>
             <strong>Mitnehmen</strong>: Ihre Daten in einem maschinenlesbaren Format erhalten, um sie zu einem anderen Dienst zu übertragen.
@@ -258,7 +330,8 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>Einwilligung widerrufen</strong>, die Sie in die Verarbeitung Ihrer Gesundheitsdaten gegeben haben. Ohne diese Daten
-            kann die App Ihren Plan nicht berechnen, daher bedeutet der Widerruf, dass Ihr Konto gelöscht wird.
+            kann die App Ihren Plan nicht berechnen, daher bedeutet der Widerruf, dass Ihr Konto gelöscht wird: „Persönliche Daten“ →
+            „Einwilligung widerrufen“.
           </li>
           <li>
             <strong>Widersprechen</strong>: der Verarbeitung widersprechen oder ihre Einschränkung verlangen.
@@ -283,7 +356,14 @@ const SECTIONS: ILegalSection[] = [
         <li>Zugriffsregeln in der Datenbank: Jedes Konto sieht nur seine eigenen Einträge und seine eigenen Dateien.</li>
         <li>Fotos liegen in einem privaten Speicher, die Links zu ihnen sind nicht öffentlich.</li>
         <li>Geheime Dienstschlüssel werden nur auf dem Server gespeichert, nicht in der App.</li>
-        <li>Die Anmeldung erfolgt mit einem Einmalcode – es gibt keine Passwörter, die gestohlen werden könnten.</li>
+        <li>
+          Der Sitzungsschlüssel auf Ihrem Smartphone ist verschlüsselt; der Schlüssel dafür liegt im sicheren Speicher des Systems (Keychain
+          oder Keystore).
+        </li>
+        <li>
+          Die Anmeldung erfolgt mit einem Einmalcode, der Apple-ID oder einem Google-Konto – es gibt keine Passwörter, die gestohlen werden
+          könnten.
+        </li>
       </ul>
     ),
   },
@@ -313,8 +393,8 @@ export const privacyDe: ILegalDocument = {
   title: "Datenschutzerklärung",
   lead: (
     <p>
-      AIFit+ zählt Kalorien anhand von Fotos Ihres Essens. Dafür braucht die App Daten über Ihren Körper und Ihre Ernährung. Hier steht kurz
-      und auf den Punkt: was wir erheben, wozu, wo wir es speichern und wie Sie alles löschen.
+      AIFit+ zählt die Kalorien und Nährstoffe in dem, was Sie essen. Dafür braucht die App Daten über Ihren Körper und Ihre Ernährung. Hier
+      steht kurz und auf den Punkt: was wir erheben, wozu, wo wir es speichern und wie Sie alles löschen.
     </p>
   ),
   sections: SECTIONS,

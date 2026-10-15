@@ -31,9 +31,11 @@ const SECTIONS: ILegalSection[] = [
         <ul>
           <li>Berechnet aus Ihren Antworten Ihre Tagesziele für Kalorien, Eiweiß, Fett und Kohlenhydrate.</li>
           <li>
-            Erkennt Mahlzeiten auf Fotos mithilfe künstlicher Intelligenz und schätzt Portionsgewicht, Kalorien und Nährstoffe.
+            Erkennt mithilfe künstlicher Intelligenz Mahlzeiten auf Fotos und anhand Ihrer getippten oder gesprochenen Beschreibungen und
+            schätzt Portionsgewicht, Kalorien und Nährstoffe.
           </li>
-          <li>Führt ein Ernährungs- und Gewichtstagebuch und gibt Tipps und Erinnerungen.</li>
+          <li>Findet verpackte Produkte per Barcode und liest Nährwerttabellen von einem Foto aus.</li>
+          <li>Führt ein Ernährungs- und Gewichtstagebuch und sendet Erinnerungen.</li>
         </ul>
         <p>
           Die App wird über den App Store und Google Play in ausgewählten Ländern vertrieben. In der Russischen Föderation ist sie nicht
@@ -49,15 +51,20 @@ const SECTIONS: ILegalSection[] = [
       <>
         <p>
           AIFit+ hilft Ihnen, Ihre Ernährung im Blick zu behalten, stellt aber keine Diagnosen und behandelt nichts. Die Berechnungen und
-          Tipps dienen nur der Information und ersetzen weder ärztlichen Rat noch eine Ernährungsberatung.
+          Schätzungen dienen nur der Information und ersetzen weder ärztlichen Rat noch eine Ernährungsberatung.
         </p>
         <p>
           Die Fotoerkennung liefert eine <strong>Schätzung</strong>: Gericht, Portionsgewicht und Kalorien können von den tatsächlichen
           Werten abweichen. Prüfen Sie das Ergebnis und korrigieren Sie es von Hand.
         </p>
         <p>
-          Die Erkennung von Mahlzeiten, die Rückfragen und die Tipps stammen von einem System künstlicher Intelligenz, nicht von einem
-          Menschen.
+          Die Erkennung von Mahlzeiten, das Auslesen von Nährwerttabellen, und die Rückfragen stammen von einem System
+          künstlicher Intelligenz, nicht von einem Menschen.
+        </p>
+        <p>
+          Die per Barcode gefundenen Produktdaten stammen von Open Food Facts, einer freien Datenbank, die von Freiwilligen gepflegt und unter
+          der Open Database License veröffentlicht wird. Sie können unvollständig oder falsch sein: Vergleichen Sie sie mit den Angaben auf
+          der Verpackung.
         </p>
         <p>
           <strong>Allergien und Unverträglichkeiten.</strong> Die App kann auf einem Foto nicht jede Zutat erkennen und prüft Lebensmittel
@@ -82,7 +89,10 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>Sie können die App ab {LEGAL.minAge} Jahren nutzen.</li>
-        <li>Sie melden sich mit einem Einmalcode an, der an Ihre E-Mail-Adresse gesendet wird. Ein Konto ist für eine Person bestimmt.</li>
+        <li>
+          Sie melden sich mit einem Einmalcode an, der an Ihre E-Mail-Adresse gesendet wird, mit Ihrer Apple-ID oder mit Ihrem Google-Konto.
+          Für die Anmeldung über Apple oder Google gelten zusätzlich deren Bedingungen. Ein Konto ist für eine Person bestimmt.
+        </li>
         <li>Machen Sie zutreffende Angaben zu Ihrer Person: Daraus werden Ihre Ziele berechnet.</li>
         <li>Geben Sie Anmeldecodes nicht an andere weiter. Handlungen in Ihrem Konto gelten als Ihre eigenen.</li>
         <li>Sie können Ihr Konto jederzeit in der App löschen: Tippen Sie auf Ihr Profilfoto → „Konto löschen“.</li>
@@ -110,7 +120,6 @@ const SECTIONS: ILegalSection[] = [
           <strong>Das Löschen Ihres Kontos kündigt Ihr Abonnement nicht</strong> – kündigen Sie es gesondert im Store.
         </li>
         <li>Erstattungen wickeln der App Store und Google Play nach ihren eigenen Regeln ab.</li>
-        <li>Ein Promo-Code schenkt Ihnen kostenlose Tage. Er kann nicht gegen Geld eingetauscht werden.</li>
         <li>
           Wenn wir den Preis ändern, gilt der neue Preis ab dem nächsten Abrechnungszeitraum, und der Store holt vorab Ihre Zustimmung ein.
         </li>
@@ -130,7 +139,8 @@ const SECTIONS: ILegalSection[] = [
           <li>Den Zugang zum Dienst weiterzuverkaufen.</li>
         </ul>
         <p>
-          Um Missbrauch vorzubeugen, ist die Zahl der Erkennungen pro Tag begrenzt. Bei normaler Nutzung stört dieses Limit nicht.
+          Um Missbrauch vorzubeugen, ist die Zahl der KI-Erkennungen und Neuberechnungen pro Tag begrenzt. Bei normaler Nutzung stört
+          dieses Limit nicht.
         </p>
       </>
     ),
@@ -140,8 +150,9 @@ const SECTIONS: ILegalSection[] = [
     title: "Ihre Fotos und Daten",
     body: (
       <p>
-        Ihre Fotos und Tagebucheinträge bleiben Ihre. Sie gestatten uns, sie zu speichern und zu verarbeiten – ausschließlich, damit der
-        Dienst für Sie funktioniert: um Ihr Tagebuch anzuzeigen, Mahlzeiten zu erkennen und Ihre Geräte zu synchronisieren. Wir
+        Ihre Fotos, Beschreibungen und Tagebucheinträge bleiben Ihre. Sie gestatten uns, sie zu speichern und zu verarbeiten –
+        ausschließlich, damit der Dienst für Sie funktioniert: um Ihr Tagebuch anzuzeigen, Mahlzeiten und Nährwerttabellen zu erkennen und
+        Ihre Geräte zu synchronisieren. Wir
         veröffentlichen Ihre Inhalte nicht. Einzelheiten finden Sie in der <Link href="/de/privacy">Datenschutzerklärung</Link>.
       </p>
     ),

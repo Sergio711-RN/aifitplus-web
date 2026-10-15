@@ -31,9 +31,11 @@ const SECTIONS: ILegalSection[] = [
         <ul>
           <li>Calcola i tuoi obiettivi giornalieri di calorie, proteine, grassi e carboidrati a partire dalle tue risposte.</li>
           <li>
-            Riconosce i pasti nelle foto con l’intelligenza artificiale e stima il peso della porzione, le calorie e i nutrienti.
+            Riconosce con l’intelligenza artificiale i pasti nelle foto e dalle tue descrizioni, scritte o dettate, e stima il peso della
+            porzione, le calorie e i nutrienti.
           </li>
-          <li>Tiene un diario dell’alimentazione e del peso, e ti dà consigli e promemoria.</li>
+          <li>Trova i prodotti confezionati tramite codice a barre e legge le etichette nutrizionali da una foto.</li>
+          <li>Tiene un diario dell’alimentazione e del peso, e ti invia promemoria.</li>
         </ul>
         <p>
           L’app è distribuita tramite App Store e Google Play in alcuni paesi. Non è disponibile nella Federazione Russa.
@@ -47,7 +49,7 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <>
         <p>
-          AIFit+ ti aiuta a tenere sotto controllo l’alimentazione, ma non fa diagnosi e non cura nulla. I suoi calcoli e consigli hanno
+          AIFit+ ti aiuta a tenere sotto controllo l’alimentazione, ma non fa diagnosi e non cura nulla. I suoi calcoli e le sue stime hanno
           solo scopo informativo e non sostituiscono il parere di un medico o di un dietista.
         </p>
         <p>
@@ -55,8 +57,12 @@ const SECTIONS: ILegalSection[] = [
           diversi da quelli reali. Controlla il risultato e correggilo a mano.
         </p>
         <p>
-          Il riconoscimento dei pasti, le domande di chiarimento e i consigli sono generati da un sistema di intelligenza artificiale, non
-          da una persona.
+          Il riconoscimento dei pasti, la lettura delle etichette e le domande di chiarimento sono generati da un sistema di
+          intelligenza artificiale, non da una persona.
+        </p>
+        <p>
+          I dati dei prodotti trovati tramite codice a barre provengono da Open Food Facts, un database gratuito compilato da volontari e
+          pubblicato con licenza Open Database License. Possono essere incompleti o errati: confrontali con l’etichetta sulla confezione.
         </p>
         <p>
           <strong>Allergie e intolleranze.</strong> L’app non può vedere tutti gli ingredienti in una foto e non verifica la presenza di
@@ -81,7 +87,10 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>Puoi usare l’app a partire dai {LEGAL.minAge} anni.</li>
-        <li>Accedi con un codice monouso inviato alla tua email. Ogni account è destinato a una sola persona.</li>
+        <li>
+          Accedi con un codice monouso inviato alla tua email, con il tuo ID Apple o con il tuo account Google. All’accesso tramite Apple o
+          Google si applicano anche le loro condizioni. Ogni account è destinato a una sola persona.
+        </li>
         <li>Fornisci informazioni corrette su di te: i tuoi obiettivi vengono calcolati a partire da quelle.</li>
         <li>Non comunicare i codici di accesso ad altre persone. Le azioni compiute nel tuo account si considerano tue.</li>
         <li>Puoi eliminare l’account in qualsiasi momento dall’app: tocca la foto del profilo → «Elimina account».</li>
@@ -104,7 +113,6 @@ const SECTIONS: ILegalSection[] = [
           <strong>Eliminare l’account non annulla l’abbonamento</strong>: disdicilo separatamente nello store.
         </li>
         <li>I rimborsi sono gestiti da App Store e Google Play secondo le loro regole.</li>
-        <li>Un codice promozionale aggiunge giorni gratuiti. Non può essere convertito in denaro.</li>
         <li>
           Se modifichiamo il prezzo, il nuovo prezzo si applica a partire dal periodo successivo e lo store ti chiederà in anticipo il
           consenso.
@@ -125,7 +133,8 @@ const SECTIONS: ILegalSection[] = [
           <li>Rivendere l’accesso al servizio.</li>
         </ul>
         <p>
-          Per prevenire gli abusi, il numero di riconoscimenti al giorno è limitato. Il limite non ostacola il normale utilizzo.
+          Per prevenire gli abusi, il numero di riconoscimenti e ricalcoli con l’IA al giorno è limitato. Il limite non ostacola il
+          normale utilizzo.
         </p>
       </>
     ),
@@ -135,9 +144,9 @@ const SECTIONS: ILegalSection[] = [
     title: "Le tue foto e i tuoi dati",
     body: (
       <p>
-        Le tue foto e le voci del diario restano tue. Ci autorizzi a conservarle e a trattarle solo per far funzionare il servizio per te:
-        mostrarti il diario, riconoscere i pasti, sincronizzare i tuoi dispositivi. Non pubblichiamo i tuoi contenuti. Per i dettagli
-        consulta l’<Link href="/it/privacy">Informativa sulla privacy</Link>.
+        Le tue foto, le descrizioni e le voci del diario restano tue. Ci autorizzi a conservarle e a trattarle solo per far funzionare il
+        servizio per te: mostrarti il diario, riconoscere i pasti e le etichette, sincronizzare i tuoi dispositivi. Non pubblichiamo i
+        tuoi contenuti. Per i dettagli consulta l’<Link href="/it/privacy">Informativa sulla privacy</Link>.
       </p>
     ),
   },
