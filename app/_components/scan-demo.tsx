@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { useEffect, useState } from "react";
 import { useI18n } from "../_i18n/i18n-provider";
 import { MEALS, type IMeal, type MealType } from "../_lib/content";
@@ -101,6 +101,20 @@ export const ScanDemo = () => {
     return () => window.clearTimeout(timer);
   }, [phase]);
 
+  // Warm the next photo so the swap never shows an empty frame: from the first result on, in JS, not as an <img> in
+  // the HTML — on the first load its 54 KB competed with the first photo (PageSpeed, 15.10.2026). Same `srcSet` and
+  // `sizes` as the viewfinder's, so the browser picks the same file
+  const isWarming = step > 0 || phase === "result";
+  useEffect(() => {
+    if (!isWarming) return;
+    const { props } = getImageProps({ src: next.photo, alt: "", fill: true, sizes: "300px" });
+    const image = new window.Image();
+    image.sizes = props.sizes ?? "";
+    image.srcset = props.srcSet ?? "";
+    image.src = props.src;
+    image.decode().catch(() => {});
+  }, [isWarming, next.photo]);
+
   return (
     <div className="absolute inset-0 overflow-hidden bg-ink-deep">
       {/* Live camera view: the whole plate sits sharp in the viewfinder, the same frame spills out blurred and dark
@@ -141,16 +155,22 @@ export const ScanDemo = () => {
               animate={{ scale: [1, 1.07], x: [0, -4], y: [0, 3] }}
               transition={{ duration: (SCAN_MS + RESULT_MS) / 1000, ease: "linear" }}
             >
-              <Image src={meal.photo} alt={t.meals[meal.dish]} fill sizes="300px" loading="eager" fetchPriority="high" className="object-cover" />
+              {/* The first photo decodes synchronously: with `async` (next/image's default) the browser may show frames
+                  without it and paint it only after the hydration tasks — PageSpeed counted 2 s of «render delay» */}
+              <Image
+                src={meal.photo}
+                alt={t.meals[meal.dish]}
+                fill
+                sizes="300px"
+                loading="eager"
+                fetchPriority="high"
+                decoding={step === 0 ? "sync" : "async"}
+                className="object-cover"
+              />
             </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>
-      {/* Warm the next photo so the swap never shows an empty frame — from the first result on, not in the HTML: on the
-          first load its 54 KB competed with the first photo (PageSpeed, 15.10.2026), and the swap is seconds away */}
-      {(step > 0 || phase === "result") && (
-        <Image src={next.photo} alt="" width={1} height={1} className="pointer-events-none absolute opacity-0" sizes="300px" />
-      )}
 
       {/* Legibility: dark top and bottom, a dim veil while the result is shown */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ink/90 to-transparent" />
