@@ -12,6 +12,9 @@ export const ru = {
     termsTitle: "Условия использования — AIFit+",
     termsDescription:
       "Правила использования AIFit+: аккаунт, подписка и пробный период, ограничения, предупреждение о здоровье и ответственность.",
+    supportTitle: "Поддержка — AIFit+",
+    supportDescription:
+      "Помощь с AIFit+: как связаться с нами, вход, подписка и возврат денег, копия данных и удаление аккаунта.",
   },
   nav: {
     how: "Как это работает",
@@ -130,7 +133,7 @@ export const ru = {
     accept: "Принять",
     decline: "Отклонить",
   },
-  footer: { privacy: "Политика конфиденциальности", terms: "Условия использования", cookies: "Настройки cookie" },
+  footer: { privacy: "Политика конфиденциальности", terms: "Условия использования", support: "Поддержка", cookies: "Настройки cookie" },
   legal: {
     effective: (date: string) => `Действует с ${date}`,
     contents: "Содержание",

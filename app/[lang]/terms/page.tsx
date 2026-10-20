@@ -27,7 +27,7 @@ export default async function TermsPage({ params }: PageProps<"/[lang]/terms">) 
         title={document.title}
         lead={document.lead}
         sections={document.sections}
-        sibling={{ href: `/${lang}/privacy`, label: getDictionary(lang).footer.privacy }}
+        links={[{ href: `/${lang}/privacy`, label: getDictionary(lang).footer.privacy }]}
       />
       <Footer />
     </>

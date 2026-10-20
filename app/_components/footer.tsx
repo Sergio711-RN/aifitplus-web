@@ -37,6 +37,12 @@ export const Footer = () => {
             >
               {t.footer.terms}
             </Link>
+            <Link
+              href={`/${locale}/support`}
+              className="transition-colors hover:text-text"
+            >
+              {t.footer.support}
+            </Link>
             <button
               type="button"
               onClick={openConsentSettings}

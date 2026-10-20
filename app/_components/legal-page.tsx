@@ -20,8 +20,10 @@ interface ILegalPageProps {
   title: string;
   lead: ReactNode;
   sections: ILegalSection[];
-  /** The other document, linked under the title */
-  sibling: { href: string; label: string };
+  /** Other pages, linked under the title */
+  links: { href: string; label: string }[];
+  /** «Effective from» date under the title; not for pages that are not a legal document */
+  effective?: boolean;
 }
 
 /** Last section whose top has crossed the upper third of the screen */
@@ -58,7 +60,7 @@ const useActiveSection = (ids: string[]) => {
   return active;
 };
 
-export const LegalPage = ({ title, lead, sections, sibling }: ILegalPageProps) => {
+export const LegalPage = ({ title, lead, sections, links, effective = true }: ILegalPageProps) => {
   const { locale, t } = useI18n();
   const effectiveDate = new Intl.DateTimeFormat(LOCALE_META[locale].intl, { dateStyle: "long" }).format(new Date(LEGAL.effectiveDate));
   const ids = sections.map((section) => section.id);
@@ -99,10 +101,12 @@ export const LegalPage = ({ title, lead, sections, sibling }: ILegalPageProps) =
           >
             <h1 className="text-[clamp(1.85rem,7.6vw,4rem)] leading-[1] font-extrabold tracking-[-0.035em]">{title}</h1>
             <p className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[15px] text-text-3">
-              <span>{t.legal.effective(effectiveDate)}</span>
-              <Link href={sibling.href} className="text-apricot underline-offset-4 hover:underline">
-                {sibling.label}
-              </Link>
+              {effective && <span>{t.legal.effective(effectiveDate)}</span>}
+              {links.map((link) => (
+                <Link key={link.href} href={link.href} className="text-apricot underline-offset-4 hover:underline">
+                  {link.label}
+                </Link>
+              ))}
             </p>
             <div className="mt-8 text-[clamp(1.05rem,1.5vw,1.2rem)] leading-relaxed text-text-2">{lead}</div>
           </motion.div>

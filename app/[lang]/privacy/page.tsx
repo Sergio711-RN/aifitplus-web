@@ -27,7 +27,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
         title={document.title}
         lead={document.lead}
         sections={document.sections}
-        sibling={{ href: `/${lang}/terms`, label: getDictionary(lang).footer.terms }}
+        links={[{ href: `/${lang}/terms`, label: getDictionary(lang).footer.terms }]}
       />
       <Footer />
     </>

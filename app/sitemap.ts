@@ -11,6 +11,7 @@ const PAGES = [
   { path: "", changeFrequency: "monthly", priority: 1 },
   { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
   { path: "/terms", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/support", changeFrequency: "monthly", priority: 0.5 },
 ] as const;
 
 // Every language version of every page, each listing its siblings so search engines link them as translations

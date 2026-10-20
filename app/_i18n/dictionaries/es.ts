@@ -15,6 +15,9 @@ export const es: Dictionary = {
     termsTitle: "Términos de uso — AIFit+",
     termsDescription:
       "Las reglas de uso de AIFit+: cuenta, suscripción y prueba gratuita, uso aceptable, aviso sobre salud y responsabilidad.",
+    supportTitle: "Soporte — AIFit+",
+    supportDescription:
+      "Ayuda con AIFit+: cómo contactarnos, inicio de sesión, suscripción y reembolsos, copia de tus datos y eliminación de la cuenta.",
   },
   nav: {
     how: "Cómo funciona",
@@ -130,7 +133,7 @@ export const es: Dictionary = {
     accept: "Aceptar",
     decline: "Rechazar",
   },
-  footer: { privacy: "Política de privacidad", terms: "Términos de uso", cookies: "Configuración de cookies" },
+  footer: { privacy: "Política de privacidad", terms: "Términos de uso", support: "Soporte", cookies: "Configuración de cookies" },
   legal: {
     effective: (date: string) => `Vigente desde el ${date}`,
     contents: "Contenido",

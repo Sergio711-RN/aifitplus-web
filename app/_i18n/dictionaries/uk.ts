@@ -13,6 +13,9 @@ export const uk: Dictionary = {
     termsTitle: "Умови використання — AIFit+",
     termsDescription:
       "Правила використання AIFit+: обліковий запис, підписка та пробний період, обмеження, застереження щодо здоров’я та відповідальність.",
+    supportTitle: "Підтримка — AIFit+",
+    supportDescription:
+      "Допомога з AIFit+: як зв’язатися з нами, вхід, підписка й повернення коштів, копія даних і видалення облікового запису.",
   },
   nav: {
     how: "Як це працює",
@@ -128,7 +131,7 @@ export const uk: Dictionary = {
     accept: "Прийняти",
     decline: "Відхилити",
   },
-  footer: { privacy: "Політика конфіденційності", terms: "Умови використання", cookies: "Налаштування cookie" },
+  footer: { privacy: "Політика конфіденційності", terms: "Умови використання", support: "Підтримка", cookies: "Налаштування cookie" },
   legal: {
     effective: (date: string) => `Діє з ${date}`,
     contents: "Зміст",
