@@ -89,6 +89,7 @@ const SECTIONS: ILegalSection[] = [
             Un relevé de chaque requête à l’IA : son type, son heure, son résultat et sa taille. Il nous sert pour la limite quotidienne et pour
             connaître le coût du service.
           </li>
+          <li>La date à laquelle vous avez autorisé la reconnaissance par IA, ou l’indication que vous ne l’avez pas autorisée.</li>
           <li>
             Journaux techniques du serveur : adresse IP, heure et type de requête. Ils sont nécessaires au fonctionnement et à la protection
             du service.
@@ -130,10 +131,17 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Fonctionnement de l’application</strong> : connexion, calcul de vos objectifs quotidiens, reconnaissance des repas et des
-          étiquettes nutritionnelles, recherche de produits par code-barres, journal, synchronisation entre appareils, réponses à vos messages.
-          Fondement : notre contrat avec vous (<Link href="/fr/terms">Conditions d’utilisation</Link>),
-          art. 6(1)(b) du RGPD.
+          <strong>Fonctionnement de l’application</strong> : connexion, calcul de vos objectifs quotidiens, recherche de produits par
+          code-barres, journal, synchronisation entre appareils, réponses à vos messages. Fondement : notre contrat avec vous
+          (<Link href="/fr/terms">Conditions d’utilisation</Link>), art. 6(1)(b) du RGPD.
+        </li>
+        <li>
+          <strong>Reconnaissance des repas et des étiquettes nutritionnelles</strong> par IA : nous n’envoyons une photo, une description ou
+          une photo d’étiquette à Google Gemini qu’après votre autorisation dans l’application. Fondement : votre consentement, art. 6(1)(a)
+          du RGPD, et, dans la mesure où une requête révèle des informations sur votre santé, votre consentement explicite, art. 9(2)(a) du
+          RGPD. Vous pouvez le retirer à tout moment : touchez votre photo de profil → « Informations personnelles » → « Reconnaissance par
+          IA ». Sans lui, vous pouvez toujours ajouter des produits trouvés par code-barres et des repas depuis « Enregistrés », modifier le
+          poids des ingrédients et supprimer des entrées de votre journal.
         </li>
         <li>
           <strong>Les données sur la santé</strong> ne sont traitées que pour calculer votre plan et tenir votre journal. Fondement : votre
@@ -186,6 +194,14 @@ const SECTIONS: ILegalSection[] = [
           Le modèle est Gemini, de Google. Google traite la requête pour notre compte et uniquement pour y répondre. Nous utilisons l’API Gemini
           payante : selon ses conditions, le contenu des requêtes ne sert pas à entraîner les modèles de Google; Google peut le conserver
           pendant une durée limitée, uniquement pour détecter les abus.
+        </p>
+        <p>
+          Avant la première requête, l’application vous montre ce qui sera envoyé à Google et vous demande votre autorisation. Seuls la
+          photo, la description ou la photo d’étiquette, vos réponses aux questions de précision, vos modifications d’ingrédients et la
+          langue de l’interface (pour que la réponse arrive dans cette langue) sont envoyés; votre nom, votre adresse courriel, votre poids
+          et les autres données de votre profil ne le sont pas. Nous enregistrons la date de votre autorisation. Si vous la retirez, plus
+          rien n’est envoyé à Gemini, votre journal est conservé, et l’application vous la redemandera la prochaine fois que vous voudrez
+          faire reconnaître un aliment.
         </p>
         <p>
           La photo originale et la vue de côté sont supprimées du stockage 30 jours après avoir été prises; le journal conserve un petit
@@ -331,6 +347,10 @@ const SECTIONS: ILegalSection[] = [
             consentement ».
           </li>
           <li>
+            <strong>Retirer votre autorisation</strong> de reconnaissance par IA : « Informations personnelles » → « Reconnaissance par
+            IA ». Votre compte et votre journal sont conservés.
+          </li>
+          <li>
             <strong>Vous opposer</strong> au traitement ou en demander la limitation.
           </li>
           <li>
@@ -367,8 +387,11 @@ const SECTIONS: ILegalSection[] = [
     title: "Âge",
     body: (
       <p>
-        Vous pouvez utiliser AIFit+ à partir de {LEGAL.minAge} ans. Nous ne recueillons pas sciemment de données d’enfants. Si vous apprenez
-        qu’un enfant a créé un compte, écrivez-nous et nous le supprimerons.
+        Vous pouvez utiliser AIFit+ à partir de {LEGAL.minAge} ans. L’application vous demande votre âge lors de la configuration; si vous
+        êtes plus jeune, l’application est bloquée sur cet appareil, vos réponses sont effacées du téléphone et, si vous avez déjà ouvert
+        une session, le compte est supprimé. Les réponses données avant l’inscription n’atteignent jamais notre serveur : nous ne recevons
+        donc aucune donnée sur la santé de mineurs. Nous ne recueillons pas sciemment de données d’enfants. Si vous apprenez qu’un enfant a
+        créé un compte, écrivez-nous et nous le supprimerons.
       </p>
     ),
   },

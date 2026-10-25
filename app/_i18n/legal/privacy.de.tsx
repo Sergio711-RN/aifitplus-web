@@ -88,6 +88,7 @@ const SECTIONS: ILegalSection[] = [
             Ein Eintrag zu jeder Anfrage an die KI: Art, Zeitpunkt, Ergebnis und Umfang. Wir benötigen ihn für das Tageslimit und um zu
             wissen, was der Dienst kostet.
           </li>
+          <li>Das Datum, an dem Sie die KI-Erkennung erlaubt haben, oder ein Vermerk, dass Sie sie nicht erlaubt haben.</li>
           <li>
             Technische Serverprotokolle: IP-Adresse, Zeitpunkt und Art der Anfrage. Wir benötigen sie, um den Dienst zu betreiben und zu
             schützen.
@@ -129,9 +130,17 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Betrieb der App</strong>: Anmeldung, Berechnung Ihrer Tagesziele, Erkennung von Mahlzeiten und Nährwerttabellen, Suche
-          von Produkten per Barcode, Tagebuch, Synchronisierung zwischen Geräten, Antworten auf Ihre Nachrichten. Rechtsgrundlage: unser
-          Vertrag mit Ihnen (<Link href="/de/terms">Nutzungsbedingungen</Link>), Art. 6 Abs. 1 lit. b DSGVO.
+          <strong>Betrieb der App</strong>: Anmeldung, Berechnung Ihrer Tagesziele, Suche von Produkten per Barcode, Tagebuch,
+          Synchronisierung zwischen Geräten, Antworten auf Ihre Nachrichten. Rechtsgrundlage: unser Vertrag mit Ihnen
+          (<Link href="/de/terms">Nutzungsbedingungen</Link>), Art. 6 Abs. 1 lit. b DSGVO.
+        </li>
+        <li>
+          <strong>Erkennung von Mahlzeiten und Nährwerttabellen</strong> mit KI: Ein Foto, eine Beschreibung oder das Foto einer
+          Nährwerttabelle senden wir erst an Google Gemini, nachdem Sie dies in der App erlaubt haben. Rechtsgrundlage: Ihre Einwilligung,
+          Art. 6 Abs. 1 lit. a DSGVO, und, soweit eine Anfrage Angaben über Ihre Gesundheit erkennen lässt, Ihre ausdrückliche Einwilligung,
+          Art. 9 Abs. 2 lit. a DSGVO. Sie können sie jederzeit widerrufen: Tippen Sie auf Ihr Profilfoto → „Persönliche Daten“ →
+          „KI-Erkennung“. Ohne sie können Sie weiterhin per Barcode gefundene Produkte und Mahlzeiten aus „Gespeichert“ hinzufügen, das
+          Gewicht von Zutaten ändern und Einträge in Ihrem Tagebuch löschen.
         </li>
         <li>
           <strong>Gesundheitsdaten</strong> werden nur verarbeitet, um Ihren Plan zu berechnen und Ihr Tagebuch zu führen. Rechtsgrundlage:
@@ -187,6 +196,13 @@ const SECTIONS: ILegalSection[] = [
           Das Modell ist Gemini von Google. Google verarbeitet die Anfrage in unserem Auftrag und ausschließlich, um sie zu beantworten. Wir
           nutzen die kostenpflichtige Gemini API: Nach ihren Bedingungen werden die Inhalte von Anfragen nicht zum Training der Modelle von
           Google verwendet; Google kann sie für begrenzte Zeit ausschließlich zur Erkennung von Missbrauch aufbewahren.
+        </p>
+        <p>
+          Vor der ersten Anfrage zeigt die App, was an Google gesendet wird, und bittet um Ihre Erlaubnis. Gesendet werden nur das Foto, die
+          Beschreibung oder das Foto der Nährwerttabelle, Ihre Antworten auf Rückfragen, Ihre Änderungen an den Zutaten und die Sprache der
+          App (damit die Antwort in dieser Sprache zurückkommt) – nicht aber Ihr Name, Ihre E-Mail-Adresse, Ihr Gewicht und die übrigen
+          Profildaten. Wir speichern das Datum Ihrer Erlaubnis. Wenn Sie sie widerrufen, wird nichts mehr an Gemini gesendet, Ihr Tagebuch
+          bleibt erhalten, und die App fragt erneut, wenn Sie das nächste Mal Essen erkennen lassen möchten.
         </p>
         <p>
           Das Originalfoto und die Seitenansicht werden 30 Tage nach der Aufnahme aus dem Speicher gelöscht; im Tagebuch bleibt eine kleine
@@ -334,6 +350,10 @@ const SECTIONS: ILegalSection[] = [
             „Einwilligung widerrufen“.
           </li>
           <li>
+            <strong>Erlaubnis widerrufen</strong> für die KI-Erkennung: „Persönliche Daten“ → „KI-Erkennung“. Ihr Konto und Ihr Tagebuch
+            bleiben erhalten.
+          </li>
+          <li>
             <strong>Widersprechen</strong>: der Verarbeitung widersprechen oder ihre Einschränkung verlangen.
           </li>
           <li>
@@ -372,8 +392,11 @@ const SECTIONS: ILegalSection[] = [
     title: "Alter",
     body: (
       <p>
-        Sie können AIFit+ ab {LEGAL.minAge} Jahren nutzen. Wir erheben nicht wissentlich Daten von Kindern. Wenn Sie erfahren, dass ein Kind
-        ein Konto erstellt hat, schreiben Sie uns, und wir löschen es.
+        Sie können AIFit+ ab {LEGAL.minAge} Jahren nutzen. Die App fragt bei der Einrichtung nach Ihrem Alter; sind Sie jünger, wird die App
+        auf diesem Gerät gesperrt, Ihre Antworten werden vom Telefon gelöscht, und wenn Sie bereits angemeldet sind, wird das Konto
+        gelöscht. Antworten vor der Registrierung erreichen unseren Server nie, daher erhalten wir keine Gesundheitsdaten von
+        Minderjährigen. Wir erheben nicht wissentlich Daten von Kindern. Wenn Sie erfahren, dass ein Kind ein Konto erstellt hat, schreiben
+        Sie uns, und wir löschen es.
       </p>
     ),
   },

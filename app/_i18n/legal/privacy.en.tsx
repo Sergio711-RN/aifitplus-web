@@ -76,6 +76,7 @@ const SECTIONS: ILegalSection[] = [
           <li>Reminder settings and units of measurement.</li>
           <li>An internal user ID and an encrypted session key on your device.</li>
           <li>A record of each request to the AI: its type, time, outcome and size. We need it for the daily limit and to know what the service costs.</li>
+          <li>The date you allowed AI recognition, or a mark that you have not allowed it.</li>
           <li>Server technical logs: IP address, time and type of request. We need them to run and protect the service.</li>
           <li>
             Crash and error reports: internal user ID, device model, operating system, app version, the screen where the error happened and the
@@ -109,9 +110,16 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Running the app</strong>: sign-in, calculating your daily targets, recognising meals and nutrition labels, finding products by
-          barcode, the diary, syncing between devices, replying to your messages.
-          Legal basis: our contract with you (<Link href="/en/terms">Terms of Use</Link>), Art. 6(1)(b) GDPR.
+          <strong>Running the app</strong>: sign-in, calculating your daily targets, finding products by barcode, the diary, syncing between
+          devices, replying to your messages. Legal basis: our contract with you (<Link href="/en/terms">Terms of Use</Link>), Art. 6(1)(b)
+          GDPR.
+        </li>
+        <li>
+          <strong>Recognising meals and nutrition labels</strong> with AI: we send a photo, a description or a label photo to Google Gemini
+          only after you allow it in the app. Legal basis: your consent, Art. 6(1)(a) GDPR, and, to the extent a request reveals information
+          about your health, your explicit consent, Art. 9(2)(a) GDPR. You can withdraw it at any time: tap your profile photo → “Personal
+          details” → “AI recognition”. Without it, you can still add products found by barcode and meals from “Saved”, change the weight of
+          ingredients and delete entries in your diary.
         </li>
         <li>
           <strong>Health data</strong> is processed only to calculate your plan and keep your diary. Legal basis: your separate explicit
@@ -160,6 +168,13 @@ const SECTIONS: ILegalSection[] = [
         <p>
           The model is Gemini by Google. Google processes the request on our behalf and only to answer it. We use the paid Gemini API: under its
           terms, request content is not used to train Google’s models; Google may keep it for a limited time solely to detect abuse.
+        </p>
+        <p>
+          Before the first request, the app shows what will be sent to Google and asks for your permission. Only the photo, the description
+          or the label photo, your answers to follow-up questions, your ingredient edits and the interface language (so that the answer
+          comes back in it) are sent; your name, email, weight and other profile data are not. We record the date you gave permission. If
+          you withdraw it, nothing more is sent to Gemini, your diary stays, and the app will ask again the next time you want food
+          recognised.
         </p>
         <p>
           The original photo and the side view are deleted from storage 30 days after they are taken; the diary keeps a small preview for as long
@@ -290,6 +305,9 @@ const SECTIONS: ILegalSection[] = [
             withdrawing consent means deleting your account: “Personal details” → “Withdraw consent”.
           </li>
           <li>
+            <strong>Withdraw permission</strong> for AI recognition: “Personal details” → “AI recognition”. Your account and diary stay.
+          </li>
+          <li>
             <strong>Object</strong> to processing or restrict it.
           </li>
           <li>
@@ -322,8 +340,10 @@ const SECTIONS: ILegalSection[] = [
     title: "Age",
     body: (
       <p>
-        You can use AIFit+ from the age of {LEGAL.minAge}. We do not knowingly collect children’s data. If you find out that a child has
-        created an account, write to us and we will delete it.
+        You can use AIFit+ from the age of {LEGAL.minAge}. The app asks your age during setup; if you are younger, the app closes on that
+        device, your answers are erased from the phone, and if you have already signed in, the account is deleted. Answers given before
+        sign-up never reach our server, so we do not receive a minor’s health data. We do not knowingly collect children’s data. If you find
+        out that a child has created an account, write to us and we will delete it.
       </p>
     ),
   },

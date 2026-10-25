@@ -88,6 +88,7 @@ const SECTIONS: ILegalSection[] = [
             Un registro di ogni richiesta all’IA: tipo, ora, esito e dimensione. Ci serve per il limite giornaliero e per sapere quanto
             costa il servizio.
           </li>
+          <li>La data in cui hai consentito il riconoscimento IA, oppure l’indicazione che non l’hai consentito.</li>
           <li>
             Log tecnici del server: indirizzo IP, ora e tipo di richiesta. Ci servono per far funzionare il servizio e proteggerlo.
           </li>
@@ -127,10 +128,17 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          <strong>Funzionamento dell’app</strong>: accesso, calcolo dei tuoi obiettivi giornalieri, riconoscimento dei pasti e delle
-          etichette nutrizionali, ricerca dei prodotti tramite codice a barre, diario, sincronizzazione tra dispositivi, risposte ai tuoi
-          messaggi. Base giuridica: il nostro contratto con te (<Link href="/it/terms">Condizioni d’uso</Link>),
-          art. 6, par. 1, lett. b) del GDPR.
+          <strong>Funzionamento dell’app</strong>: accesso, calcolo dei tuoi obiettivi giornalieri, ricerca dei prodotti tramite codice a
+          barre, diario, sincronizzazione tra dispositivi, risposte ai tuoi messaggi. Base giuridica: il nostro contratto con te
+          (<Link href="/it/terms">Condizioni d’uso</Link>), art. 6, par. 1, lett. b) del GDPR.
+        </li>
+        <li>
+          <strong>Riconoscimento dei pasti e delle etichette nutrizionali</strong> con l’IA: inviamo una foto, una descrizione o la foto di
+          un’etichetta a Google Gemini solo dopo che l’hai consentito nell’app. Base giuridica: il tuo consenso, art. 6, par. 1, lett. a)
+          del GDPR, e, nella misura in cui una richiesta rivela informazioni sulla tua salute, il tuo consenso esplicito, art. 9, par. 2,
+          lett. a) del GDPR. Puoi revocarlo in qualsiasi momento: tocca la foto del profilo → «Dati personali» → «Riconoscimento IA». Senza
+          di esso puoi comunque aggiungere i prodotti trovati tramite codice a barre e i pasti dai «Salvati», cambiare il peso degli
+          ingredienti ed eliminare le voci del diario.
         </li>
         <li>
           <strong>I dati sulla salute</strong> sono trattati solo per calcolare il tuo piano e tenere il tuo diario. Base giuridica: il
@@ -185,6 +193,13 @@ const SECTIONS: ILegalSection[] = [
           Il modello è Gemini di Google. Google tratta la richiesta per nostro conto e solo per rispondere. Usiamo l’API Gemini a
           pagamento: secondo le sue condizioni, il contenuto delle richieste non viene usato per addestrare i modelli di Google; Google può
           conservarlo per un periodo limitato al solo scopo di individuare abusi.
+        </p>
+        <p>
+          Prima di inviare la prima richiesta, l’app ti mostra cosa verrà inviato a Google e ti chiede il permesso. Vengono inviati solo la
+          foto, la descrizione o la foto dell’etichetta, le tue risposte alle domande di chiarimento, le modifiche agli ingredienti e la
+          lingua dell’interfaccia (perché la risposta arrivi in quella lingua); il tuo nome, il tuo indirizzo email, il tuo peso e gli altri
+          dati del profilo no. Registriamo la data in cui hai dato il permesso. Se lo revochi, a Gemini non viene più inviato nulla, il
+          diario resta e l’app te lo chiederà di nuovo la prossima volta che vorrai far riconoscere un alimento.
         </p>
         <p>
           La foto originale e la vista laterale vengono eliminate dall’archivio 30 giorni dopo lo scatto; il diario conserva una piccola
@@ -332,6 +347,10 @@ const SECTIONS: ILegalSection[] = [
             piano, quindi revocare il consenso comporta l’eliminazione dell’account: «Dati personali» → «Revoca il consenso».
           </li>
           <li>
+            <strong>Revocare il permesso</strong> per il riconoscimento IA: «Dati personali» → «Riconoscimento IA». L’account e il diario
+            restano.
+          </li>
+          <li>
             <strong>Opporti</strong> al trattamento o chiederne la limitazione.
           </li>
           <li>
@@ -367,8 +386,11 @@ const SECTIONS: ILegalSection[] = [
     title: "Età",
     body: (
       <p>
-        Puoi usare AIFit+ a partire dai {LEGAL.minAge} anni. Non raccogliamo consapevolmente dati di minori al di sotto di questa età. Se
-        vieni a sapere che un bambino ha creato un account, scrivici e lo elimineremo.
+        Puoi usare AIFit+ a partire dai {LEGAL.minAge} anni. L’app ti chiede l’età durante la configurazione; se sei più giovane, l’app su
+        quel dispositivo si blocca, le risposte vengono cancellate dal telefono e, se hai già effettuato l’accesso, l’account viene
+        eliminato. Le risposte date prima della registrazione non arrivano mai al nostro server, quindi non riceviamo dati sulla salute di
+        minori. Non raccogliamo consapevolmente dati di minori al di sotto di questa età. Se vieni a sapere che un bambino ha creato un
+        account, scrivici e lo elimineremo.
       </p>
     ),
   },
