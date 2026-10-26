@@ -33,7 +33,6 @@ export default async function SupportPage({ params }: PageProps<"/[lang]/support
           { href: `/${lang}/privacy`, label: t.footer.privacy },
           { href: `/${lang}/terms`, label: t.footer.terms },
         ]}
-        effective={false}
       />
       <Footer />
     </>

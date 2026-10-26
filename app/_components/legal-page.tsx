@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { LOCALE_META } from "../_i18n/config";
 import { useI18n } from "../_i18n/i18n-provider";
-import { LEGAL } from "../_lib/legal";
 import { AppMark } from "./app-mark";
 import { LangSwitch } from "./lang-switch";
 import { ScrollProgress } from "./scroll-progress";
@@ -22,8 +21,10 @@ interface ILegalPageProps {
   sections: ILegalSection[];
   /** Other pages, linked under the title */
   links: { href: string; label: string }[];
-  /** «Effective from» date under the title; not for pages that are not a legal document */
-  effective?: boolean;
+  /** ISO date the document takes effect, shown under the title; none for pages that are not a legal document */
+  effectiveDate?: string;
+  /** «Coming soon» store button in the header; off where the page may hold nothing but the document */
+  storeButton?: boolean;
 }
 
 /** Last section whose top has crossed the upper third of the screen */
@@ -60,9 +61,9 @@ const useActiveSection = (ids: string[]) => {
   return active;
 };
 
-export const LegalPage = ({ title, lead, sections, links, effective = true }: ILegalPageProps) => {
+export const LegalPage = ({ title, lead, sections, links, effectiveDate, storeButton = true }: ILegalPageProps) => {
   const { locale, t } = useI18n();
-  const effectiveDate = new Intl.DateTimeFormat(LOCALE_META[locale].intl, { dateStyle: "long" }).format(new Date(LEGAL.effectiveDate));
+  const effective = effectiveDate && new Intl.DateTimeFormat(LOCALE_META[locale].intl, { dateStyle: "long" }).format(new Date(effectiveDate));
   const ids = sections.map((section) => section.id);
   const active = useActiveSection(ids);
 
@@ -79,13 +80,15 @@ export const LegalPage = ({ title, lead, sections, links, effective = true }: IL
           </Link>
           <div className="flex items-center gap-2">
             <LangSwitch />
-            <Link
-              href={`/${locale}#download`}
-              className="rounded-full bg-apricot px-4 py-2.5 text-[15px] font-bold whitespace-nowrap text-ink transition-colors hover:bg-apricot-light sm:px-5"
-            >
-              <span className="sm:hidden">{t.nav.ctaShort}</span>
-              <span className="hidden sm:inline">{t.nav.cta}</span>
-            </Link>
+            {storeButton && (
+              <Link
+                href={`/${locale}#download`}
+                className="rounded-full bg-apricot px-4 py-2.5 text-[15px] font-bold whitespace-nowrap text-ink transition-colors hover:bg-apricot-light sm:px-5"
+              >
+                <span className="sm:hidden">{t.nav.ctaShort}</span>
+                <span className="hidden sm:inline">{t.nav.cta}</span>
+              </Link>
+            )}
           </div>
         </div>
       </header>
@@ -101,7 +104,7 @@ export const LegalPage = ({ title, lead, sections, links, effective = true }: IL
           >
             <h1 className="text-[clamp(1.85rem,7.6vw,4rem)] leading-[1] font-extrabold tracking-[-0.035em]">{title}</h1>
             <p className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[15px] text-text-3">
-              {effective && <span>{t.legal.effective(effectiveDate)}</span>}
+              {effective && <span>{t.legal.effective(effective)}</span>}
               {links.map((link) => (
                 <Link key={link.href} href={link.href} className="text-apricot underline-offset-4 hover:underline">
                   {link.label}

@@ -296,3 +296,71 @@ body {
 .legal a:hover {
   text-decoration: underline;
 }
+/* Tables of the Consumer Health Data Privacy Policy; on phones each row is a card with the column name above each cell */
+.legal table {
+  margin-top: 1rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-2);
+}
+.legal table:first-child {
+  margin-top: 0;
+}
+.legal th {
+  padding: 0 1rem 0.75rem 0;
+  border-bottom: 1px solid var(--color-line);
+  text-align: left;
+  vertical-align: bottom;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.legal td {
+  padding: 0.875rem 1rem 0.875rem 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-line) 60%, transparent);
+  vertical-align: top;
+}
+.legal td:first-child {
+  font-weight: 600;
+  color: var(--color-text);
+}
+.legal td a {
+  overflow-wrap: break-word;
+}
+@media (max-width: 47.99rem) {
+  .legal thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .legal :is(table, tbody, tr, td) {
+    display: block;
+  }
+  .legal tr {
+    padding: 1rem 0;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-line) 60%, transparent);
+  }
+  .legal tr:first-child {
+    padding-top: 0;
+  }
+  .legal tr:last-child {
+    border-bottom: 0;
+  }
+  .legal td {
+    padding: 0;
+    border: 0;
+  }
+  .legal td + td {
+    margin-top: 0.5rem;
+  }
+  .legal td + td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-text-3);
+  }
+}

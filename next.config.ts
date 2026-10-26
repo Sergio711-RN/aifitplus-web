@@ -6,8 +6,14 @@ const nextConfig: NextConfig = {
   // Plain files for Apache on the shared hosting (no Node.js there): `next build` writes the site to `out/`;
   // language redirects, 404s and caching are in `public/.htaccess`
   output: "export",
-  // `next dev` does not read `.htaccess`: «/» opens the default language there
-  ...(isDev && { redirects: async () => [{ source: "/", destination: "/en", permanent: false }] }),
+  // `next dev` does not read `.htaccess`: «/» opens the default language there, and the English-only
+  // Consumer Health Data Privacy Policy opens from every language
+  ...(isDev && {
+    redirects: async () => [
+      { source: "/", destination: "/en", permanent: false },
+      { source: "/:lang(uk|ru|fr|de|es|it)/health-data", destination: "/en/health-data", permanent: false },
+    ],
+  }),
   // The root layout sits under `[lang]`, so unmatched URLs need their own full-page 404 (`app/global-not-found.tsx`)
   experimental: {
     globalNotFound: true,

@@ -50,6 +50,11 @@ const SECTIONS: ILegalSection[] = [
           categoria particolare di dati: arrivano sul nostro server solo dopo che hai dato un consenso separato al momento della
           registrazione. Fino ad allora le tue risposte restano soltanto sul tuo dispositivo.
         </p>
+        <p>
+          L’acqua che registri: quantità e ora di ogni voce, il tuo obiettivo di acqua, la dimensione del bicchiere e le ore della tua
+          giornata, e se le bevande del diario contano nell’acqua. Come le tue risposte, sono dati sulla salute: arrivano sul nostro server
+          solo dopo il tuo consenso.
+        </p>
         <h3>Diario alimentare</h3>
         <ul>
           <li>Le foto dei pasti che scatti o scegli dalla galleria, compresa una vista laterale facoltativa.</li>
@@ -63,8 +68,8 @@ const SECTIONS: ILegalSection[] = [
             confezione e della porzione), così la scansione successiva lo trova. La foto dell’etichetta non viene salvata.
           </li>
           <li>
-            I risultati del riconoscimento: piatto, ingredienti, peso della porzione, calorie, proteine, grassi, carboidrati, le tue
-            correzioni e le risposte alle domande di chiarimento.
+            I risultati del riconoscimento: piatto, ingredienti, peso della porzione, calorie, proteine, grassi, carboidrati, il contenuto
+            d’acqua stimato delle bevande, le tue correzioni e le risposte alle domande di chiarimento.
           </li>
           <li>I pasti che aggiungi a «Salvati».</li>
           <li>Ora e tipo di pasto.</li>
@@ -99,7 +104,8 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             Sul telefono l’app conserva una copia del diario e delle statistiche caricati più di recente, per poterli vedere anche offline,
-            e dei prodotti trovati tramite codice a barre. Tutto questo viene cancellato quando esci dall’account.
+            dei prodotti trovati tramite codice a barre, delle voci d’acqua non ancora inviate perché eri offline e del segno «Giornata
+            calda o allenamento» di oggi. Tutto questo viene cancellato quando esci dall’account.
           </li>
         </ul>
         <h3>Sito web</h3>
@@ -141,9 +147,9 @@ const SECTIONS: ILegalSection[] = [
           ingredienti ed eliminare le voci del diario.
         </li>
         <li>
-          <strong>I dati sulla salute</strong> sono trattati solo per calcolare il tuo piano e tenere il tuo diario. Base giuridica: il
-          tuo consenso esplicito e separato, che dai spuntando una casella al momento della registrazione, art. 9, par. 2, lett. a) del
-          GDPR.
+          <strong>I dati sulla salute</strong> sono trattati solo per calcolare il tuo piano e il tuo obiettivo di acqua e tenere il tuo
+          diario di cibo e acqua. Base giuridica: il tuo consenso esplicito e separato, che dai spuntando una casella al momento della
+          registrazione, art. 9, par. 2, lett. a) del GDPR.
         </li>
         <li>
           <strong>Abbonamento</strong>: verifica dell’accesso alle funzioni a pagamento. Base giuridica: contratto, art. 6, par. 1,
@@ -297,7 +303,7 @@ const SECTIONS: ILegalSection[] = [
     title: "Per quanto tempo conserviamo i dati",
     body: (
       <ul>
-        <li>Dati dell’account, diario, pasti salvati e prodotti letti dalle etichette — finché hai un account.</li>
+        <li>Dati dell’account, diario di cibo e acqua, pasti salvati e prodotti letti dalle etichette — finché hai un account.</li>
         <li>
           Foto originali dei pasti e viste laterali — 30 giorni; l’anteprima nel diario — finché non elimini il pasto o l’account. Le foto
           delle etichette non vengono salvate.
@@ -355,6 +361,13 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>Presentare un reclamo</strong> all’autorità per la protezione dei dati del paese in cui vivi o lavori.
+          </li>
+          <li>
+            Se vivi nello Stato di Washington o in Nevada, consulta anche la nostra{" "}
+            <Link href="/en/health-data" hrefLang="en" lang="en">
+              Consumer Health Data Privacy Policy
+            </Link>{" "}
+            (in inglese).
           </li>
         </ul>
         <p>

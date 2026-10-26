@@ -24,6 +24,9 @@ RewriteRule ^ %1 [R=301,L]
 # /en/contact → /en/support: the address people and store reviewers try first
 RewriteRule ^(en|uk|ru|fr|de|es|it)/contact$ /$1/support [R=301,L]
 
+# The Consumer Health Data Privacy Policy is English only (`app/[lang]/health-data`): the other languages open it in English
+RewriteRule ^(uk|ru|fr|de|es|it)/health-data$ /en/health-data [R=301,L]
+
 # Address without a language (/, /privacy) → the same page in the visitor's language: the one picked in the switcher
 # (cookie NEXT_LOCALE, `app/_i18n/config.ts`), else the first supported one in Accept-Language, else English.
 # Not for files (favicon.ico, sitemap.xml) and Next assets

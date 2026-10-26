@@ -133,7 +133,13 @@ export const fr: Dictionary = {
     accept: "Accepter",
     decline: "Refuser",
   },
-  footer: { privacy: "Politique de confidentialité", terms: "Conditions d’utilisation", support: "Assistance", cookies: "Paramètres des témoins" },
+  footer: {
+    privacy: "Politique de confidentialité",
+    terms: "Conditions d’utilisation",
+    healthData: "Consumer Health Data Privacy Policy",
+    support: "Assistance",
+    cookies: "Paramètres des témoins",
+  },
   legal: {
     effective: (date: string) => `En vigueur depuis le ${date}`,
     contents: "Sommaire",

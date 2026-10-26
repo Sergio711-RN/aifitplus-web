@@ -133,7 +133,15 @@ export const ru = {
     accept: "Принять",
     decline: "Отклонить",
   },
-  footer: { privacy: "Политика конфиденциальности", terms: "Условия использования", support: "Поддержка", cookies: "Настройки cookie" },
+  footer: {
+    privacy: "Политика конфиденциальности",
+    terms: "Условия использования",
+    /** Not translated: the name of an English-only document (`/en/health-data`); Washington law wants a separate link
+     * with this name on the home page */
+    healthData: "Consumer Health Data Privacy Policy",
+    support: "Поддержка",
+    cookies: "Настройки cookie",
+  },
   legal: {
     effective: (date: string) => `Действует с ${date}`,
     contents: "Содержание",

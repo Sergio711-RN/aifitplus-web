@@ -131,7 +131,13 @@ export const uk: Dictionary = {
     accept: "Прийняти",
     decline: "Відхилити",
   },
-  footer: { privacy: "Політика конфіденційності", terms: "Умови використання", support: "Підтримка", cookies: "Налаштування cookie" },
+  footer: {
+    privacy: "Політика конфіденційності",
+    terms: "Умови використання",
+    healthData: "Consumer Health Data Privacy Policy",
+    support: "Підтримка",
+    cookies: "Налаштування cookie",
+  },
   legal: {
     effective: (date: string) => `Діє з ${date}`,
     contents: "Зміст",

@@ -37,6 +37,15 @@ export const Footer = () => {
             >
               {t.footer.terms}
             </Link>
+            {/* English-only document: the same page from every language */}
+            <Link
+              href="/en/health-data"
+              hrefLang="en"
+              lang="en"
+              className="transition-colors hover:text-text"
+            >
+              {t.footer.healthData}
+            </Link>
             <Link
               href={`/${locale}/support`}
               className="transition-colors hover:text-text"

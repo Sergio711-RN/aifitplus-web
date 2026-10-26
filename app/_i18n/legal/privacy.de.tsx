@@ -49,6 +49,11 @@ const SECTIONS: ILegalSection[] = [
           eine besondere Kategorie personenbezogener Daten: Sie gelangen erst auf unseren Server, nachdem Sie bei der Registrierung
           gesondert eingewilligt haben. Bis dahin werden Ihre Antworten ausschließlich auf Ihrem Gerät gespeichert.
         </p>
+        <p>
+          Wasser, das Sie erfassen: Menge und Zeitpunkt jedes Eintrags, Ihr Wasserziel, Glasgröße und die Stunden Ihres Tages sowie die
+          Angabe, ob Getränke aus dem Tagebuch mitgezählt werden. Wie Ihre Antworten sind dies Gesundheitsdaten und gelangen erst nach Ihrer
+          Einwilligung auf unseren Server.
+        </p>
         <h3>Ernährungstagebuch</h3>
         <ul>
           <li>Fotos von Mahlzeiten, die Sie aufnehmen oder aus Ihrer Galerie auswählen, einschließlich einer optionalen Seitenansicht.</li>
@@ -63,8 +68,8 @@ const SECTIONS: ILegalSection[] = [
             gespeichert.
           </li>
           <li>
-            Ergebnisse der Erkennung: Gericht, Zutaten, Portionsgewicht, Kalorien, Eiweiß, Fett, Kohlenhydrate, Ihre Korrekturen und Ihre
-            Antworten auf Rückfragen.
+            Ergebnisse der Erkennung: Gericht, Zutaten, Portionsgewicht, Kalorien, Eiweiß, Fett, Kohlenhydrate, der geschätzte Wassergehalt
+            von Getränken, Ihre Korrekturen und Ihre Antworten auf Rückfragen.
           </li>
           <li>Mahlzeiten, die Sie zu „Gespeichert“ hinzufügen.</li>
           <li>Uhrzeit und Art der Mahlzeit.</li>
@@ -99,8 +104,9 @@ const SECTIONS: ILegalSection[] = [
             IP-Adresse noch Bildschirmfotos.
           </li>
           <li>
-            Auf Ihrem Smartphone bewahrt die App eine Kopie des zuletzt geladenen Tagebuchs und der Statistik auf, damit Sie sie auch offline
-            sehen können, sowie die per Barcode gefundenen Produkte. All das wird beim Abmelden gelöscht.
+            Auf Ihrem Smartphone bewahrt die App eine Kopie des zuletzt geladenen Tagebuchs und der Statistik auf, damit Sie sie auch
+            offline sehen können, sowie die per Barcode gefundenen Produkte, offline erfasste und noch nicht gesendete Wassereinträge und
+            die Markierung „Heißer Tag oder Training“ für heute. All das wird beim Abmelden gelöscht.
           </li>
         </ul>
         <h3>Website</h3>
@@ -143,9 +149,9 @@ const SECTIONS: ILegalSection[] = [
           Gewicht von Zutaten ändern und Einträge in Ihrem Tagebuch löschen.
         </li>
         <li>
-          <strong>Gesundheitsdaten</strong> werden nur verarbeitet, um Ihren Plan zu berechnen und Ihr Tagebuch zu führen. Rechtsgrundlage:
-          Ihre gesonderte ausdrückliche Einwilligung, die Sie bei der Registrierung durch Setzen eines Häkchens erteilen, Art. 9 Abs. 2
-          lit. a DSGVO.
+          <strong>Gesundheitsdaten</strong> werden nur verarbeitet, um Ihren Plan und Ihr Wasserziel zu berechnen und Ihr Ernährungs- und
+          Wassertagebuch zu führen. Rechtsgrundlage: Ihre gesonderte ausdrückliche Einwilligung, die Sie bei der Registrierung durch Setzen
+          eines Häkchens erteilen, Art. 9 Abs. 2 lit. a DSGVO.
         </li>
         <li>
           <strong>Abonnement</strong>: Prüfung des Zugangs zu kostenpflichtigen Funktionen. Rechtsgrundlage: Vertrag, Art. 6 Abs. 1 lit. b
@@ -298,7 +304,8 @@ const SECTIONS: ILegalSection[] = [
     body: (
       <ul>
         <li>
-          Kontodaten, Tagebuch, gespeicherte Mahlzeiten und aus Nährwerttabellen ausgelesene Produkte – solange Sie ein Konto haben.
+          Kontodaten, Ernährungs- und Wassertagebuch, gespeicherte Mahlzeiten und aus Nährwerttabellen ausgelesene Produkte – solange Sie
+          ein Konto haben.
         </li>
         <li>
           Originalfotos von Mahlzeiten und Seitenansichten – 30 Tage; die Vorschau im Tagebuch – bis Sie die Mahlzeit oder Ihr Konto
@@ -358,6 +365,13 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>Beschwerde einlegen</strong> bei der Datenschutzaufsichtsbehörde des Landes, in dem Sie leben oder arbeiten.
+          </li>
+          <li>
+            Wenn Sie in Washington oder Nevada leben, beachten Sie auch unsere{" "}
+            <Link href="/en/health-data" hrefLang="en" lang="en">
+              Consumer Health Data Privacy Policy
+            </Link>{" "}
+            (auf Englisch).
           </li>
         </ul>
         <p>

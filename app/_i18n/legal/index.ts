@@ -1,4 +1,5 @@
 import type { Locale } from "../config";
+import { healthDataEn } from "./health-data.en";
 import { privacyDe } from "./privacy.de";
 import { privacyEn } from "./privacy.en";
 import { privacyEs } from "./privacy.es";
@@ -14,6 +15,8 @@ import { termsIt } from "./terms.it";
 import { termsRu } from "./terms.ru";
 import { termsUk } from "./terms.uk";
 import type { ILegalDocument } from "./types";
+
+export { HEALTH_DATA_META } from "./health-data.en";
 
 export const PRIVACY: Record<Locale, ILegalDocument> = {
   en: privacyEn,
@@ -33,3 +36,6 @@ export const TERMS: Record<Locale, ILegalDocument> = {
   es: termsEs,
   it: termsIt,
 };
+
+/** Consumer Health Data Privacy Policy: English only, at /en/health-data */
+export const HEALTH_DATA: ILegalDocument = healthDataEn;

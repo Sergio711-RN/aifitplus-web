@@ -1,4 +1,4 @@
-// Details used by the Privacy Policy and the Terms. The registration number is left out on purpose (owner's decision).
+// Details used by the Privacy Policy, the Terms and the Consumer Health Data Privacy Policy. The registration number is left out on purpose (owner's decision).
 // `null` renders a highlighted «fill me» mark on the page,
 // so nothing goes live with an invented value.
 
@@ -52,6 +52,11 @@ export const LEGAL = {
   minAge: 16,
   /** How long the hosting provider keeps backups after deletion, days */
   backupRetentionDays: 30,
-  /** Date both documents take effect, ISO; shown in each language's format */
-  effectiveDate: "2026-10-01",
+  /** Date each document takes effect, ISO; shown in each language's format. Separate, so that changing one document
+   * does not move the date of the others */
+  effectiveDate: {
+    privacy: "2026-10-26",
+    terms: "2026-10-01",
+    healthData: "2026-10-26",
+  },
 };

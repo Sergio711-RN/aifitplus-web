@@ -50,6 +50,11 @@ const SECTIONS: ILegalSection[] = [
           de datos: llegan a nuestro servidor solo después de que usted da un consentimiento aparte al registrarse. Hasta ese momento, sus
           respuestas se guardan únicamente en su dispositivo.
         </p>
+        <p>
+          El agua que usted registra: la cantidad y la hora de cada registro, su meta de agua, el tamaño del vaso y las horas de su día, y
+          si las bebidas del diario cuentan como agua. Como sus respuestas, son datos de salud: llegan a nuestro servidor solo después de su
+          consentimiento.
+        </p>
         <h3>Diario de comidas</h3>
         <ul>
           <li>Fotos de comidas que usted toma o elige de su galería, incluida una vista lateral opcional.</li>
@@ -63,8 +68,8 @@ const SECTIONS: ILegalSection[] = [
             del envase y de la porción) para que el siguiente escaneo lo encuentre. La foto de la etiqueta no se guarda.
           </li>
           <li>
-            Resultados del reconocimiento: plato, ingredientes, peso de la porción, calorías, proteínas, grasas, carbohidratos, sus
-            correcciones y sus respuestas a las preguntas aclaratorias.
+            Resultados del reconocimiento: plato, ingredientes, peso de la porción, calorías, proteínas, grasas, carbohidratos, el contenido
+            de agua estimado de las bebidas, sus correcciones y sus respuestas a las preguntas aclaratorias.
           </li>
           <li>Comidas que usted agrega a “Guardados”.</li>
           <li>Hora y tipo de comida.</li>
@@ -98,8 +103,9 @@ const SECTIONS: ILegalSection[] = [
             electrónico, su dirección IP ni capturas de pantalla.
           </li>
           <li>
-            En su teléfono, la aplicación guarda una copia del diario y de las estadísticas cargados más recientemente, para que se puedan ver
-            sin conexión, y de los productos encontrados por código de barras. Todo esto se borra al cerrar sesión.
+            En su teléfono, la aplicación guarda una copia del diario y de las estadísticas cargados más recientemente, para que se puedan
+            ver sin conexión, de los productos encontrados por código de barras, de los registros de agua aún no enviados por falta de
+            conexión y de la marca “Día caluroso o entrenamiento” de hoy. Todo esto se borra al cerrar sesión.
           </li>
         </ul>
         <h3>Sitio web</h3>
@@ -142,8 +148,8 @@ const SECTIONS: ILegalSection[] = [
           entradas de su diario.
         </li>
         <li>
-          <strong>Los datos de salud</strong> se tratan únicamente para calcular su plan y llevar su diario. Base legal: su consentimiento
-          explícito y aparte, que usted da al marcar una casilla al registrarse, art. 9.2.a del RGPD.
+          <strong>Los datos de salud</strong> se tratan únicamente para calcular su plan y su meta de agua y llevar su diario de comidas y
+          agua. Base legal: su consentimiento explícito y aparte, que usted da al marcar una casilla al registrarse, art. 9.2.a del RGPD.
         </li>
         <li>
           <strong>Suscripción</strong>: verificación del acceso a las funciones de pago. Base legal: contrato, art. 6.1.b del RGPD.
@@ -293,7 +299,9 @@ const SECTIONS: ILegalSection[] = [
     title: "Cuánto tiempo conservamos los datos",
     body: (
       <ul>
-        <li>Datos de la cuenta, diario, comidas guardadas y productos leídos de etiquetas: mientras usted tenga una cuenta.</li>
+        <li>
+          Datos de la cuenta, diario de comidas y agua, comidas guardadas y productos leídos de etiquetas: mientras usted tenga una cuenta.
+        </li>
         <li>
           Fotos originales de comidas y vistas laterales: 30 días; la vista previa en el diario: hasta que usted elimine la comida o su
           cuenta. Las fotos de etiquetas no se guardan.
@@ -349,6 +357,13 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>Presentar una queja</strong> ante la autoridad de protección de datos del país donde vive o trabaja.
+          </li>
+          <li>
+            Si vive en Washington o Nevada, consulte también nuestra{" "}
+            <Link href="/en/health-data" hrefLang="en" lang="en">
+              Consumer Health Data Privacy Policy
+            </Link>{" "}
+            (en inglés).
           </li>
         </ul>
         <p>

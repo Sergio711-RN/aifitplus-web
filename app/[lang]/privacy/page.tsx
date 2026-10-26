@@ -6,6 +6,7 @@ import { isLocale } from "../../_i18n/config";
 import { getDictionary } from "../../_i18n/dictionaries";
 import { PRIVACY } from "../../_i18n/legal";
 import { pageMetadata } from "../../_i18n/seo";
+import { LEGAL } from "../../_lib/legal";
 
 export const generateMetadata = async ({ params }: PageProps<"/[lang]/privacy">): Promise<Metadata> => {
   const { lang } = await params;
@@ -27,6 +28,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[lang]/privacy
         title={document.title}
         lead={document.lead}
         sections={document.sections}
+        effectiveDate={LEGAL.effectiveDate.privacy}
         links={[{ href: `/${lang}/terms`, label: getDictionary(lang).footer.terms }]}
       />
       <Footer />

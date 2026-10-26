@@ -6,6 +6,7 @@ import { isLocale } from "../../_i18n/config";
 import { getDictionary } from "../../_i18n/dictionaries";
 import { TERMS } from "../../_i18n/legal";
 import { pageMetadata } from "../../_i18n/seo";
+import { LEGAL } from "../../_lib/legal";
 
 export const generateMetadata = async ({ params }: PageProps<"/[lang]/terms">): Promise<Metadata> => {
   const { lang } = await params;
@@ -27,6 +28,7 @@ export default async function TermsPage({ params }: PageProps<"/[lang]/terms">) 
         title={document.title}
         lead={document.lead}
         sections={document.sections}
+        effectiveDate={LEGAL.effectiveDate.terms}
         links={[{ href: `/${lang}/privacy`, label: getDictionary(lang).footer.privacy }]}
       />
       <Footer />

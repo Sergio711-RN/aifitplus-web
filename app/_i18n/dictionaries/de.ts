@@ -132,7 +132,13 @@ export const de: Dictionary = {
     accept: "Akzeptieren",
     decline: "Ablehnen",
   },
-  footer: { privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen", support: "Support", cookies: "Cookie-Einstellungen" },
+  footer: {
+    privacy: "Datenschutzerklärung",
+    terms: "Nutzungsbedingungen",
+    healthData: "Consumer Health Data Privacy Policy",
+    support: "Support",
+    cookies: "Cookie-Einstellungen",
+  },
   legal: {
     effective: (date: string) => `Gültig ab ${date}`,
     contents: "Inhalt",

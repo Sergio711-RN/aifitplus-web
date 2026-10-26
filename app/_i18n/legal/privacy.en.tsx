@@ -45,6 +45,10 @@ const SECTIONS: ILegalSection[] = [
           type and what you want to improve. This is a special category of data: it reaches our server only
           after you give separate consent at sign-up. Until then, your answers are stored only on your device.
         </p>
+        <p>
+          Water you log: the amount and time of each entry, your water target, glass size and the hours of your day, and whether drinks from
+          your diary count toward water. Like your answers, this is health data and reaches our server only after your consent.
+        </p>
         <h3>Food diary</h3>
         <ul>
           <li>Photos of meals that you take or pick from your gallery, including an optional side view.</li>
@@ -57,7 +61,10 @@ const SECTIONS: ILegalSection[] = [
             reads the numbers, and we save the product in your account (name, brand, nutrition per 100 g, package and serving weight) so the
             next scan finds it. The label photo itself is not saved.
           </li>
-          <li>Recognition results: dish, ingredients, portion weight, calories, protein, fat, carbs, your edits and answers to follow-up questions.</li>
+          <li>
+            Recognition results: dish, ingredients, portion weight, calories, protein, fat, carbs, the estimated water content of drinks,
+            your edits and answers to follow-up questions.
+          </li>
           <li>Meals you add to “Saved”.</li>
           <li>Time and type of meal.</li>
         </ul>
@@ -83,8 +90,9 @@ const SECTIONS: ILegalSection[] = [
             app’s last technical steps before it. Reports do not include your email, your IP address or screenshots.
           </li>
           <li>
-            On your phone, the app keeps a copy of the most recently loaded diary and statistics, so they can be seen offline, and the products
-            found by barcode. All of this is erased when you sign out.
+            On your phone, the app keeps a copy of the most recently loaded diary and statistics, so they can be seen offline, the products
+            found by barcode, water entries not yet sent while you were offline and today’s “Hot day or workout” mark. All of this is erased
+            when you sign out.
           </li>
         </ul>
         <h3>Website</h3>
@@ -122,8 +130,8 @@ const SECTIONS: ILegalSection[] = [
           ingredients and delete entries in your diary.
         </li>
         <li>
-          <strong>Health data</strong> is processed only to calculate your plan and keep your diary. Legal basis: your separate explicit
-          consent, which you give by ticking a box at sign-up, Art. 9(2)(a) GDPR.
+          <strong>Health data</strong> is processed only to calculate your plan and water target and to keep your food and water diary.
+          Legal basis: your separate explicit consent, which you give by ticking a box at sign-up, Art. 9(2)(a) GDPR.
         </li>
         <li>
           <strong>Subscription</strong>: checking access to paid features. Legal basis: contract, Art. 6(1)(b) GDPR.
@@ -263,7 +271,7 @@ const SECTIONS: ILegalSection[] = [
     title: "How long we keep data",
     body: (
       <ul>
-        <li>Account data, the diary, saved meals and products read from labels — for as long as you have an account.</li>
+        <li>Account data, the food and water diary, saved meals and products read from labels — for as long as you have an account.</li>
         <li>
           Original meal photos and side views — 30 days; the preview in the diary — until you delete the meal or your account. Label photos are
           not saved.
@@ -312,6 +320,13 @@ const SECTIONS: ILegalSection[] = [
           </li>
           <li>
             <strong>Complain</strong> to the data protection authority in the country where you live or work.
+          </li>
+          <li>
+            If you live in Washington or Nevada, see also our{" "}
+            <Link href="/en/health-data">
+              Consumer Health Data Privacy Policy
+            </Link>
+            .
           </li>
         </ul>
         <p>

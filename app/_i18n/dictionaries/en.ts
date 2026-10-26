@@ -132,7 +132,13 @@ export const en: Dictionary = {
     accept: "Accept",
     decline: "Decline",
   },
-  footer: { privacy: "Privacy Policy", terms: "Terms of Use", support: "Support", cookies: "Cookie settings" },
+  footer: {
+    privacy: "Privacy Policy",
+    terms: "Terms of Use",
+    healthData: "Consumer Health Data Privacy Policy",
+    support: "Support",
+    cookies: "Cookie settings",
+  },
   legal: {
     effective: (date: string) => `Effective from ${date}`,
     contents: "Contents",
