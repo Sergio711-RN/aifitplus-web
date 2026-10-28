@@ -31,6 +31,16 @@ export interface IPlanInput {
   goal: Goal;
 }
 
+/** What the calculator starts with; the water demo on the page counts the same person's water goal */
+export const DEFAULT_PLAN_INPUT: IPlanInput = {
+  sex: "female",
+  age: 30,
+  heightCm: 168,
+  weightKg: 68,
+  activity: "light",
+  goal: "lose",
+};
+
 export interface IPlan {
   calories: number;
   proteinG: number;

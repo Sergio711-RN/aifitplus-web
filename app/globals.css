@@ -27,6 +27,8 @@
   --color-mint: #7fd8be;
   --color-mint-text: #bdebdd;
   --color-rose: #ff8a9a;
+  /* Water, as in the app (`water` in theme.ts): its own colour, so it never reads as the apricot «glass» of calories */
+  --color-water: #7cc8ff;
   --color-plate: #e9ecf8;
   --color-plate-well: #d5daf0;
 

@@ -10,6 +10,7 @@ import { Magnetic } from "./magnetic";
 const LINKS = [
   { href: "#how", key: "how" },
   { href: "#day", key: "day" },
+  { href: "#water", key: "water" },
   { href: "#plan", key: "plan" },
 ] as const;
 

@@ -20,6 +20,7 @@ export const ru = {
     how: "Как это работает",
     day: "День",
     plan: "План",
+    water: "Вода",
     toTop: "AIFit+, наверх",
     toHome: "AIFit+, на главную",
     cta: "Скоро в сторах",
@@ -27,7 +28,7 @@ export const ru = {
     ctaShort: "Скоро",
     language: "Язык",
   },
-  units: { kcal: "ккал", g: "г", kg: "кг", cm: "см", years: "лет" },
+  units: { kcal: "ккал", g: "г", kg: "кг", cm: "см", years: "лет", ml: "мл", l: "л" },
   macros: { carbs: "Углеводы", fats: "Жиры", protein: "Белки", carbsShort: "У", fatsShort: "Ж", proteinShort: "Б" },
   mealTypes: { breakfast: "Завтрак", lunch: "Обед", snack: "Перекус", dinner: "Ужин" },
   meals: {
@@ -109,6 +110,36 @@ export const ru = {
     moderate: "Средняя",
     high: "Высокая",
     perDay: "Норма в день",
+    /** The water goal under the macros, from the same weight and activity */
+    water: "Вода",
+    waterPerDay: "пить в день",
+  },
+  water: {
+    title: "Вода — по графику дня",
+    text: "Норма воды считается из веса и активности и раскладывается на ваш день: видно, успеваете ли вы. Стакан воды — одно нажатие, а чай и суп из дневника ИИ засчитает сам.",
+    /** The demo of the app's water card on Home and the day's entries of the water screen */
+    card: "Вода",
+    of: (goal: string) => `из ${goal}`,
+    add: (amount: string) => `Добавить ${amount}`,
+    addedShort: (amount: string) => `Добавлено ${amount}`,
+    undo: "Отменить",
+    fromDiary: "из дневника · оценка ИИ",
+    estimating: "ИИ оценивает воду…",
+    entry: "Вода",
+    drinks: { cappuccino: "Капучино", greenTea: "Зелёный чай" },
+    today: (time: string) => `Сегодня, ${time}`,
+    status: {
+      done: "Норма на сегодня выпита",
+      over: (amount: string) => `Норма выпита, сверх неё — ${amount}`,
+      tooMuch: "Это заметно больше обычного. Много воды за короткое время небезопасно",
+      onTrack: (time: string) => `По графику. Следующий стакан — к ${time}`,
+      behind: "Чуть отстаёте: стакан сейчас — и вы по графику",
+    },
+    points: [
+      { title: "ИИ считает воду в напитках", text: "Сфотографировали обед с чаем или суп — вода из них засчитается сама, с пометкой «оценка ИИ». Поправить объём можно в приёме пищи." },
+      { title: "Стакан к нужному часу", text: "Норма разложена на день с 8:00 до 21:00 — или на ваши часы. Видно, вы по графику или чуть отстаёте. Если включить напоминания, они придут, только когда вы отстаёте." },
+      { title: "Без гонки за литрами", text: "Рассчитанная норма — от 1,5 до 3,5 л. Сверх неё приложение не хвалит и не ругает, а если воды заметно больше обычного, мягко предупредит." },
+    ],
   },
   cta: {
     title: "Скоро на вашем телефоне",

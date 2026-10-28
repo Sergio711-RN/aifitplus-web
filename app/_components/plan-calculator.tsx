@@ -2,10 +2,13 @@
 
 import { motion, useInView } from "motion/react";
 import { useId, useRef, useState } from "react";
+import { LOCALE_META } from "../_i18n/config";
 import { useI18n } from "../_i18n/i18n-provider";
-import { buildPlan, type Activity, type Goal, type IPlanInput, type Sex } from "../_lib/nutrition-plan";
+import { buildPlan, DEFAULT_PLAN_INPUT, type Activity, type Goal, type IPlanInput, type Sex } from "../_lib/nutrition-plan";
+import { calcWaterGoal, formatWater } from "../_lib/water-plan";
 import { CountUp } from "./count-up";
 import { type IGlow, SectionBackdrop } from "./section-backdrop";
+import { DropIcon } from "./water-day";
 
 const Segmented = <T extends string>({
   label,
@@ -145,16 +148,10 @@ const PLAN_GLOWS: IGlow[] = [
 ];
 
 export const PlanCalculator = () => {
-  const { t } = useI18n();
-  const [input, setInput] = useState<IPlanInput>({
-    sex: "female",
-    age: 30,
-    heightCm: 168,
-    weightKg: 68,
-    activity: "light",
-    goal: "lose",
-  });
+  const { t, locale } = useI18n();
+  const [input, setInput] = useState<IPlanInput>(DEFAULT_PLAN_INPUT);
   const plan = buildPlan(input);
+  const waterMl = calcWaterGoal(input);
   const set = <K extends keyof IPlanInput>(key: K) => (value: IPlanInput[K]) => setInput((current) => ({ ...current, [key]: value }));
 
   const macros = [
@@ -227,6 +224,17 @@ export const PlanCalculator = () => {
                   </div>
                 </div>
               ))}
+            </div>
+            {/* Water: the same weight and activity, as on the app's «Норма воды» */}
+            <div className="mt-3 flex items-center justify-between gap-3 rounded-2xl bg-surface-muted/60 px-4 py-3">
+              <span className="flex items-center gap-2 text-[13px] text-text-3">
+                <DropIcon className="h-4 w-3.5 text-water" />
+                {t.plan.water}
+              </span>
+              <span className="text-right">
+                <span className="text-[22px] font-extrabold text-water tabular-nums">{formatWater(waterMl, LOCALE_META[locale].intl, t.units)}</span>{" "}
+                <span className="text-[13px] text-text-3">{t.plan.waterPerDay}</span>
+              </span>
             </div>
           </div>
         </div>

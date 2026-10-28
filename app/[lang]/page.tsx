@@ -8,6 +8,7 @@ import { Nav } from "../_components/nav";
 import { PlanCalculator } from "../_components/plan-calculator";
 import { ScrollProgress } from "../_components/scroll-progress";
 import { VelocityMarquee } from "../_components/velocity-marquee";
+import { WaterDay } from "../_components/water-day";
 
 export default function Home() {
   return (
@@ -26,6 +27,9 @@ export default function Home() {
         </Suspense>
         <Suspense>
           <DayTimeline />
+        </Suspense>
+        <Suspense>
+          <WaterDay />
         </Suspense>
         <Suspense>
           <PlanCalculator />
